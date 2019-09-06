@@ -6,6 +6,7 @@ public class DrawPointCollider : MonoBehaviour
 {
     // Initialize the public variables
     public int xx, yy;
+    public GameObject cube;
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +20,11 @@ public class DrawPointCollider : MonoBehaviour
         
     }
 
-
+    // Check for collision
     void OnTriggerStay()
     {
-
+        var drawRecognition = GetComponentInParent<DrawRecognition>();
+        drawRecognition.drawData[xx, yy] = 1;
+        cube.SetActive(true);
     }
 }

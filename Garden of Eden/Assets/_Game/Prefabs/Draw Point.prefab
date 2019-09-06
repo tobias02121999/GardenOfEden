@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5101851122616329069}
   - component: {fileID: 6250596990203509456}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Draw Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
