@@ -9,8 +9,10 @@ public class DrawRecognition : MonoBehaviour
     public Vector2 gridSize;
     public int[,] drawData;
     public int symbolCount, symbolVariation;
-    public float scale;
     public TextMesh symbolText, drawDataText;
+
+    [HideInInspector]
+    public float scale;
 
     // Initialize the private variables
     GameObject[,] colliderGrid;
