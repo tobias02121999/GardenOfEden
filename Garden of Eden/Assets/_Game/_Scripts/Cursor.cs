@@ -8,7 +8,7 @@ public class Cursor : MonoBehaviour
     public float sensitivity, lineOffset, recognitionScale;
     public string axisHor, axisVer, drawButton;
     public GameObject drawPoint, drawRecognition;
-    public Transform drawPointParent;
+    public Transform drawPointParent, rightHand;
     public TextMesh symbolText;
 
     // Initialize the private variables
@@ -16,6 +16,7 @@ public class Cursor : MonoBehaviour
     List<Transform> drawPoints = new List<Transform>();
     LineRenderer lineRenderer;
     Vector2 drawEdgeHor, drawEdgeVer, drawPivot, drawSize;
+    bool isDrawing;
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +48,30 @@ public class Cursor : MonoBehaviour
     {
         if (inkAlarm <= 0f)
         {
-            if (Input.GetButton(drawButton))
+            if (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) != 0f)
             {
+                if (!isDrawing)
+                {
+                    drawPoints.Clear();
+
+                    foreach (Transform child in drawPointParent)
+                        Destroy(child.gameObject);
+
+                    drawPointParent.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+                    drawPointParent.position = transform.position;
+                    isDrawing = true;
+                }
+
                 var obj = Instantiate(drawPoint, transform.position, Quaternion.identity);
                 obj.transform.parent = drawPointParent;
+                obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, 0f);
                 drawPoints.Add(obj.transform);
+
+                if (drawPoints.Count <= 1)
+                {
+                    drawEdgeHor = new Vector2(obj.transform.localPosition.x, obj.transform.localPosition.x);
+                    drawEdgeVer = new Vector2(obj.transform.localPosition.y, obj.transform.localPosition.y);
+                }
             }
 
             inkAlarm = lineOffset;
@@ -73,31 +93,29 @@ public class Cursor : MonoBehaviour
     // Initialize the draw recognition
     void RecognitionInit()
     {
-        if (Input.GetButtonUp(drawButton))
+        if (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) == 0f && isDrawing)
         {
             var scale = Mathf.Max(drawSize.x, drawSize.y);
 
-            var pos = new Vector3(drawPivot.x, drawPivot.y, transform.position.z);
-            var obj = Instantiate(drawRecognition, pos, Quaternion.identity);
+            var obj = Instantiate(drawRecognition, transform.position, Quaternion.identity);
+            obj.transform.parent = drawPointParent;
+            obj.transform.localPosition = new Vector3(drawPivot.x, drawPivot.y, 0f);
 
             obj.GetComponent<DrawRecognition>().scale = scale * recognitionScale;
             obj.GetComponent<DrawRecognition>().symbolText = symbolText;
+            obj.GetComponent<DrawRecognition>().drawPointParent = drawPointParent;
+
+            isDrawing = false;
         }
     }
 
     // Get data from the drawing
     void GetDrawData()
     {
-        if (!Input.GetButton(drawButton))
-        {
-            drawEdgeHor = new Vector2(transform.position.x, transform.position.x);
-            drawEdgeVer = new Vector2(transform.position.y, transform.position.y);
-        }
-
         for (var i = 0; i < drawPoints.Count; i++)
         {
-            var posX = drawPoints[i].position.x;
-            var posY = drawPoints[i].position.y;
+            var posX = drawPoints[i].localPosition.x;
+            var posY = drawPoints[i].localPosition.y;
 
             if (posX < drawEdgeHor.x)
                 drawEdgeHor.x = posX;

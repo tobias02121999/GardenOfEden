@@ -14,6 +14,9 @@ public class DrawRecognition : MonoBehaviour
     [HideInInspector]
     public float scale;
 
+    [HideInInspector]
+    public Transform drawPointParent;
+
     // Initialize the private variables
     GameObject[,] colliderGrid;
     int gridWidth, gridHeight;
@@ -29,6 +32,8 @@ public class DrawRecognition : MonoBehaviour
 
         DrawLibraryInit(); // Initialize the draw library
         CreateGrid(); // Instantiate the collider grid
+
+        transform.rotation = Quaternion.Euler(drawPointParent.rotation.eulerAngles);
 
         // Initialize the draw data
         drawData = new int[gridWidth, gridHeight];
