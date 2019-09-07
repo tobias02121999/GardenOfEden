@@ -77,7 +77,9 @@ public class Cursor : MonoBehaviour
         {
             var scale = Mathf.Max(drawSize.x, drawSize.y);
 
-            var obj = Instantiate(drawRecognition, drawPivot, Quaternion.identity);
+            var pos = new Vector3(drawPivot.x, drawPivot.y, transform.position.z);
+            var obj = Instantiate(drawRecognition, pos, Quaternion.identity);
+
             obj.GetComponent<DrawRecognition>().scale = scale * recognitionScale;
             obj.GetComponent<DrawRecognition>().symbolText = symbolText;
         }
