@@ -10,6 +10,7 @@ public class DrawRecognition : MonoBehaviour
     public int[,] drawData;
     public int symbolCount, symbolVariation;
     public TextMesh symbolText, drawDataText;
+    public GameObject[] symbolObjects;
 
     [HideInInspector]
     public float scale;
@@ -149,6 +150,7 @@ public class DrawRecognition : MonoBehaviour
                             if (xx == gridWidth - 1 && yy == gridHeight - 1)
                             {
                                 symbolText.text = "This is a " + GetSymbolData(c) + "!";
+                                Instantiate(symbolObjects[c], transform.position, Quaternion.identity);
                                 goto End;
                             }
                         }
@@ -168,6 +170,9 @@ public class DrawRecognition : MonoBehaviour
         }
 
         drawDataText.text = str;
+
+        foreach (Transform child in drawPointParent)
+            Destroy(child.gameObject);
     }
 
     // Get the symbol data

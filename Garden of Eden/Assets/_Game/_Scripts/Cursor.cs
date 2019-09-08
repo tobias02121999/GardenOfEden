@@ -8,7 +8,7 @@ public class Cursor : MonoBehaviour
     public float sensitivity, lineOffset, recognitionScale;
     public string axisHor, axisVer, drawButton;
     public GameObject drawPoint, drawRecognition;
-    public Transform drawPointParent, rightHand;
+    public Transform drawPointParent, rightHand, head;
     public TextMesh symbolText;
 
     // Initialize the private variables
@@ -54,10 +54,7 @@ public class Cursor : MonoBehaviour
                 {
                     drawPoints.Clear();
 
-                    foreach (Transform child in drawPointParent)
-                        Destroy(child.gameObject);
-
-                    drawPointParent.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+                    drawPointParent.rotation = Quaternion.Euler(0f, head.rotation.eulerAngles.y, 0f);
                     drawPointParent.position = transform.position;
                     isDrawing = true;
                 }

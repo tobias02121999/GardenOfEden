@@ -140,6 +140,10 @@ MonoBehaviour:
   gridSize: {x: 5, y: 5}
   symbolCount: 2
   symbolVariation: 6
-  scale: 0
   symbolText: {fileID: 0}
   drawDataText: {fileID: 6515983102064949471}
+  symbolObjects:
+  - {fileID: 148802231449521297, guid: 90850c07c98cd524ba349becd4f7272e, type: 3}
+  - {fileID: 5208727771068222263, guid: 94960373c61f2f840837eb1b3a08b420, type: 3}
+  scale: 0
+  drawPointParent: {fileID: 0}
