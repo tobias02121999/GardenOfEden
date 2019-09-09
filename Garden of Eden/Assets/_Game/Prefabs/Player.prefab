@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6252354395598340537}
   - component: {fileID: 6252354395598340541}
   - component: {fileID: 5815435111283827604}
+  - component: {fileID: 6795669664061068650}
   - component: {fileID: 8208416025683667527}
   m_Layer: 0
   m_Name: Player 1
@@ -233,6 +234,19 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &6795669664061068650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252354395598340534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d1e168d61d2554ca5fc321c733e607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 8
 --- !u!114 &8208416025683667527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,5 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc8d12f3d8141640875e03af94eeb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localCamera: {fileID: 6252354395130357537}
-  movementSpeed: 8
+  nonLocalComponents:
+  - {fileID: 6252354395130357537}
+  - {fileID: 6252354395130357566}
+  - {fileID: 6795669664061068650}
