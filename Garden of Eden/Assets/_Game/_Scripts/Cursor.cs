@@ -5,17 +5,19 @@ using UnityEngine;
 public class Cursor : MonoBehaviour
 {
     // Initialize the public variables
-    public float sensitivity, lineOffset, recognitionScale;
+    public float sensitivity, lineOffset, recognitionScale, drawFrequency;
     public string axisHor, axisVer, drawButton;
+    public bool debugMode;
     public GameObject drawPoint, drawRecognition;
     public Transform drawPointParent, rightHand, head;
     public TextMesh symbolText;
 
     // Initialize the private variables
-    float inkAlarm;
+    float inkAlarm, posAlarm;
     List<Transform> drawPoints = new List<Transform>();
     LineRenderer lineRenderer;
     Vector2 drawEdgeHor, drawEdgeVer, drawPivot, drawSize;
+    Vector3 posOld, posNew;
     bool isDrawing;
 
     // Start is called before the first frame update
@@ -32,6 +34,7 @@ public class Cursor : MonoBehaviour
         DrawLine(); // Draw the line between the draw points
         RecognitionInit(); // Initialize the draw recognition
         GetDrawData(); // Get data from the drawing
+        GetPos();
     }
 
     // Move the cursor around
@@ -46,18 +49,55 @@ public class Cursor : MonoBehaviour
     // Instantiate the draw points
     void SetDrawPoints()
     {
-        if (inkAlarm <= 0f)
+        for (var i = 0; i < drawFrequency; i++)
         {
-            if (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) != 0f)
+            if ((OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) != 0f) || (Input.GetButton(drawButton) && debugMode))
             {
                 if (!isDrawing)
                 {
                     drawPoints.Clear();
 
-                    drawPointParent.rotation = Quaternion.Euler(0f, head.rotation.eulerAngles.y, 0f);
+                    if (!debugMode)
+                        drawPointParent.rotation = Quaternion.Euler(0f, head.rotation.eulerAngles.y, 0f);
+
                     drawPointParent.position = transform.position;
                     isDrawing = true;
                 }
+
+                var dist = Vector3.Distance(posOld, transform.position);
+
+
+                var obj = Instantiate(drawPoint, transform.position, Quaternion.identity);
+                obj.transform.parent = drawPointParent;
+                obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, 0f);
+                drawPoints.Add(obj.transform);
+
+                if (drawPoints.Count <= 1)
+                {
+                    drawEdgeHor = new Vector2(obj.transform.localPosition.x, obj.transform.localPosition.x);
+                    drawEdgeVer = new Vector2(obj.transform.localPosition.y, obj.transform.localPosition.y);
+                }
+            }
+        }
+
+        /*
+        if (inkAlarm <= 0f)
+        {
+            if ((OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) != 0f) || (Input.GetButton(drawButton) && debugMode))
+            {
+                if (!isDrawing)
+                {
+                    drawPoints.Clear();
+
+                    if (!debugMode)
+                        drawPointParent.rotation = Quaternion.Euler(0f, head.rotation.eulerAngles.y, 0f);
+
+                    drawPointParent.position = transform.position;
+                    isDrawing = true;
+                }
+
+                var dist = Vector3.Distance(posOld, transform.position);
+
 
                 var obj = Instantiate(drawPoint, transform.position, Quaternion.identity);
                 obj.transform.parent = drawPointParent;
@@ -75,6 +115,7 @@ public class Cursor : MonoBehaviour
         }
         else
             inkAlarm--;
+        */
     }
 
     // Draw the line between the draw points
@@ -90,7 +131,8 @@ public class Cursor : MonoBehaviour
     // Initialize the draw recognition
     void RecognitionInit()
     {
-        if (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) == 0f && isDrawing)
+        if ((OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) == 0f && !debugMode && isDrawing) || 
+            (!Input.GetButton(drawButton) && debugMode && isDrawing))
         {
             var scale = Mathf.Max(drawSize.x, drawSize.y);
 
@@ -101,6 +143,7 @@ public class Cursor : MonoBehaviour
             obj.GetComponent<DrawRecognition>().scale = scale * recognitionScale;
             obj.GetComponent<DrawRecognition>().symbolText = symbolText;
             obj.GetComponent<DrawRecognition>().drawPointParent = drawPointParent;
+            obj.GetComponent<DrawRecognition>().debugMode = debugMode;
 
             isDrawing = false;
         }
@@ -132,6 +175,17 @@ public class Cursor : MonoBehaviour
 
         drawPivot.x = drawEdgeHor.x + (drawSize.x / 2f);
         drawPivot.y = drawEdgeVer.x + (drawSize.y / 2f);
+    }
+
+    void GetPos()
+    {
+        if (posAlarm <= 0f)
+        {
+            posOld = transform.position;
+            posAlarm = 1f;
+        }
+        else
+            posAlarm--;
     }
 
     // Calculate the length towards a direction with a given speed for the X position
