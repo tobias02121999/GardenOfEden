@@ -98,8 +98,9 @@ GameObject:
   - component: {fileID: 5815435111283827604}
   - component: {fileID: 6795669664061068650}
   - component: {fileID: 8208416025683667527}
+  - component: {fileID: 5180702596914396473}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.1
+  m_SendInterval: 0.11111111
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
@@ -233,7 +234,7 @@ MonoBehaviour:
   m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
+  m_InterpolateMovement: 0.01
 --- !u!114 &6795669664061068650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,3 +264,17 @@ MonoBehaviour:
   - {fileID: 6252354395130357537}
   - {fileID: 6252354395130357566}
   - {fileID: 6795669664061068650}
+--- !u!114 &5180702596914396473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252354395598340534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73be5c0facab7c148b983385d8d110fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localTransform: {fileID: 6252354395598340538}
+  smoothing: 15
