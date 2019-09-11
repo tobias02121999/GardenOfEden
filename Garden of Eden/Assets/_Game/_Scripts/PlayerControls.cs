@@ -1,19 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using InputTracking = UnityEngine.XR.InputTracking;
+using Node = UnityEngine.XR.XRNode;
 
-public class PlayerControls : MonoBehaviour
+public class PlayerControls : NetworkBehaviour
 {
-    public float movementSpeed;
+    public GameObject ovrCameraRig;
+    public Transform leftHand;
+    public Transform rightHand;
+    public Camera leftEye;
+    public Camera rightEye;
 
-    Vector3 localPosition;
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        localPosition.x = Input.GetAxis("Horizontal");
-        localPosition.z = Input.GetAxis("Vertical");
+        if (!isLocalPlayer)
+        {
+            ovrCameraRig.SetActive(false);
+        }
+        else
+        {
+            // Makes sure the local camera's are the main camera's.
+            if (leftEye.tag != "MainCamera")
+            {
+                leftEye.tag = "MainCamera";
+                leftEye.enabled = true;
+            }
 
-        transform.position += localPosition * movementSpeed * Time.deltaTime;
+            if (rightEye.tag != "MainCamera")
+            {
+                rightEye.tag = "MainCamera";
+                rightEye.enabled = true;
+            }
+
+            // Takes care of the local hand tracking.
+            leftHand.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
+            leftHand.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
+
+            rightHand.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
+            rightHand.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
+        }
     }
 }

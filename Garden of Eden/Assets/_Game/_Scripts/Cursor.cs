@@ -9,7 +9,7 @@ public class Cursor : MonoBehaviour
     public string axisHor, axisVer, drawButton;
     public bool debugMode;
     public GameObject drawPoint, drawRecognition;
-    public Transform drawPointParent, rightHand, head;
+    public Transform rightHand, head;
     public TextMesh symbolText;
 
     // Initialize the private variables
@@ -20,9 +20,15 @@ public class Cursor : MonoBehaviour
     Vector3 posOld, posNew;
     bool isDrawing;
 
+    GameObject drawPointObject;
+    Transform drawPointParent;
+
     // Start is called before the first frame update
     void Start()
     {
+        drawPointObject = new GameObject();
+        drawPointParent = drawPointObject.transform;
+
         lineRenderer = GetComponent<LineRenderer>();
     }
 
