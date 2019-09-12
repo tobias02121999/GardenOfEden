@@ -8,11 +8,12 @@ public class RagdollAnimator : MonoBehaviour
     // Initialize the public variables
     public Transform[] bones, targets;
     public float[] animationControl;
-    public float collisionImpact, impactRecovery, collapseMinimum;
+    public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed;
     public BoxCollider feetCollider;
+    public Transform movementParent;
 
     // Initialize the private variables
-    float maxForce = 60f;
+    float maxForce = 65f, collapseAlarm;
     public bool hasCollapsed;
 
     // Run this code once at the start
@@ -39,7 +40,7 @@ public class RagdollAnimator : MonoBehaviour
     void FixedUpdate()
     {
         Follow(); // Follow the target
-        //Move(); // Apply force to the players rigidbodies
+        Move(); // Apply force to the players rigidbodies
     }
 
     // Follow the target
@@ -87,12 +88,15 @@ public class RagdollAnimator : MonoBehaviour
     // Recover from recent impacts
     void Recover()
     {
-        for (var i = 0; i < bones.Length; i++)
+        if (collapseAlarm <= 0f)
         {
-            if (animationControl[i] <= 100f - impactRecovery)
-                animationControl[i] += impactRecovery;
-            else
-                animationControl[i] = 100f;
+            for (var i = 0; i < bones.Length; i++)
+            {
+                if (animationControl[i] <= 100f - impactRecovery)
+                    animationControl[i] += impactRecovery;
+                else
+                    animationControl[i] = 100f;
+            }
         }
     }
 
@@ -109,6 +113,8 @@ public class RagdollAnimator : MonoBehaviour
                 for (var i = 0; i < bones.Length; i++)
                     animationControl[i] = 0f;
 
+                collapseAlarm = collapseDuration;
+
                 feetCollider.enabled = false;
                 hasCollapsed = true;
             }
@@ -118,19 +124,21 @@ public class RagdollAnimator : MonoBehaviour
             feetCollider.enabled = true;
             hasCollapsed = false;
         }
+
+        collapseAlarm--;
     }
 
-    /*
     // Apply force to the players rigidbodies
     void Move()
     {
-        for (var i = 0; i < bones.Length; i++)
+        if (!hasCollapsed)
         {
-            var rb = bones[i].GetComponent<Rigidbody>();
-            var forward = movementParent.forward;
-            var up = movementParent.up;
-            rb.AddForce((forward * speed) + (up * feather));
+            for (var i = 0; i < bones.Length; i++)
+            {
+                var rb = bones[i].GetComponent<Rigidbody>();
+                var forward = movementParent.forward;
+                rb.AddForce(forward * speed);
+            }
         }
     }
-    */
 }
