@@ -224,7 +224,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6117999845440160485}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -1019,6 +1019,52 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cursor
       objectReference: {fileID: 0}
+    - target: {fileID: 4392758505490392908, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3426841134936368074, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: sensitivity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: recognitionScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: drawFrequency
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: drawRecognition
+      value: 
+      objectReference: {fileID: 6216087337244992958, guid: c6897a9b47fc720418e4ad295982753c,
+        type: 3}
+    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: rightHand
+      value: 
+      objectReference: {fileID: 1259975458233020016}
+    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 6532427273485342750}
+    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: symbolText
+      value: 
+      objectReference: {fileID: 3484776328811782155}
     - target: {fileID: 3426841134936368084, guid: 322195173e805cb4cb52c47ea7007c50,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1089,52 +1135,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 4392758505490392908, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: m_Parameters.widthMultiplier
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 3426841134936368074, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: sensitivity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: recognitionScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: drawFrequency
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: drawRecognition
-      value: 
-      objectReference: {fileID: 6216087337244992958, guid: c6897a9b47fc720418e4ad295982753c,
-        type: 3}
-    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: rightHand
-      value: 
-      objectReference: {fileID: 1259975458233020016}
-    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: head
-      value: 
-      objectReference: {fileID: 6532427273485342750}
-    - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: symbolText
-      value: 
-      objectReference: {fileID: 3484776328811782155}
     m_RemovedComponents:
     - {fileID: 3426841134936368073, guid: 322195173e805cb4cb52c47ea7007c50, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 322195173e805cb4cb52c47ea7007c50, type: 3}
