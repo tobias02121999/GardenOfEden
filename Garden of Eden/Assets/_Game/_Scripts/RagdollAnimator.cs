@@ -8,13 +8,14 @@ public class RagdollAnimator : MonoBehaviour
     // Initialize the public variables
     public Transform[] bones, targets;
     public float[] animationControl;
-    public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed;
+    public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed, wanderDuration, turnSpeed;
     public BoxCollider feetCollider;
     public Transform movementParent;
 
     // Initialize the private variables
-    float maxForce = 65f, collapseAlarm;
-    public bool hasCollapsed;
+    public float maxForce = 65f, collapseAlarm, wanderAlarm;
+    bool hasCollapsed;
+    float targetRot, currentRot;
 
     // Run this code once at the start
     void Start()
@@ -30,10 +31,12 @@ public class RagdollAnimator : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     void Update()
     {
         Recover(); // Recover from recent impacts
         Collapse(); // Collapse when the average animation control value gets too low
+        Wander(); // Randomize the movement direction
     }
 
     // Run this code every single frame
@@ -104,7 +107,6 @@ public class RagdollAnimator : MonoBehaviour
     void Collapse()
     {
         var average = animationControl.Average();
-        Debug.Log(average);
 
         if (average <= collapseMinimum)
         {
@@ -139,6 +141,31 @@ public class RagdollAnimator : MonoBehaviour
                 var forward = movementParent.forward;
                 rb.AddForce(forward * speed);
             }
+        }
+    }
+
+    // Randomize the movement direction
+    void Wander()
+    {
+        if (!hasCollapsed)
+        {
+            if (wanderAlarm <= 0f)
+            {
+                targetRot = Random.Range(0f, 360f);
+                wanderAlarm = wanderDuration;
+
+                Debug.Log("Randomize");
+            }
+
+            wanderAlarm--;
+
+            if (currentRot >= targetRot + turnSpeed)
+                currentRot -= turnSpeed;
+
+            if (currentRot <= targetRot - turnSpeed)
+                currentRot += turnSpeed;
+
+            movementParent.rotation = Quaternion.Euler(0f, currentRot, 0f);
         }
     }
 }

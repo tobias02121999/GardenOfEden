@@ -85,43 +85,6 @@ public class Cursor : MonoBehaviour
                 }
             }
         }
-
-        /*
-        if (inkAlarm <= 0f)
-        {
-            if ((OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) != 0f) || (Input.GetButton(drawButton) && debugMode))
-            {
-                if (!isDrawing)
-                {
-                    drawPoints.Clear();
-
-                    if (!debugMode)
-                        drawPointParent.rotation = Quaternion.Euler(0f, head.rotation.eulerAngles.y, 0f);
-
-                    drawPointParent.position = transform.position;
-                    isDrawing = true;
-                }
-
-                var dist = Vector3.Distance(posOld, transform.position);
-
-
-                var obj = Instantiate(drawPoint, transform.position, Quaternion.identity);
-                obj.transform.parent = drawPointParent;
-                obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, 0f);
-                drawPoints.Add(obj.transform);
-
-                if (drawPoints.Count <= 1)
-                {
-                    drawEdgeHor = new Vector2(obj.transform.localPosition.x, obj.transform.localPosition.x);
-                    drawEdgeVer = new Vector2(obj.transform.localPosition.y, obj.transform.localPosition.y);
-                }
-            }
-
-            inkAlarm = lineOffset;
-        }
-        else
-            inkAlarm--;
-        */
     }
 
     // Draw the line between the draw points
