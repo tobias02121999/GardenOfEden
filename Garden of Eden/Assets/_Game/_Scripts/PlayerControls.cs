@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -8,6 +8,7 @@ using Node = UnityEngine.XR.XRNode;
 public class PlayerControls : NetworkBehaviour
 {
     public GameObject ovrCameraRig;
+    public GameObject cursor;
     public Transform leftHand;
     public Transform rightHand;
     public Camera leftEye;
@@ -18,6 +19,7 @@ public class PlayerControls : NetworkBehaviour
         if (!isLocalPlayer)
         {
             ovrCameraRig.SetActive(false);
+            cursor.SetActive(false);
         }
         else
         {
