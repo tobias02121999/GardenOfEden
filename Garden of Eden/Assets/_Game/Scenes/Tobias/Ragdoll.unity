@@ -841,80 +841,6 @@ Transform:
   m_Father: {fileID: 1677646428}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &399061893
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6532427273485501498, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_Name
-      value: Network Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 10.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 15.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -6.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.26432756
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.964433
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -30.654001
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3770014374224428209, guid: 69aa05be405f2d84a9c78731e209d57b,
-        type: 3}
-      propertyPath: m_Convex
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 69aa05be405f2d84a9c78731e209d57b, type: 3}
 --- !u!1 &407364444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,6 +949,7 @@ GameObject:
   - component: {fileID: 459819289}
   - component: {fileID: 459819288}
   - component: {fileID: 459819287}
+  - component: {fileID: 459819286}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -1030,6 +957,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &459819286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459819285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0
 --- !u!114 &459819287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1045,7 +988,7 @@ MonoBehaviour:
   m_NetworkPort: 7777
   m_ServerBindToIP: 0
   m_ServerBindAddress: 
-  m_NetworkAddress: localhost
+  m_NetworkAddress: 10.3.20.17
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
