@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Linq;
 public class RagdollAnimator : MonoBehaviour
 {
     // Initialize the public variables
-    public Transform[] bones, targets;
+    Public Transform[] bones, targets;
     public float[] animationControl;
     public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed, wanderDuration, turnSpeed;
     public BoxCollider feetCollider;

@@ -938,6 +938,75 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1606476600}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &425972742
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6532427273485501498, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_Name
+      value: Network Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.26432756
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.964433
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30.654001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6532427273485342740, guid: 69aa05be405f2d84a9c78731e209d57b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69aa05be405f2d84a9c78731e209d57b, type: 3}
 --- !u!1 &459819285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,7 +1069,8 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 1
   m_OfflineScene: Ragdoll
   m_OnlineScene: Ragdoll
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 0}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
