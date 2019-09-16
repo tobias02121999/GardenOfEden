@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3426841134936368084}
   - component: {fileID: 3426841134936368075}
   - component: {fileID: 3426841134936368074}
-  - component: {fileID: 3426841134936368073}
   - component: {fileID: 4392758505490392908}
   - component: {fileID: 3426841134936368072}
   m_Layer: 0
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3426841134936368079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -50,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3426841134936368079}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &3426841134936368073
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3426841134936368079}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!120 &4392758505490392908
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -133,7 +119,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.5
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -198,14 +184,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4046e4f6e4ec2e546881523970ab3a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 0.25
+  sensitivity: 0
   lineOffset: 1
+  recognitionScale: 1
+  drawFrequency: 2
   axisHor: Mouse X
   axisVer: Mouse Y
   drawButton: Fire1
+  debugMode: 0
   drawPoint: {fileID: 8593562687531297515, guid: 870c63b9cddad81458632cbd960061da,
     type: 3}
-  drawRecognition: {fileID: 0}
-  drawPointParent: {fileID: 0}
-  drawEdgeHor: {x: 0, y: 0}
-  drawEdgeVer: {x: 0, y: 0}
+  drawRecognition: {fileID: 6216087337244992958, guid: c6897a9b47fc720418e4ad295982753c,
+    type: 3}
+  rightHand: {fileID: 0}
+  head: {fileID: 0}
+  symbolText: {fileID: 0}

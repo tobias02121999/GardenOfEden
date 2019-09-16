@@ -6,14 +6,14 @@ using System.Linq;
 public class RagdollAnimator : MonoBehaviour
 {
     // Initialize the public variables
-    Public Transform[] bones, targets;
+    public Transform[] bones, targets;
     public float[] animationControl;
     public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed, wanderDuration, turnSpeed;
     public BoxCollider feetCollider;
     public Transform movementParent;
 
     // Initialize the private variables
-    public float maxForce = 65f, collapseAlarm, wanderAlarm;
+    float maxForce = 65f, collapseAlarm, wanderAlarm;
     bool hasCollapsed;
     float targetRot, currentRot;
 

@@ -144,7 +144,7 @@ MonoBehaviour:
   drawDataText: {fileID: 6515983102064949471}
   symbolObjects:
   - {fileID: 148802231449521297, guid: 90850c07c98cd524ba349becd4f7272e, type: 3}
-  - {fileID: 5208727771068222263, guid: 94960373c61f2f840837eb1b3a08b420, type: 3}
+  - {fileID: 3705685333055380692, guid: be8255f328d10304399d4d2885af227f, type: 3}
   scale: 0
   debugMode: 0
   drawPointParent: {fileID: 0}
