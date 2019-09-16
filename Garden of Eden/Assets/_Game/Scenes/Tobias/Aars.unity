@@ -277,6 +277,7 @@ MonoBehaviour:
   target: {fileID: 925288398}
   reference: {fileID: 1120029090}
   speed: 10
+  rotationSpeed: 1
 --- !u!65 &2125369940
 BoxCollider:
   m_ObjectHideFlags: 0
