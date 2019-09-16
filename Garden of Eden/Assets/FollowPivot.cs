@@ -38,5 +38,6 @@ public class FollowPivot : MonoBehaviour
         var step = dist * speed;
 
         rb.velocity = reference.forward * step;
+        rb.rotation = target.rotation;
     }
 }

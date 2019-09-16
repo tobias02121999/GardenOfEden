@@ -350,7 +350,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 290011361242660828}
   reference: {fileID: 6537387249471951215}
-  speed: 0.1
+  speed: 10
 --- !u!64 &3770014374224428209
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 488a1a083c43c1344a3cdadf1aca413e, type: 3}
 --- !u!1 &4995785899380288504
@@ -429,7 +429,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1259975458233020016}
   reference: {fileID: 5288353378312925303}
-  speed: 0.1
+  speed: 10
 --- !u!1 &5316464840068294015
 GameObject:
   m_ObjectHideFlags: 0
