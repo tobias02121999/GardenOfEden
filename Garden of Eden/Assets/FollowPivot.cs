@@ -16,7 +16,7 @@ public class FollowPivot : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.maxAngularVelocity = Mathf.Infinity;
+        rb.maxAngularVelocity = 20f;
     }
 
     // Update is called once per frame

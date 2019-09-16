@@ -9,8 +9,10 @@ public class PlayerControls : NetworkBehaviour
 {
     public GameObject ovrCameraRig;
     public GameObject cursor;
-    public Transform leftHand;
-    public Transform rightHand;
+    public Transform leftPivot;
+    public Transform rightPivot;
+    public GameObject physicsBrush;
+    public GameObject drawingBrush;
     public Camera leftEye;
     public Camera rightEye;
 
@@ -37,11 +39,14 @@ public class PlayerControls : NetworkBehaviour
             }
 
             // Takes care of the local hand tracking.
-            leftHand.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
-            leftHand.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
+            leftPivot.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
+            leftPivot.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
 
-            rightHand.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
-            rightHand.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
+            rightPivot.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
+            rightPivot.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
+
+            physicsBrush.SetActive(!cursor.GetComponent<Cursor>().isDrawing);
+            drawingBrush.SetActive(cursor.GetComponent<Cursor>().isDrawing);
         }
     }
 }

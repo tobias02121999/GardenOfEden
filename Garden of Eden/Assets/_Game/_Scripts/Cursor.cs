@@ -7,7 +7,7 @@ public class Cursor : MonoBehaviour
     // Initialize the public variables
     public float sensitivity, lineOffset, recognitionScale, drawFrequency;
     public string axisHor, axisVer, drawButton;
-    public bool debugMode;
+    public bool debugMode, isDrawing;
     public GameObject drawPoint, drawRecognition;
     public Transform rightHand, head;
     public TextMesh symbolText;
@@ -18,7 +18,6 @@ public class Cursor : MonoBehaviour
     LineRenderer lineRenderer;
     Vector2 drawEdgeHor, drawEdgeVer, drawPivot, drawSize;
     Vector3 posOld, posNew;
-    bool isDrawing;
 
     GameObject drawPointObject;
     Transform drawPointParent;
