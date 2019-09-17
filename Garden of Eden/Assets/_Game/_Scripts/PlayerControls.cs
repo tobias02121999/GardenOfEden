@@ -15,6 +15,7 @@ public class PlayerControls : NetworkBehaviour
     public GameObject drawingBrush;
     public Camera leftEye;
     public Camera rightEye;
+    public Animation handAnimation;
 
     private void Update()
     {
@@ -47,6 +48,9 @@ public class PlayerControls : NetworkBehaviour
 
             physicsBrush.SetActive(!cursor.GetComponent<Cursor>().isDrawing);
             drawingBrush.SetActive(cursor.GetComponent<Cursor>().isDrawing);
+
+            var duration = handAnimation["Hand Close"].length;
+            handAnimation["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
         }
     }
 }

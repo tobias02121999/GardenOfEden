@@ -105,7 +105,7 @@ ModelImporter:
       name: Hand Close
       takeName: Armature|ArmatureAction
       firstFrame: 0
-      lastFrame: 50
+      lastFrame: 50.000004
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
