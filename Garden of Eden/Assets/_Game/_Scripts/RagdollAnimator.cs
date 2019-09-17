@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Panda;
 
 public class RagdollAnimator : MonoBehaviour
 {
     // Initialize the public variables
     public Transform[] bones, targets;
     public float[] animationControl;
-    public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed, wanderDuration, turnSpeed;
+    public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed, wanderDuration, turnSpeed, fearGauge, fearMultiplier;
+    [HideInInspector] float baseSpeed;
     public BoxCollider feetCollider;
     public Transform movementParent;
 
@@ -20,6 +22,8 @@ public class RagdollAnimator : MonoBehaviour
     // Run this code once at the start
     void Start()
     {
+        baseSpeed = speed;
+
         for (var i = 0; i < bones.Length; i++)
         {
             bones[i].gameObject.AddComponent<RagdollCollider>();
@@ -37,6 +41,11 @@ public class RagdollAnimator : MonoBehaviour
         Recover(); // Recover from recent impacts
         Collapse(); // Collapse when the average animation control value gets too low
         Wander(); // Randomize the movement direction
+
+        if (fearMultiplier >= 7)
+        {
+            fearMultiplier = 7;
+        }
     }
 
     // Run this code every single frame
@@ -139,6 +148,7 @@ public class RagdollAnimator : MonoBehaviour
             {
                 var rb = bones[i].GetComponent<Rigidbody>();
                 var forward = movementParent.forward;
+
                 rb.AddForce(forward * speed);
             }
         }
@@ -168,4 +178,55 @@ public class RagdollAnimator : MonoBehaviour
             movementParent.rotation = Quaternion.Euler(0f, currentRot, 0f);
         }
     }
+
+
+    // AI BEHAVIOR
+    [Task]
+    bool MeteorHasSpawned() 
+    {
+        if (DrawRecognition.returnShape == "Circle" || Input.GetMouseButtonDown(0))    // Checking if the player has drawn a circle
+        {
+            fearGauge += 2;                             // If so, increase fear among the humans
+            Task.current.Succeed();
+            return true;
+        }
+        else
+        {
+            Task.current.Fail();                        // Else fail this task
+            return false;        // DEBUG, FOR ACTUAL RESULT REVERT TO FALSE
+        }
+    }
+
+    [Task]
+    void GaugeFear()
+    {
+        float closestObject = 10000f;
+        Vector3 closestObjectPosition = Vector3.zero;
+
+        for (int i = 0; i < GameManager.fearObjects.Count; i++)
+        {
+            float newObjectDistance = Vector3.Distance(this.transform.position, GameManager.fearObjects[i].transform.position);
+
+            if (newObjectDistance < closestObject)
+            {
+                closestObject = newObjectDistance;
+                closestObjectPosition = GameManager.fearObjects[i].transform.position;
+            }
+        }
+
+        fearGauge = Mathf.Clamp(fearGauge + 100 - Vector3.Distance(this.transform.position, closestObjectPosition) / 0.75f , 0, 100);
+        if (fearGauge <= 100)
+        {
+            speed = Mathf.Clamp(speed + fearGauge / 4, 0, 12);
+        }
+    }
+
+//    [Task]
+//    void Panic()        // What happens when humans panic
+//    {
+//        Mathf.Lerp(fearGauge, 100, fearMultiplier * Time.deltaTime);    // Fear increases over time
+//        wanderDuration = 50f;
+//        speed = 5f;
+//        fearMultiplier += fearMultiplier;   // Fear multiplier to make fear incrase faster.
+//    }
 }

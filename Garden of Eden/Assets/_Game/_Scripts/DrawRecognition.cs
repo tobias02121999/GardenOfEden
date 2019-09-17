@@ -12,6 +12,8 @@ public class DrawRecognition : MonoBehaviour
     public TextMesh symbolText, drawDataText;
     public GameObject[] symbolObjects;
 
+    public static string returnShape;
+
     [HideInInspector]
     public float scale;
 
@@ -161,7 +163,11 @@ public class DrawRecognition : MonoBehaviour
                             if (xx == gridWidth - 1 && yy == gridHeight - 1)
                             {
                                 symbolText.text = "This is a " + GetSymbolData(c) + "!";
-                                Instantiate(symbolObjects[c], transform.position, Quaternion.identity);
+                                var instancedObject = Instantiate(symbolObjects[c], transform.position, Quaternion.identity);
+                                if (instancedObject.tag == "FearObject")
+                                {
+                                    GameManager.fearObjects.Add(instancedObject);
+                                }
                                 goto End;
                             }
                         }
@@ -194,14 +200,17 @@ public class DrawRecognition : MonoBehaviour
         {
             // Square
             case 0:
+                returnShape = "Square";
                 return "Square";
 
             // Circle
             case 1:
+                returnShape = "Circle";
                 return "Circle";
 
             // Failsafe
             default:
+                returnShape = "None";
                 return "None";
         }
     }

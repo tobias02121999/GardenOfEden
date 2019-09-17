@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 5426963264037809732}
   - component: {fileID: 6121814379531694962}
   - component: {fileID: 1984813682764793077}
+  - component: {fileID: 7326833211756634053}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: FearObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,3 +184,15 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &7326833211756634053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148802231449521297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace97c3cf0d7e834ba4549a86dee0c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

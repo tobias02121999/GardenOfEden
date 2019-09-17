@@ -1,0 +1,9 @@
+tree("Root")
+	fallback
+		tree("PlayerInteraction")
+
+tree("PlayerInteraction")
+	fallback
+		while MeteorHasSpawned
+			GaugeFear
+			
