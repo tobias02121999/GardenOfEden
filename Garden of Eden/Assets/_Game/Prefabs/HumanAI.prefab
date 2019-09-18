@@ -2567,6 +2567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   humanAnimator: {fileID: 5067458816977037695}
+  humanMesh: {fileID: 1087664315249151329}
   fearGauge: 0
   fearMultiplier: 0
   fearReductionSpeed: 10

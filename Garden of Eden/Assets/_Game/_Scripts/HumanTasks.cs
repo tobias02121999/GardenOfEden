@@ -7,6 +7,7 @@ using Panda;
 public class HumanTasks : MonoBehaviour
 {
     public RagdollAnimator humanAnimator;
+    public Transform humanMesh;
     public float fearGauge, fearMultiplier, fearReductionSpeed;
     [HideInInspector] float baseSpeed;
 
@@ -39,10 +40,15 @@ public class HumanTasks : MonoBehaviour
         else
         {
             fearGauge = 0f;
+            GameManager.Instance.fearObjects.Clear(); // Reset the list
+            for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
+            {
+                GameManager.Instance.fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);
+            }
 
             for (int i = 0; i < GameManager.Instance.fearObjects.Count; i++)
             {
-                float newObjectDistance = Vector3.Distance(this.transform.position, GameManager.Instance.fearObjects[i].transform.position);
+                float newObjectDistance = Vector3.Distance(humanMesh.position, GameManager.Instance.fearObjects[i].transform.position);
 
                 if (newObjectDistance < closestObject)
                 {
@@ -51,7 +57,7 @@ public class HumanTasks : MonoBehaviour
                 }
             }
 
-            fearGauge = Mathf.Clamp(fearGauge + 100 - Vector3.Distance(this.transform.position, closestObjectPosition) / 0.75f, 0, 100);
+            fearGauge = Mathf.Clamp(fearGauge + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition) / 0.75f, 0, 100);
             SetSpeed();
 
             Task.current.Succeed();
