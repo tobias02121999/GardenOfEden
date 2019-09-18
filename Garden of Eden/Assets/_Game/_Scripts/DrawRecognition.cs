@@ -12,6 +12,8 @@ public class DrawRecognition : MonoBehaviour
     public TextMesh symbolText, drawDataText;
     public GameObject[] symbolObjects;
 
+    public static string returnShape;
+
     [HideInInspector]
     public float scale;
 
@@ -194,14 +196,17 @@ public class DrawRecognition : MonoBehaviour
         {
             // Square
             case 0:
+                returnShape = "Square";
                 return "Square";
 
             // Circle
             case 1:
+                returnShape = "Circle";
                 return "Circle";
 
             // Failsafe
             default:
+                returnShape = "None";
                 return "None";
         }
     }
