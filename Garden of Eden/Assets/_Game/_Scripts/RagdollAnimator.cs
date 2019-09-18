@@ -1,10 +1,10 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
 public class RagdollAnimator : MonoBehaviour
-{
+{ 
     // Initialize the public variables
     public Transform[] bones, targets;
     public float[] animationControl;
