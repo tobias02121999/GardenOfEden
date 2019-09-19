@@ -105,7 +105,7 @@ ModelImporter:
       name: Hand Close
       takeName: Armature|ArmatureAction
       firstFrame: 0
-      lastFrame: 50.000004
+      lastFrame: 50
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -153,7 +153,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
+    previousCalculatedGlobalScale: 0.001
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
