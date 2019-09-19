@@ -979,6 +979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3577275300777367057}
   - component: {fileID: 761670812254961281}
+  - component: {fileID: 380771461}
   m_Layer: 15
   m_Name: Hand
   m_TagString: Untagged
@@ -1014,10 +1015,32 @@ Animation:
   m_Animation: {fileID: 7400000, guid: f68a1ded1151033468ab682e67d05b6e, type: 3}
   m_Animations:
   - {fileID: 7400000, guid: f68a1ded1151033468ab682e67d05b6e, type: 3}
+  - {fileID: 7400002, guid: f68a1ded1151033468ab682e67d05b6e, type: 3}
+  - {fileID: 7400004, guid: f68a1ded1151033468ab682e67d05b6e, type: 3}
+  - {fileID: 7400006, guid: f68a1ded1151033468ab682e67d05b6e, type: 3}
+  - {fileID: 7400008, guid: f68a1ded1151033468ab682e67d05b6e, type: 3}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &380771461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3577275300777200241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f16ff6e3cd9fb34ebbdc2fe6ceec960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indexFinger: {fileID: 3577275300777367055}
+  middleFinger: {fileID: 3577275300777367093}
+  ringFinger: {fileID: 3577275300777367099}
+  pinky: {fileID: 3577275300777367073}
+  thumb: {fileID: 3577275300777367081}
+  anim: {fileID: 761670812254961281}
 --- !u!1 &3577275300777200243
 GameObject:
   m_ObjectHideFlags: 0

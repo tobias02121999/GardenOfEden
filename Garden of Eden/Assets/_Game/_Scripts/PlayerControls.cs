@@ -16,6 +16,7 @@ public class PlayerControls : NetworkBehaviour
     public Camera leftEye;
     public Camera rightEye;
     public Animation handAnimation;
+    public bool[] FingerIsColliding;
 
     private void Update()
     {
@@ -49,8 +50,22 @@ public class PlayerControls : NetworkBehaviour
             physicsBrush.SetActive(!cursor.GetComponent<Cursor>().isDrawing);
             drawingBrush.SetActive(cursor.GetComponent<Cursor>().isDrawing);
 
-            var duration = handAnimation["Hand Close"].length;
-            handAnimation["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+            var duration = handAnimation["Hand Index Finger"].length;
+
+            if (FingerIsColliding[0])
+                handAnimation["Hand Index Finger"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+
+            if (FingerIsColliding[1])
+                handAnimation["Hand Middle Finger"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+
+            if (FingerIsColliding[2])
+                handAnimation["Hand Ring Finger"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+
+            if (FingerIsColliding[3])
+                handAnimation["Hand Pinky"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+
+            if (FingerIsColliding[4])
+                handAnimation["Hand Thumb"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
         }
     }
 }
