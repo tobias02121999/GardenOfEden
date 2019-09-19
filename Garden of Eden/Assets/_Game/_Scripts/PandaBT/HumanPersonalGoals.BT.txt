@@ -1,3 +1,9 @@
 tree("PersonalGoals")
-	repeat
-		CheckForDanger
+	fallback
+		while IsCalm
+			sequence
+				CheckForCalamitySites
+				CheckResources
+				CheckTimeSinceLastBuild
+				CheckForSufficientRoom
+				BuildHome

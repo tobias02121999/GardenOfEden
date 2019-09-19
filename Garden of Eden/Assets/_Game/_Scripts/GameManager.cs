@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject cube;
 
     public List<GameObject> fearObjects = new List<GameObject>();
+    public List<GameObject> lingeringFearObjects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
