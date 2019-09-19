@@ -36,7 +36,6 @@ public class RagdollAnimator : MonoBehaviour
     {
         Recover(); // Recover from recent impacts
         Collapse(); // Collapse when the average animation control value gets too low
-        Wander(); // Randomize the movement direction
     }
 
     // Run this code every single frame
@@ -144,28 +143,5 @@ public class RagdollAnimator : MonoBehaviour
         }
     }
 
-    // Randomize the movement direction
-    void Wander()
-    {
-        if (!hasCollapsed)
-        {
-            if (wanderAlarm <= 0f)
-            {
-                targetRot = Random.Range(0f, 360f);
-                wanderAlarm = wanderDuration;
 
-                Debug.Log("Randomize");
-            }
-
-            wanderAlarm--;
-
-            if (currentRot >= targetRot + turnSpeed)
-                currentRot -= turnSpeed;
-
-            if (currentRot <= targetRot - turnSpeed)
-                currentRot += turnSpeed;
-
-            movementParent.rotation = Quaternion.Euler(0f, currentRot, 0f);
-        }
-    }
 }

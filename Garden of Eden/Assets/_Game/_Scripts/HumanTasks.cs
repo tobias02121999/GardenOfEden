@@ -7,7 +7,7 @@ using Panda;
 public class HumanTasks : MonoBehaviour
 {
     public RagdollAnimator humanAnimator;
-    public Transform humanMesh;
+    public Transform humanMesh, movementParent;
     public GameObject home;
     public int secondsSinceLastBuild;
     public float fearGauge, fearMultiplier, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired;
@@ -29,6 +29,31 @@ public class HumanTasks : MonoBehaviour
     }
 
     // AI BEHAVIOR
+    //[Task]
+    //void Wander() // Randomize the movement direction
+    //{
+    //    if (!hasCollapsed)
+    //    {
+    //        if (wanderAlarm <= 0f)
+    //        {
+    //            targetRot = Random.Range(0f, 360f);
+    //            wanderAlarm = wanderDuration;
+
+    //            Debug.Log("Randomize");
+    //        }
+
+    //        wanderAlarm--;
+
+    //        if (currentRot >= targetRot + turnSpeed)
+    //            currentRot -= turnSpeed;
+
+    //        if (currentRot <= targetRot - turnSpeed)
+    //            currentRot += turnSpeed;
+
+    //        movementParent.rotation = Quaternion.Euler(0f, currentRot, 0f);
+    //    }
+    //}
+
     [Task]
     bool MeteorHasSpawned() // Check if a meteor has spawned.
     {
@@ -211,9 +236,83 @@ public class HumanTasks : MonoBehaviour
     {
         wasInvoked = true;
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1); // Wait for one second.
         secondsSinceLastBuild++;
 
         wasInvoked = false;
+    }
+
+    [Task]
+    void MoveToDestination(int destinationIndex)
+    {
+        switch (destinationIndex)   // Goto...
+        {
+            case 0: // ...Nearest house.
+                break;
+
+            case 1: // ...Nearest tree.
+                int layer = 17;
+                int mask = 1 << layer;
+                
+                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 50f, mask);    
+                foreach (Collider col in trees)
+                {
+                    float distanceToTree = Vector3.Distance(humanMesh.position, col.transform.position);
+                    if (distanceToTree < 20)
+                    {
+                        movementParent.LookAt(col.transform.position);
+                        continue;
+                    }
+                }
+                break;
+
+            case 2:
+                break;
+        }
+    }
+
+    [Task]
+    bool AtDestination(int destinationIndex)
+    {
+        switch (destinationIndex)
+        {
+            case 0:
+                break;
+
+            case 1:
+                int layer = 17;
+                int mask = 1 << layer;
+
+                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 2.5f, mask);
+                foreach (Collider collider in trees)
+                {
+                    if (Vector3.Distance(humanMesh.position, collider.transform.position) <= 5f)
+                    {
+                        Task.current.Succeed();
+                        return true;
+                    }
+                }
+
+                break;
+
+            case 2:
+                break;
+        }
+
+        Task.current.Fail();
+        return false;
+    }
+
+    [Task]
+    void ChopTree()
+    {
+        int layer = 17;
+        int mask = 1 << layer;
+
+        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 2.5f, mask);
+        foreach (Collider collider in trees)
+        {
+            Destroy(collider.gameObject);
+        }
     }
 }
