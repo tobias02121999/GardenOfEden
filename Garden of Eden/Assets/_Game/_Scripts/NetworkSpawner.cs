@@ -44,6 +44,7 @@ public class NetworkSpawner : NetworkBehaviour
         }
     }
 
+    // Spawn the prefab over the network
     [Command]
     void CmdSpawn()
     {

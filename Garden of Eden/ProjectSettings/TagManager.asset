@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FearObject
   - House
+  - LevelBorder
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Self
   - Buildings
   - Resources
-  - 
+  - Birds
   - 
   - 
   - 
