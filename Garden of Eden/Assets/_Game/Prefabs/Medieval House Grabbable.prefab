@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3705685332040711244}
   - component: {fileID: 3705685332040711245}
   - component: {fileID: 2476874176198292808}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,8 +111,8 @@ GameObject:
   - component: {fileID: 3705685333055340788}
   - component: {fileID: 3705685331884349278}
   - component: {fileID: 1070334290691111077}
-  m_Layer: 0
-  m_Name: Medieval House
+  m_Layer: 16
+  m_Name: Medieval House Grabbable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 3705685333054570710}
   - component: {fileID: 3705685333053440534}
   - component: {fileID: 8658445104397480096}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
