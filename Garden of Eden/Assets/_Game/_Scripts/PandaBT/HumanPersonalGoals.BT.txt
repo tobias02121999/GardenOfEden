@@ -1,17 +1,19 @@
 tree("PersonalGoals")
 	fallback
 		while IsCalm
-			sequence
+			fallback
 				sequence
 					CheckForCalamitySites
 					CheckResources
 					CheckTimeSinceLastBuild
-					CheckForSufficientRoom
-					BuildHome
+					while CheckForSufficientRoom
+						BuildHome
 				sequence
-					CheckResources
-					MoveToDestination(1)
-					while AtDestination(1)
-						ChopTree
+					while not CheckForSufficientRoom
+						sequence
+							CheckResources
+							MoveToDestination(1)
+							while AtDestination(1)
+								ChopTree
 
 

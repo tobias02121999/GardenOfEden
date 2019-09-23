@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FearObject
   - House
+  - Tree
   layers:
   - Default
   - TransparentFX

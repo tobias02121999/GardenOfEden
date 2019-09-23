@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using Panda;
 
 public class HumanTasks : MonoBehaviour
@@ -19,6 +17,12 @@ public class HumanTasks : MonoBehaviour
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
+    GameObject[] FearObjectsInScene;
+
+    void Start()
+    {
+        FearObjectsInScene = GameObject.FindGameObjectsWithTag("FearObject");
+    }
 
     private void Update()
     {
@@ -62,9 +66,8 @@ public class HumanTasks : MonoBehaviour
             Task.current.Succeed();
             return true;
         }
-        else
-        {
-            Task.current.Succeed();                        // Else fail this task
+        else{
+            Task.current.Succeed();
             return false;
         }
     }
@@ -74,15 +77,15 @@ public class HumanTasks : MonoBehaviour
     {
         if (GameManager.Instance.fearObjects.Count <= 0)    // If there are no fear objects in the scene fail this task.
         {
-            Task.current.Fail();
+            Task.current.Succeed();
         }
         else
         {
             fearGauge = 0f; // Reset the fear gauge to adjust it (otherwise it will just add onto the former amount.
             GameManager.Instance.fearObjects.Clear(); // Reset the list
-            for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
+            for (int i = 0; i < FearObjectsInScene.Length; i++)
             {
-                GameManager.Instance.fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);   // Add all the fear objects back into the scene.
+                GameManager.Instance.fearObjects.Add(FearObjectsInScene[i]);   // Add all the fear objects back into the scene.
             }
 
             for (int i = 0; i < GameManager.Instance.fearObjects.Count; i++)    // Scan through all objects that can instill fear.
@@ -205,7 +208,7 @@ public class HumanTasks : MonoBehaviour
     }
 
     [Task]
-    void CheckForSufficientRoom()   // Check's if there is room to build the house.
+    bool CheckForSufficientRoom()   // Check's if there is room to build the house.
     {
         int layer = 16;
         int mask = 1 << layer;
@@ -215,11 +218,12 @@ public class HumanTasks : MonoBehaviour
         Debug.Log(homes.Length);
         if (homes.Length > 0)
         {
-            Task.current.Fail();
-        }
-        else
-        {
             Task.current.Succeed();
+            return false;
+        }
+        else{
+            Task.current.Succeed();
+            return true;
         }
     }
 
