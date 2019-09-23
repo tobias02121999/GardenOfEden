@@ -8,7 +8,7 @@ public class HumanTasks : MonoBehaviour
     public Transform humanMesh, movementParent;
     public GameObject home;
     public int secondsSinceLastBuild;
-    public float fearGauge, fearMultiplier, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired;
+    public float fearGauge, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired;
     [HideInInspector] float baseSpeed;
     
 
@@ -21,7 +21,7 @@ public class HumanTasks : MonoBehaviour
 
     void Start()
     {
-        FearObjectsInScene = GameObject.FindGameObjectsWithTag("FearObject");
+        FearObjectsInScene = GameObject.FindGameObjectsWithTag("FearObject"); // this doesnt work anymore, fix pls.
     }
 
     private void Update()
@@ -265,46 +265,14 @@ public class HumanTasks : MonoBehaviour
                     if (distanceToTree < 20)
                     {
                         movementParent.LookAt(col.transform.position);
-                        continue;
-                    }
-                }
-                break;
-
-            case 2:
-                break;
-        }
-    }
-
-    [Task]
-    bool AtDestination(int destinationIndex)
-    {
-        switch (destinationIndex)
-        {
-            case 0:
-                break;
-
-            case 1:
-                int layer = 17;
-                int mask = 1 << layer;
-
-                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 2.5f, mask);
-                foreach (Collider collider in trees)
-                {
-                    if (Vector3.Distance(humanMesh.position, collider.transform.position) <= 5f)
-                    {
                         Task.current.Succeed();
-                        return true;
                     }
                 }
-
                 break;
 
             case 2:
                 break;
         }
-
-        Task.current.Fail();
-        return false;
     }
 
     [Task]
@@ -313,10 +281,16 @@ public class HumanTasks : MonoBehaviour
         int layer = 17;
         int mask = 1 << layer;
 
-        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 2.5f, mask);
+        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 5f, mask);
         foreach (Collider collider in trees)
         {
             Destroy(collider.gameObject);
+            Task.current.Succeed();
+        }
+
+        if (trees.Length <= 0)
+        {
+            Task.current.Fail();
         }
     }
 }

@@ -13,7 +13,6 @@ tree("PersonalGoals")
 						sequence
 							CheckResources
 							MoveToDestination(1)
-							while AtDestination(1)
-								ChopTree
+							ChopTree
 
 
