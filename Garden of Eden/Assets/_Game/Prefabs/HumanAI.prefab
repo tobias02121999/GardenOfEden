@@ -2361,7 +2361,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3e1f625c44cf3f74e87426eda565e10b, type: 2}
+  - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2572,7 +2572,7 @@ MonoBehaviour:
   home: {fileID: 3705685333055380692, guid: be8255f328d10304399d4d2885af227f, type: 3}
   secondsSinceLastBuild: 0
   fearGauge: 0
-  fearReductionSpeed: 10
+  fearReductionSpeed: 1.5
   minDistanceFromBuildToCalamity: 0
   minResourceRequired: 1
 --- !u!114 &1136336191720823694

@@ -17,18 +17,13 @@ public class HumanTasks : MonoBehaviour
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
-    GameObject[] FearObjectsInScene;
-
-    void Start()
-    {
-        FearObjectsInScene = GameObject.FindGameObjectsWithTag("FearObject"); // this doesnt work anymore, fix pls.
-    }
 
     private void Update()
     {
         if (!wasInvoked)
         {
             StartCoroutine("BuildTimer");   // Continually runs the build timer.
+            ReduceFearOverTime();
         }
     }
 
@@ -78,14 +73,15 @@ public class HumanTasks : MonoBehaviour
         if (GameManager.Instance.fearObjects.Count <= 0)    // If there are no fear objects in the scene fail this task.
         {
             Task.current.Succeed();
+            SetSpeed();
         }
         else
         {
             fearGauge = 0f; // Reset the fear gauge to adjust it (otherwise it will just add onto the former amount.
             GameManager.Instance.fearObjects.Clear(); // Reset the list
-            for (int i = 0; i < FearObjectsInScene.Length; i++)
+            for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
             {
-                GameManager.Instance.fearObjects.Add(FearObjectsInScene[i]);   // Add all the fear objects back into the scene.
+                GameManager.Instance.fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);   // Add all the fear objects back into the scene.
             }
 
             for (int i = 0; i < GameManager.Instance.fearObjects.Count; i++)    // Scan through all objects that can instill fear.
@@ -100,19 +96,23 @@ public class HumanTasks : MonoBehaviour
                 }
             }
 
-            fearGauge = Mathf.Clamp(fearGauge + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition) / 0.75f, 0, 100); // Set fear
+            // Big Math
+            var distanceToFear = fearGauge + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition);
+            fearGauge = Mathf.Clamp(distanceToFear, 0, 100); // Set fear
             SetSpeed();
 
             Task.current.Succeed();
         }
-    }
+   }
 
     void SetSpeed() // Sets the speed of this human based on the amount of fear.
     {
         if (fearGauge <= 100)
         {
             humanAnimator.speed = 0f;
-            humanAnimator.speed = Mathf.Clamp(humanAnimator.speed + fearGauge / 10, 2, 12);
+            var adjustedFear = fearGauge / 10;
+            humanAnimator.speed = Mathf.Clamp(humanAnimator.speed + adjustedFear, 2, 12);
+            Debug.Log("Speed adjusted to " + humanAnimator.speed);
         }
     }
 
@@ -121,7 +121,6 @@ public class HumanTasks : MonoBehaviour
     {
         if (GameManager.Instance.fearObjects.Count <= 0)
         {
-            fearGauge = 0f;
             SetSpeed();
             Task.current.Succeed();
         }
@@ -236,16 +235,6 @@ public class HumanTasks : MonoBehaviour
         Destroy(gameObject);    // Remove the human from the game when the house is built.
     }
 
-    IEnumerator BuildTimer()    // To make sure humans don't go building houses the second they are born.
-    {
-        wasInvoked = true;
-
-        yield return new WaitForSeconds(1); // Wait for one second.
-        secondsSinceLastBuild++;
-
-        wasInvoked = false;
-    }
-
     [Task]
     void MoveToDestination(int destinationIndex)
     {
@@ -281,7 +270,7 @@ public class HumanTasks : MonoBehaviour
         int layer = 17;
         int mask = 1 << layer;
 
-        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 5f, mask);
+        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 3f, mask);
         foreach (Collider collider in trees)
         {
             Destroy(collider.gameObject);
@@ -291,6 +280,24 @@ public class HumanTasks : MonoBehaviour
         if (trees.Length <= 0)
         {
             Task.current.Fail();
+        }
+    }
+    
+    IEnumerator BuildTimer()    // To make sure humans don't go building houses the second they are born.
+    {
+        wasInvoked = true;
+
+        yield return new WaitForSeconds(1); // Wait for one second.
+        secondsSinceLastBuild++;
+
+        wasInvoked = false;
+    }
+
+    void ReduceFearOverTime()
+    {
+        if (GameManager.Instance.fearObjects.Count <= 0)
+        {
+            fearGauge = Mathf.Lerp(fearGauge, 0, Time.deltaTime * fearReductionSpeed);
         }
     }
 }
