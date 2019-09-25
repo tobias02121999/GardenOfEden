@@ -2567,7 +2567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   humanAnimator: {fileID: 5067458816977037695}
-  humanMesh: {fileID: 1087664315249151329}
+  humanMesh: {fileID: 1087664315249151339}
   movementParent: {fileID: 1189377019851491048}
   home: {fileID: 3705685333055380692, guid: be8255f328d10304399d4d2885af227f, type: 3}
   secondsSinceLastBuild: 0

@@ -10,6 +10,7 @@ public class HumanTasks : MonoBehaviour
     public int secondsSinceLastBuild;
     public float fearGauge, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired;
     [HideInInspector] float baseSpeed;
+    [HideInInspector] bool _inRangeOfTree;
     
 
     float closestObject = 10000f;
@@ -17,6 +18,7 @@ public class HumanTasks : MonoBehaviour
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
+    bool checkForTree = false;
 
     private void Update()
     {
@@ -24,6 +26,19 @@ public class HumanTasks : MonoBehaviour
         {
             StartCoroutine("BuildTimer");   // Continually runs the build timer.
             ReduceFearOverTime();
+        }
+
+        if (checkForTree)
+        {
+            Collider[] trees = Physics.OverlapSphere(humanMesh.position, 3f);
+            Debug.Log(trees.Length);
+            foreach (Collider collider in trees)
+            {
+                if (collider.tag == "Tree")
+                {
+                    _inRangeOfTree = true;
+                }
+            }
         }
     }
 
@@ -87,11 +102,11 @@ public class HumanTasks : MonoBehaviour
             for (int i = 0; i < GameManager.Instance.fearObjects.Count; i++)    // Scan through all objects that can instill fear.
             {
                 // Determine the current objects distance.
-                float newObjectDistance = Vector3.Distance(humanMesh.position, GameManager.Instance.fearObjects[i].transform.position);
+                float currentObjectDistance = Vector3.Distance(humanMesh.position, GameManager.Instance.fearObjects[i].transform.position);
 
-                if (newObjectDistance < closestObject) // If an objects distance is smaller than the former distance, the current objects distance will be the new closest distance.
+                if (currentObjectDistance < closestObject) // If an objects distance is smaller than the former distance, the current objects distance will be the new closest distance.
                 {
-                    closestObject = newObjectDistance;
+                    closestObject = currentObjectDistance;
                     closestObjectPosition = GameManager.Instance.fearObjects[i].transform.position;
                 }
             }
@@ -212,7 +227,7 @@ public class HumanTasks : MonoBehaviour
         int layer = 16;
         int mask = 1 << layer;
 
-        Vector3 halfExtends = new Vector3(3, 3, 3);
+        Vector3 halfExtends = new Vector3(3.5f, 3f, 3.5f);
         Collider[] homes = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, mask);
         Debug.Log(homes.Length);
         if (homes.Length > 0)
@@ -248,6 +263,10 @@ public class HumanTasks : MonoBehaviour
                 int mask = 1 << layer;
                 
                 Collider[] trees = Physics.OverlapSphere(humanMesh.position, 50f, mask);    
+                if (trees.Length > 0)
+                {
+                    checkForTree = true;
+                }
                 foreach (Collider col in trees)
                 {
                     float distanceToTree = Vector3.Distance(humanMesh.position, col.transform.position);
@@ -265,21 +284,31 @@ public class HumanTasks : MonoBehaviour
     }
 
     [Task]
+    bool InRangeOfTree()
+    {
+        if (_inRangeOfTree)
+        {
+            Task.current.Succeed();
+            return true;
+        }
+        else
+        {
+            Task.current.Fail();
+            return false;
+        }
+    }
+
+    [Task]
     void ChopTree()
     {
         int layer = 17;
         int mask = 1 << layer;
 
-        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 3f, mask);
-        foreach (Collider collider in trees)
+        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
+        foreach (Collider tree in trees)
         {
-            Destroy(collider.gameObject);
+            Destroy(tree.gameObject);
             Task.current.Succeed();
-        }
-
-        if (trees.Length <= 0)
-        {
-            Task.current.Fail();
         }
     }
     
