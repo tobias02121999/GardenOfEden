@@ -47,8 +47,8 @@ public class PlayerControls : NetworkBehaviour
             rightPivot.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
             rightPivot.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
 
-            physicsBrush.SetActive(!cursor.GetComponent<Cursor>().isDrawing);
-            drawingBrush.SetActive(cursor.GetComponent<Cursor>().isDrawing);
+            physicsBrush.SetActive(!cursor.GetComponent<Brush>().isDrawing);
+            drawingBrush.SetActive(cursor.GetComponent<Brush>().isDrawing);
 
             var duration = handAnimation["Hand Close"].length;
             handAnimation["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
