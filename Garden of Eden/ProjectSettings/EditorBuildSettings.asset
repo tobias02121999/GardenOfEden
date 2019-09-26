@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Game/Scenes/Daan.unity
+    path: Assets/_Game/Scenes/Daan/Daan.unity
     guid: 7b2402cc18099a74581abf6828caa1da
   - enabled: 1
     path: Assets/_Game/Scenes/Tobias/Main.unity
