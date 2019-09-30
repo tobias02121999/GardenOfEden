@@ -9,7 +9,8 @@ public class Sun : MonoBehaviour
     public Color waterColorDay, waterColorNight;
     public Color auraColorDay, auraColorNight;
     public Color mistColorDay, mistColorNight;
-    public Material waterMaterial, skyMaterial;
+    public Color treeColorDay, treeColorNight;
+    public Material waterMaterial, skyMaterial, treeMaterial;
     public ParticleSystem mist;
     public AuraAPI.Aura aura;
 
@@ -37,7 +38,7 @@ public class Sun : MonoBehaviour
         if (rotation >= 360f)
             rotation = 0f;
 
-        Color waterColor, auraColor, mistColor;
+        Color waterColor, auraColor, mistColor, treeColor;
         float density, ambient;
 
         if (rotation <= 180f)
@@ -48,6 +49,7 @@ public class Sun : MonoBehaviour
             density = Mathf.Lerp(densityDay, densityNight, index);
             ambient = Mathf.Lerp(ambientDay, ambientNight, index);
             mistColor = Color.Lerp(mistColorDay, mistColorNight, index);
+            treeColor = Color.Lerp(treeColorDay, treeColorNight, index);
         }
         else
         {
@@ -57,10 +59,12 @@ public class Sun : MonoBehaviour
             density = Mathf.Lerp(densityNight, densityDay, index);
             ambient = Mathf.Lerp(ambientNight, ambientDay, index);
             mistColor = Color.Lerp(mistColorNight, mistColorDay, index);
+            treeColor = Color.Lerp(treeColorNight, treeColorDay, index);
         }
 
         waterMaterial.SetColor("_DepthGradientDeep", waterColor);
         skyMaterial.color = waterColor;
+        treeMaterial.color = treeColor;
 
         aura.frustum.settings.color = auraColor;
         aura.frustum.settings.density = density;
