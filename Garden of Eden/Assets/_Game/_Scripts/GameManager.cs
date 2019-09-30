@@ -25,7 +25,6 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetMouseButtonDown(0))
         {
             //var go = Instantiate(cube, new Vector3(3, 0, 0), Quaternion.identity);
-            ObjectPooler.Instance.SpawnFromPool("Human", transform.position, Quaternion.identity);
             //fearObjects.Add(go);
         }
         if (Input.GetMouseButtonDown(1))

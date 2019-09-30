@@ -30,7 +30,7 @@ public class NetworkSpawner : NetworkBehaviour
     {
         if (!hasSpawned)
         {
-            if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) != 0f)
+            if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) != 0f || Input.GetMouseButtonDown(0))
             {
                 CmdSpawn();
                 hasSpawned = true;
@@ -48,7 +48,9 @@ public class NetworkSpawner : NetworkBehaviour
     [Command]
     void CmdSpawn()
     {
-        var obj = Instantiate(prefab, spawnPos.position, Quaternion.identity);
+        //var obj = Instantiate(prefab, spawnPos.position, Quaternion.identity);
+        var obj = ObjectPooler.Instance.SpawnFromPool("Human", transform.position, Quaternion.identity);
         NetworkServer.Spawn(obj);
     }
 }
+
