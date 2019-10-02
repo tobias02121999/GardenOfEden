@@ -15,5 +15,6 @@ tree("PersonalGoals")
 							MoveToDestination(1) // Move to tree
 							while InRangeOfTree
 								ChopTree	// Chop the tree
+				Wander
 
 

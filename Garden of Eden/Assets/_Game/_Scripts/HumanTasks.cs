@@ -42,31 +42,31 @@ public class HumanTasks : MonoBehaviour
         }
     }
 
-    // AI BEHAVIOR
-    //[Task]
-    //void Wander() // Randomize the movement direction
-    //{
-    //    if (!hasCollapsed)
-    //    {
-    //        if (wanderAlarm <= 0f)
-    //        {
-    //            targetRot = Random.Range(0f, 360f);
-    //            wanderAlarm = wanderDuration;
+    //// AI BEHAVIOR
+    [Task]
+    void Wander() // Randomize the movement direction
+    {
+        if (!humanAnimator.hasCollapsed) 
+        {
+            if (humanAnimator.wanderAlarm <= 0f)
+            {
+                humanAnimator.targetRot = Random.Range(0f, 360f);
+                humanAnimator.wanderAlarm = humanAnimator.wanderDuration;
 
-    //            Debug.Log("Randomize");
-    //        }
+                Debug.Log("Randomize");
+            }
 
-    //        wanderAlarm--;
+            humanAnimator.wanderAlarm--;
 
-    //        if (currentRot >= targetRot + turnSpeed)
-    //            currentRot -= turnSpeed;
+            if (humanAnimator.currentRot >= humanAnimator.targetRot + humanAnimator.turnSpeed)
+                humanAnimator.currentRot -= humanAnimator.turnSpeed;
 
-    //        if (currentRot <= targetRot - turnSpeed)
-    //            currentRot += turnSpeed;
+            if (humanAnimator.currentRot <= humanAnimator.targetRot - humanAnimator.turnSpeed)
+                humanAnimator.currentRot += humanAnimator.turnSpeed;
 
-    //        movementParent.rotation = Quaternion.Euler(0f, currentRot, 0f);
-    //    }
-    //}
+            movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);
+        }
+    }
 
     [Task]
     bool MeteorHasSpawned() // Check if a meteor has spawned.
