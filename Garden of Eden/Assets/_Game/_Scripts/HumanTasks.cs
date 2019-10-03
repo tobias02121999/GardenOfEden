@@ -66,6 +66,8 @@ public class HumanTasks : MonoBehaviour
 
             movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);
         }
+
+        Task.current.Succeed();
     }
 
     [Task]
