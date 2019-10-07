@@ -9,11 +9,12 @@ public class Sun : MonoBehaviour
     public Color waterColorDay, waterColorNight;
     public Color auraColorDay, auraColorNight;
     public Color mistColorDay, mistColorNight;
-    public Color treeColorDay, treeColorNight;
+    public Color birchColorDay, birchColorNight;
+    public Color oakColorDay, oakColorNight;
     public Color grassColorDay, grassColorNight;
     public Color plateauColorDay, plateauColorNight;
     public Color sandColorDay, sandColorNight;
-    public Material waterMaterial, skyMaterial, treeMaterial, grassMaterial, plateauMaterial, sandMaterial;
+    public Material waterMaterial, skyMaterial, birchMaterial, oakMaterial, grassMaterial, plateauMaterial, sandMaterial;
     public ParticleSystem mist;
     public AuraAPI.Aura aura;
 
@@ -42,7 +43,7 @@ public class Sun : MonoBehaviour
         if (rotation >= 360f)
             rotation = 0f;
 
-        Color waterColor, auraColor, mistColor, treeColor, grassColor, plateauColor, sandColor;
+        Color waterColor, auraColor, mistColor, birchColor, oakColor, grassColor, plateauColor, sandColor;
         float density, ambient;
 
         if (rotation <= 180f)
@@ -53,7 +54,8 @@ public class Sun : MonoBehaviour
             density = Mathf.Lerp(densityDay, densityNight, index);
             ambient = Mathf.Lerp(ambientDay, ambientNight, index);
             mistColor = Color.Lerp(mistColorDay, mistColorNight, index);
-            treeColor = Color.Lerp(treeColorDay, treeColorNight, index);
+            birchColor = Color.Lerp(birchColorDay, birchColorNight, index);
+            oakColor = Color.Lerp(oakColorDay, oakColorNight, index);
             grassColor = Color.Lerp(grassColorDay, grassColorNight, index);
             plateauColor = Color.Lerp(plateauColorDay, plateauColorNight, index);
             sandColor = Color.Lerp(sandColorDay, sandColorNight, index);
@@ -66,7 +68,8 @@ public class Sun : MonoBehaviour
             density = Mathf.Lerp(densityNight, densityDay, index);
             ambient = Mathf.Lerp(ambientNight, ambientDay, index);
             mistColor = Color.Lerp(mistColorNight, mistColorDay, index);
-            treeColor = Color.Lerp(treeColorNight, treeColorDay, index);
+            birchColor = Color.Lerp(birchColorNight, birchColorDay, index);
+            oakColor = Color.Lerp(oakColorNight, oakColorDay, index);
             grassColor = Color.Lerp(grassColorNight, grassColorDay, index);
             plateauColor = Color.Lerp(plateauColorNight, plateauColorDay, index);
             sandColor = Color.Lerp(sandColorNight, sandColorDay, index);
@@ -74,10 +77,11 @@ public class Sun : MonoBehaviour
 
         waterMaterial.SetColor("_DepthGradientDeep", waterColor);
         skyMaterial.color = waterColor;
-        treeMaterial.color = treeColor;
         grassMaterial.color = grassColor;
         plateauMaterial.color = plateauColor;
         sandMaterial.SetColor("_EmissionColor", sandColor);
+        birchMaterial.SetColor("_EmissionColor", birchColor);
+        oakMaterial.SetColor("_EmissionColor", oakColor);
 
         aura.frustum.settings.color = auraColor;
         aura.frustum.settings.density = density;
