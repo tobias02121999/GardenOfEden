@@ -2361,7 +2361,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
+  - {fileID: 2100000, guid: a2a95b3e3d0e0384fb650a6ae9aa6c8a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2455,7 +2455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1087664315249151331}
   - component: {fileID: 5067458816977037695}
-  - component: {fileID: 6976832656938957885}
+  - component: {fileID: 4048916288518492467}
   - component: {fileID: 1136336191720823694}
   - component: {fileID: 201774716958399794}
   - component: {fileID: 3792517132476806231}
@@ -2470,7 +2470,6 @@ GameObject:
   - component: {fileID: 1488228675418186249}
   - component: {fileID: 2721999077138679465}
   - component: {fileID: 8848847577933998601}
-  - component: {fileID: 588465764}
   m_Layer: 0
   m_Name: HumanAI
   m_TagString: Untagged
@@ -2554,7 +2553,7 @@ MonoBehaviour:
   turnSpeed: 5
   feetCollider: {fileID: 1619537573}
   movementParent: {fileID: 1189377019851491048}
---- !u!114 &6976832656938957885
+--- !u!114 &4048916288518492467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2563,9 +2562,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1087664315249250627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e074f8189e4f5354790b488496357fba, type: 3}
+  m_Script: {fileID: 11500000, guid: f4fbe2e96f5c09846b538af2d3607d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   humanAnimator: {fileID: 5067458816977037695}
   humanMesh: {fileID: 1087664315249151339}
   movementParent: {fileID: 1189377019851491048}
@@ -2862,46 +2862,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35cd5ed5c1b36f42a51664083480fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &588465764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1087664315249250627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e43e7170fb45b4b81dcd16d0ff55d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scripts:
-  - {fileID: 4900000, guid: 14feab427c192144a8836b65fc34239d, type: 3}
-  - {fileID: 4900000, guid: e3ed4f3afeac3004d9a83c47a869edc3, type: 3}
-  - {fileID: 4900000, guid: dd63c1c86e25ded4ca2e20c5bcbec471, type: 3}
-  - {fileID: 4900000, guid: 79a2f9ec36a9984438918f7248b04d4f, type: 3}
-  autoReset: 1
-  tickOn: 0
-  sourceInfos:
-  - isFoldout: 1
-    breakPoints: 
-    breakPointStatuses: 
-    collapsedLines: 
-    btScript: 
-  - isFoldout: 1
-    breakPoints: 
-    breakPointStatuses: 
-    collapsedLines: 
-    btScript: 
-  - isFoldout: 1
-    breakPoints: 
-    breakPointStatuses: 
-    collapsedLines: 
-    btScript: 
-  - isFoldout: 1
-    breakPoints: 
-    breakPointStatuses: 
-    collapsedLines: 
-    btScript: 
 --- !u!1 &1087664315249250629
 GameObject:
   m_ObjectHideFlags: 0
