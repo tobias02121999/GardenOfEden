@@ -27,15 +27,36 @@ public class HumanAI : Singleton<HumanAI>
     bool wasInvoked = false;
     bool checkForTree = false;
 
-    // Start is called before the first frame update
-    void Start() 
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
+        if (!wasInvoked)
+            StartCoroutine("BuildTimer");   // Continually runs the build timer.
+
+        if (checkForTree)
+        {
+            Collider[] trees = Physics.OverlapSphere(humanMesh.position, 3f);
+            Debug.Log(trees.Length);
+            foreach (Collider collider in trees)
+            {
+                if (collider.tag == "Tree")
+                {
+                    _inRangeOfTree = true;
+                }
+            }
+        }
+
+        #region State Declaration
+        // Building has #1 priority, then comes chopping trees.
+        if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom())
+            currentState = HumanState.BUILDING;
+        else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && !CheckForSufficientRoom())
+            currentState = HumanState.CHOPPING;
+
+
+        #endregion
+
+        #region State Machine
         switch (currentState)
         {
             case HumanState.IDLE: // Human wanders about when idle.
@@ -63,25 +84,24 @@ public class HumanAI : Singleton<HumanAI>
                 break;
 
             case HumanState.CHOPPING: // The human chops a tree.
+                MoveToDestination(1);   // Move to the tree first.
+
                 int layer = 17;
                 int mask = 1 << layer;
 
                 Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
                 foreach (Collider tree in trees)
                 {
-                    Destroy(tree.gameObject);
+                    Destroy(tree.gameObject);   // Then destroy all nearby trees.
                 }
 
                 break;
 
             case HumanState.BUILDING:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom())
-                {
                     gameObject.SetActive(false);
                     Instantiate(home, humanMesh.position, Quaternion.identity);
 
                     Destroy(gameObject);    // Remove the human from the game when the house is built.
-                }
 
                 break;
 
@@ -98,6 +118,7 @@ public class HumanAI : Singleton<HumanAI>
             case HumanState.SPREADING_RELIGION:
                 break;
         }
+        #endregion
     }
 
     void GaugeFear()    // Add or remove fear based on the specified circumstances.
@@ -134,7 +155,6 @@ public class HumanAI : Singleton<HumanAI>
         }
     }
 
-
     void SetSpeed() // Sets the speed of this human based on the amount of fear.
     {
         if (fearGauge <= 100)
@@ -146,7 +166,6 @@ public class HumanAI : Singleton<HumanAI>
         }
     }
 
-
     bool CheckResources()   // Check if there are enough resources (Phony mechanic).
     {
         Collider[] cols = Physics.OverlapSphere(humanMesh.position, 100f);  // Check in a radius of 100f (DONT FORGET TO ADD A LAYERMASK TO IGNORE HUMANS AND BUILDINGS).
@@ -154,6 +173,7 @@ public class HumanAI : Singleton<HumanAI>
         {
             if (col.tag == "Tree")
             {
+                CheckForSufficientRoom();
                 return true;
             }
         }
@@ -175,6 +195,7 @@ public class HumanAI : Singleton<HumanAI>
 
         if (closestLingeringObject >= minDistanceFromBuildToCalamity)   // The task succeeds if the minimal distance to a calamity is greater than or equal to the build distance.
         {
+            CheckResources();
             return true;
         }
         else    // It fails if this distance is shorter.
@@ -198,6 +219,37 @@ public class HumanAI : Singleton<HumanAI>
         else
         {
             return true;
+        }
+    }
+
+    void MoveToDestination(int destinationIndex)
+    {
+        switch (destinationIndex)   // Goto...
+        {
+            case 0: // ...Nearest house.
+                break;
+
+            case 1: // ...Nearest tree.
+                int layer = 17;
+                int mask = 1 << layer;
+
+                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 50f, mask);
+                if (trees.Length > 0)
+                {
+                    checkForTree = true;
+                }
+                foreach (Collider col in trees)
+                {
+                    float distanceToTree = Vector3.Distance(humanMesh.position, col.transform.position);
+                    if (distanceToTree < 20)
+                    {
+                        movementParent.LookAt(col.transform.position);
+                    }
+                }
+                break;
+
+            case 2:
+                break;
         }
     }
 
