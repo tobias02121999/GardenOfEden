@@ -17,7 +17,7 @@ public class RagdollAnimator : MonoBehaviour
     public float targetRot, currentRot, wanderAlarm;
 
     // Initialize the private variables
-    float maxForce = 65f, collapseAlarm;
+    float maxForce = 1000f, collapseAlarm;
 
 
     // Run this code once at the start
@@ -54,7 +54,7 @@ public class RagdollAnimator : MonoBehaviour
         for (var i = 0; i < bones.Length; i++)
         {
             var rb = bones[i].GetComponent<Rigidbody>();
-            var force = (animationControl[i] / 100f) * maxForce;
+            var force = ((animationControl[i] / 100f) * maxForce) * Time.deltaTime;
             rb.AddTorque(ComputeTorque(bones[i], targets[i].rotation) * force);
         }
     }

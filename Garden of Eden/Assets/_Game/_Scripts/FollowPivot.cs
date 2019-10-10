@@ -23,6 +23,11 @@ public class FollowPivot : MonoBehaviour
     void Update()
     {
         Reference(); // Rotate the reference transform towards the target
+    }
+
+    // FixedUpdate is called once per fixed frame
+    private void FixedUpdate()
+    {
         Move(); // Move towards the target pivot
         Rotate(); // Rotate towards the target pivot
     }
@@ -70,7 +75,7 @@ public class FollowPivot : MonoBehaviour
         var dist = Vector3.Distance(transform.position, target.position);
         var step = dist * speed;
 
-        rb.velocity = reference.forward * step;
+        rb.velocity = reference.forward * step * Time.deltaTime;
     }
 
     // Rotate towards the target pivot
@@ -79,6 +84,6 @@ public class FollowPivot : MonoBehaviour
         var angle = Vector3.Angle(target.forward, transform.forward);
         var step = angle * rotationSpeed;
 
-        rb.AddTorque(ComputeTorque(transform, target.rotation) * step);
+        rb.AddTorque(ComputeTorque(transform, target.rotation) * step * Time.deltaTime);
     }
 }

@@ -34,7 +34,6 @@ public class NetworkSpawner : NetworkBehaviour
             {
                 CmdSpawn();
                 hasSpawned = true;
-                Debug.Log(1);
             }
         }
         else
@@ -49,7 +48,7 @@ public class NetworkSpawner : NetworkBehaviour
     void CmdSpawn()
     {
         //var obj = Instantiate(prefab, spawnPos.position, Quaternion.identity);
-        var obj = ObjectPooler.Instance.SpawnFromPool("Human", transform.position, Quaternion.identity);
+        var obj = ObjectPooler.Instance.SpawnFromPool("Humans", spawnPos.position, Quaternion.identity);
         NetworkServer.Spawn(obj);
     }
 }
