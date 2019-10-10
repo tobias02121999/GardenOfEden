@@ -35,11 +35,12 @@ public class ObjectPooler : Singleton<ObjectPooler>
         }
     }
 
+    // ObjectPooler.Instance.SpawnFromPool(string poolName, Vector3 spawnPosition, Quaternion spawnRotation);
     public GameObject SpawnFromPool(string poolName, Vector3 spawnPosition, Quaternion spawnRotation)
     {
         if (!poolDictionairy.ContainsKey(poolName))
         {
-            Debug.LogWarning("Pool with tag " + poolName + "doesn't exist.");
+            Debug.LogError("Pool with tag " + poolName + "doesn't exist.");
             return null;
         }
 

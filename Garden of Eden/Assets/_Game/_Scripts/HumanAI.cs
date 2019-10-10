@@ -56,7 +56,7 @@ public class HumanAI : Singleton<HumanAI>
             currentState = HumanState.BUILDING;
         else if (CheckForCalamitySites() && CheckResources() && !CheckForSufficientRoom())
             currentState = HumanState.CHOPPING;
-
+        
         // Keep gauging fear over time.
         if (GameManager.Instance.fearObjects.Count > 0)
             GaugeFear();
@@ -87,7 +87,6 @@ public class HumanAI : Singleton<HumanAI>
                     movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);              
                 }
 
-                currentState = HumanState.IDLE;
                 break;
 
             case HumanState.CHOPPING: // The human chops a tree.
@@ -168,8 +167,8 @@ public class HumanAI : Singleton<HumanAI>
         if (fearGauge <= 100)
         {
             humanAnimator.speed = 0f;
-            var adjustedFear = fearGauge / 10;
-            humanAnimator.speed = Mathf.Clamp(humanAnimator.speed + adjustedFear, 2, 12);
+            var adjustedFear = fearGauge / 20;
+            humanAnimator.speed = Mathf.Clamp(humanAnimator.speed + adjustedFear, 2, 5);
             Debug.Log("Speed adjusted to " + humanAnimator.speed);
         }
     }
@@ -276,6 +275,7 @@ public class HumanAI : Singleton<HumanAI>
         if (GameManager.Instance.fearObjects.Count <= 0)
         {
             fearGauge = Mathf.Lerp(fearGauge, 0, Time.deltaTime * fearReductionSpeed);
+            SetSpeed();
         }
     }
 }

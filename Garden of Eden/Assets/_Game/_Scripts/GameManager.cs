@@ -22,10 +22,10 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(2))
         {
-            //var go = Instantiate(cube, new Vector3(3, 0, 0), Quaternion.identity);
-            //fearObjects.Add(go);
+            var go = Instantiate(cube, new Vector3(3, 0, 0), Quaternion.identity);
+            fearObjects.Add(go);
         }
         if (Input.GetMouseButtonDown(1))
         {
