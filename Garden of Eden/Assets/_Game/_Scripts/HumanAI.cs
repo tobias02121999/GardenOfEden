@@ -15,7 +15,7 @@ public class HumanAI : Singleton<HumanAI>
     public Transform humanMesh, movementParent;
     public GameObject home;
     public int secondsSinceLastBuild;
-    public float fearGauge, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired;
+    public float fearGauge, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired, gatheredWood;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
@@ -31,7 +31,10 @@ public class HumanAI : Singleton<HumanAI>
     void Update()
     {
         if (!wasInvoked)
+        {
             StartCoroutine("BuildTimer");   // Continually runs the build timer.
+            ReduceFearOverTime();
+        }
 
         if (checkForTree)
         {
@@ -42,18 +45,21 @@ public class HumanAI : Singleton<HumanAI>
                 if (collider.tag == "Tree")
                 {
                     _inRangeOfTree = true;
+                    currentState = HumanState.IDLE;
                 }
             }
         }
 
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
-        if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom())
+        if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
             currentState = HumanState.BUILDING;
-        else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && !CheckForSufficientRoom())
+        else if (CheckForCalamitySites() && CheckResources() && !CheckForSufficientRoom())
             currentState = HumanState.CHOPPING;
 
-
+        // Keep gauging fear over time.
+        if (GameManager.Instance.fearObjects.Count > 0)
+            GaugeFear();
         #endregion
 
         #region State Machine
@@ -81,6 +87,7 @@ public class HumanAI : Singleton<HumanAI>
                     movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);              
                 }
 
+                currentState = HumanState.IDLE;
                 break;
 
             case HumanState.CHOPPING: // The human chops a tree.
@@ -93,6 +100,7 @@ public class HumanAI : Singleton<HumanAI>
                 foreach (Collider tree in trees)
                 {
                     Destroy(tree.gameObject);   // Then destroy all nearby trees.
+                    gatheredWood += 10;
                 }
 
                 break;
@@ -261,5 +269,13 @@ public class HumanAI : Singleton<HumanAI>
         secondsSinceLastBuild++;
 
         wasInvoked = false;
-    } 
+    }
+
+    void ReduceFearOverTime()
+    {
+        if (GameManager.Instance.fearObjects.Count <= 0)
+        {
+            fearGauge = Mathf.Lerp(fearGauge, 0, Time.deltaTime * fearReductionSpeed);
+        }
+    }
 }
