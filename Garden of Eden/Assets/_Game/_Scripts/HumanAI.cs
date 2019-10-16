@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 
@@ -54,8 +55,10 @@ public class HumanAI : Singleton<HumanAI>
         // Building has #1 priority, then comes chopping trees.
         if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
             currentState = HumanState.BUILDING;
-        else if (CheckForCalamitySites() && CheckResources() && !CheckForSufficientRoom())
+        else if (CheckResources())
             currentState = HumanState.CHOPPING;
+        else
+            currentState = HumanState.PRAYING;
         
         // Keep gauging fear over time.
         if (GameManager.Instance.fearObjects.Count > 0)
@@ -120,12 +123,31 @@ public class HumanAI : Singleton<HumanAI>
                 break;
 
             case HumanState.PRAYING:
+                MoveToDestination(2);
+
                 break;
 
             case HumanState.SPREADING_RELIGION:
                 break;
         }
         #endregion
+    }
+
+    Transform GetClosestUnit(Transform[] units)
+    {
+        Transform closestUnit = null;
+        float minDistance = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach (Transform unit in units)
+        {
+            float dist = Vector3.Distance(t.position, currentPosition);
+            if (dist < minDistance)
+            {
+                closestUnit = unit;
+                minDistance = dist;
+            }
+        }
+        return closestUnit;
     }
 
     void GaugeFear()    // Add or remove fear based on the specified circumstances.
@@ -255,7 +277,19 @@ public class HumanAI : Singleton<HumanAI>
                 }
                 break;
 
-            case 2:
+            case 2: // ...Nearest altar.
+                List<Transform> altars = new List<Transform>();
+
+                int prayingLayer = 19;
+                int prayingMask = 1 << prayingLayer;
+
+                Collider[] prayingGrounds = Physics.OverlapSphere(humanMesh.position, 25f, prayingMask);
+                foreach (Collider altar in prayingGrounds)
+                {
+                    altars.Add(altar.transform);
+                }
+
+                GetClosestUnit(altars.ToArray());
                 break;
         }
     }
