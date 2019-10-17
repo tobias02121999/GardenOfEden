@@ -16,7 +16,8 @@ public class HumanAI : Singleton<HumanAI>
     public Transform humanMesh, movementParent, rotationReference;
     public GameObject home;
     public int secondsSinceLastBuild;
-    public float fearGauge, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired, gatheredWood;
+    public float speed, wanderDuration, turnSpeed, fearGauge, fearReductionSpeed;
+    public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
@@ -41,7 +42,7 @@ public class HumanAI : Singleton<HumanAI>
         // Building has #1 priority, then comes chopping trees.
         if (humanAnimator.hasCollapsed)
             currentState = HumanState.RECOVER;
-        if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
+        else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
             currentState = HumanState.BUILDING;
         else if (CheckResources())
             currentState = HumanState.CHOPPING;
@@ -63,10 +64,10 @@ public class HumanAI : Singleton<HumanAI>
             case HumanState.IDLE: // Human wanders about when idle.
                 if (!humanAnimator.hasCollapsed)
                 {
-                    if (humanAnimator.wanderAlarm <= 0f)
+                    if (wanderAlarm <= 0f)
                     {
                         humanAnimator.targetRot = Random.Range(0f, 360f);
-                        humanAnimator.wanderAlarm = humanAnimator.wanderDuration;
+                        wanderAlarm = humanAnimator.wanderDuration;
 
                         Debug.Log("Randomize");
                     }
