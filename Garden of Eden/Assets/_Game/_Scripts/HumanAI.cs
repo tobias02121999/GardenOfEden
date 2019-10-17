@@ -13,7 +13,7 @@ public class HumanAI : Singleton<HumanAI>
     [Space]
 
     public RagdollAnimator humanAnimator;
-    public Transform humanMesh, movementParent;
+    public Transform humanMesh, movementParent, rotationReference;
     public GameObject home;
     public int secondsSinceLastBuild;
     public float fearGauge, fearReductionSpeed, minDistanceFromBuildToCalamity, minResourceRequired, gatheredWood;
@@ -37,20 +37,6 @@ public class HumanAI : Singleton<HumanAI>
             ReduceFearOverTime();
         }
 
-        if (checkForTree)
-        {
-            Collider[] trees = Physics.OverlapSphere(humanMesh.position, 3f);
-            Debug.Log(trees.Length);
-            foreach (Collider collider in trees)
-            {
-                if (collider.tag == "Tree")
-                {
-                    _inRangeOfTree = true;
-                    currentState = HumanState.IDLE;
-                }
-            }
-        }
-
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
         if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
@@ -58,7 +44,7 @@ public class HumanAI : Singleton<HumanAI>
         else if (CheckResources())
             currentState = HumanState.CHOPPING;
         else
-            currentState = HumanState.PRAYING;
+            currentState = HumanState.IDLE;
         
         // Keep gauging fear over time.
         if (GameManager.Instance.fearObjects.Count > 0)
@@ -140,7 +126,7 @@ public class HumanAI : Singleton<HumanAI>
         Vector3 currentPosition = transform.position;
         foreach (Transform unit in units)
         {
-            float dist = Vector3.Distance(t.position, currentPosition);
+            float dist = Vector3.Distance(unit.position, currentPosition);
             if (dist < minDistance)
             {
                 closestUnit = unit;
@@ -263,18 +249,15 @@ public class HumanAI : Singleton<HumanAI>
                 int mask = 1 << layer;
 
                 Collider[] trees = Physics.OverlapSphere(humanMesh.position, 50f, mask);
-                if (trees.Length > 0)
-                {
-                    checkForTree = true;
-                }
+                List<Transform> colTransforms = new List<Transform>();
                 foreach (Collider col in trees)
                 {
-                    float distanceToTree = Vector3.Distance(humanMesh.position, col.transform.position);
-                    if (distanceToTree < 20)
-                    {
-                        movementParent.LookAt(col.transform.position);
-                    }
+                    colTransforms.Add(col.transform);
                 }
+
+                rotationReference.LookAt(GetClosestUnit(colTransforms.ToArray()));
+                movementParent.rotation = rotationReference.rotation;
+
                 break;
 
             case 2: // ...Nearest altar.
@@ -288,8 +271,6 @@ public class HumanAI : Singleton<HumanAI>
                 {
                     altars.Add(altar.transform);
                 }
-
-                GetClosestUnit(altars.ToArray());
                 break;
         }
     }
