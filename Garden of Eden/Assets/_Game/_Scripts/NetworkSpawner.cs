@@ -52,4 +52,3 @@ public class NetworkSpawner : NetworkBehaviour
         NetworkServer.Spawn(obj);
     }
 }
-

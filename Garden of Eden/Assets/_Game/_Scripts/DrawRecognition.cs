@@ -9,7 +9,7 @@ public class DrawRecognition : MonoBehaviour
     public Vector2 gridSize;
     public int[,] drawData;
     public int symbolCount, symbolVariation;
-    public TextMesh symbolText, drawDataText;
+    public TextMesh drawDataText;
     public GameObject[] symbolObjects;
 
     public static string returnShape;
@@ -140,7 +140,6 @@ public class DrawRecognition : MonoBehaviour
                             {
                                 if (c == symbolCount - 1)
                                 {
-                                    symbolText.text = "Symbol not found...";
                                     goto End;
                                 }
                                 else
@@ -162,7 +161,6 @@ public class DrawRecognition : MonoBehaviour
                         {
                             if (xx == gridWidth - 1 && yy == gridHeight - 1)
                             {
-                                symbolText.text = "This is a " + GetSymbolData(c) + "!";
                                 Instantiate(symbolObjects[c], transform.position, Quaternion.identity);
                                 goto End;
                             }

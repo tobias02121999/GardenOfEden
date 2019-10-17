@@ -15,7 +15,7 @@ public class PlayerControls : NetworkBehaviour
     public GameObject drawingBrush;
     public Camera leftEye;
     public Camera rightEye;
-    public Animation handAnimation;
+    public Animation handAnimationL, handAnimationR;
 
     // Update is called once per frame
     void Update()
@@ -47,11 +47,9 @@ public class PlayerControls : NetworkBehaviour
             rightPivot.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
             rightPivot.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
 
-            physicsBrush.SetActive(!cursor.GetComponent<Brush>().isDrawing);
-            drawingBrush.SetActive(cursor.GetComponent<Brush>().isDrawing);
-
-            var duration = handAnimation["Hand Close"].length;
-            handAnimation["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+            var duration = handAnimationL["Hand Close"].length;
+            handAnimationL["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+            handAnimationR["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
         }
     }
 }
