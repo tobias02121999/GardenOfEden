@@ -229,13 +229,15 @@ public class HumanAI : Singleton<HumanAI>
 
     bool CheckForSufficientRoom()   // Check's if there is room to build the house.
     {
-        int layer = 16;
-        int mask = 1 << layer;
+        int buildingLayer = 16;
+        int resourceLayer = 17;
+        int buildingMask = 1 << buildingLayer;
+        int resourceMask = 1 << resourceLayer;
 
         Vector3 halfExtends = new Vector3(3.5f, 3f, 3.5f);
-        Collider[] homes = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, mask);
-        Debug.Log(homes.Length);
-        if (homes.Length > 0)
+        Collider[] homes = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, buildingMask);
+        Collider[] trees = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, resourceMask);
+        if (homes.Length > 0 || trees.Length > 0)
         {
             return false;
         }
