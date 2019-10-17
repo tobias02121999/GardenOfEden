@@ -2559,9 +2559,6 @@ MonoBehaviour:
   impactRecovery: 1
   collapseMinimum: 20
   collapseDuration: 120
-  speed: 2
-  wanderDuration: 150
-  turnSpeed: 5
   feetCollider: {fileID: 6171444308595301858}
   movementParent: {fileID: 4982348979533985199}
 --- !u!114 &1746902633728497879
@@ -2581,12 +2578,15 @@ MonoBehaviour:
   humanMesh: {fileID: 6538513111818616364}
   movementParent: {fileID: 4982348979533985199}
   rotationReference: {fileID: 1834327089}
-  home: {fileID: 3705685333055380692, guid: be8255f328d10304399d4d2885af227f, type: 3}
+  home: {fileID: 8778074915786923238, guid: 9bb295d988821ce4997bd060c8f1c1b1, type: 3}
   secondsSinceLastBuild: 0
+  speed: 2
+  wanderDuration: 150
+  turnSpeed: 5
   fearGauge: 0
   fearReductionSpeed: 1.5
+  wanderAlarm: 0
   minDistanceFromBuildToCalamity: 0
-  minResourceRequired: 1
   gatheredWood: 0
 --- !u!114 &6512289002699450569
 MonoBehaviour:

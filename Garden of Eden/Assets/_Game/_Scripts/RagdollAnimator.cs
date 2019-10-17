@@ -17,7 +17,7 @@ public class RagdollAnimator : MonoBehaviour
     public float targetRot, currentRot;
 
     // Initialize the private variables
-    float maxForce = 2500f, collapseAlarm;
+    float maxForce = 2750f, collapseAlarm;
 
     // Run this code once at the start
     void Start()

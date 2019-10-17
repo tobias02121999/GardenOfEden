@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 451589111532156552}
   - component: {fileID: 451589111535023784}
   - component: {fileID: 451589111534056552}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: TreeTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,9 +92,10 @@ GameObject:
   - component: {fileID: 451589111535023788}
   - component: {fileID: 451589111534056556}
   - component: {fileID: 4380236014318622327}
-  m_Layer: 0
+  - component: {fileID: 5366786087902338243}
+  m_Layer: 17
   m_Name: Oak Tree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +107,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 451589111531793068}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.4108, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -174,6 +175,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: {x: 0.75, y: 1.25}
   rotation: {x: -7.5, y: 7.5}
+--- !u!65 &5366786087902338243
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451589111531793068}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.061484504, y: 0.15474358, z: 0.061484504}
+  m_Center: {x: -0.0000000029802323, y: 0.07737179, z: 0.0000000029802323}
 --- !u!1 &451589111531793070
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +199,7 @@ GameObject:
   - component: {fileID: 451589111532156558}
   - component: {fileID: 451589111535023790}
   - component: {fileID: 451589111534056558}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: OakTree_v3_TreeTop_Leafs_FixedLeaf_v18
   m_TagString: Untagged
   m_Icon: {fileID: 0}

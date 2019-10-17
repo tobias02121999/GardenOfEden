@@ -264,7 +264,7 @@ public class HumanAI : Singleton<HumanAI>
                 }
 
                 rotationReference.LookAt(GetClosestUnit(colTransforms.ToArray()));
-                movementParent.rotation = rotationReference.rotation;
+                movementParent.rotation = Quaternion.Euler(0f, rotationReference.eulerAngles.y, 0f);
 
                 break;
 
