@@ -67,18 +67,19 @@ public class HumanAI : Singleton<HumanAI>
                     if (wanderAlarm <= 0f)
                     {
                         humanAnimator.targetRot = Random.Range(0f, 360f);
-                        wanderAlarm = humanAnimator.wanderDuration;
+                        wanderAlarm = wanderDuration;
 
                         Debug.Log("Randomize");
                     }
 
-                    humanAnimator.wanderAlarm--;
+                    wanderAlarm--;
 
-                    if (humanAnimator.currentRot >= humanAnimator.targetRot + humanAnimator.turnSpeed)
-                        humanAnimator.currentRot -= humanAnimator.turnSpeed;
+                    if (humanAnimator.currentRot >= humanAnimator.targetRot + turnSpeed)
+                        humanAnimator.currentRot -= turnSpeed;
 
-                    if (humanAnimator.currentRot <= humanAnimator.targetRot - humanAnimator.turnSpeed)
-                        humanAnimator.currentRot += humanAnimator.turnSpeed;
+                    if (humanAnimator.currentRot <= humanAnimator.targetRot - turnSpeed)
+                        humanAnimator.currentRot += turnSpeed;
+
 
                     movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);              
                 }
@@ -181,10 +182,10 @@ public class HumanAI : Singleton<HumanAI>
     {
         if (fearGauge <= 100)
         {
-            humanAnimator.speed = 0f;
+            speed = 0f;
             var adjustedFear = fearGauge / 20;
-            humanAnimator.speed = Mathf.Clamp(humanAnimator.speed + adjustedFear, 2, 5);
-            Debug.Log("Speed adjusted to " + humanAnimator.speed);
+            speed = Mathf.Clamp(speed + adjustedFear, 2, 5);
+            Debug.Log("Speed adjusted to " + speed);
         }
     }
 

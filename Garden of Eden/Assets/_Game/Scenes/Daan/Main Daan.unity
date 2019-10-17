@@ -5381,21 +5381,6 @@ PrefabInstance:
       propertyPath: m_AssetId.i15
       value: 113
       objectReference: {fileID: 0}
-    - target: {fileID: 5592170385797884816, guid: 6951bb1b462b6be469dac6ef0fdc3071,
-        type: 3}
-      propertyPath: speed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5592170385797884816, guid: 6951bb1b462b6be469dac6ef0fdc3071,
-        type: 3}
-      propertyPath: wanderDuration
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 5592170385797884816, guid: 6951bb1b462b6be469dac6ef0fdc3071,
-        type: 3}
-      propertyPath: turnSpeed
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6951bb1b462b6be469dac6ef0fdc3071, type: 3}
 --- !u!1 &2014117572
