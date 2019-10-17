@@ -8,16 +8,16 @@ public class RagdollAnimator : MonoBehaviour
     // Initialize the public variables
     public Transform[] bones, targets;
     public float[] animationControl;
-    public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration, speed, wanderDuration, turnSpeed;
+    public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration;
     public BoxCollider feetCollider;
     public Transform movementParent;
     [System.NonSerialized]
     public bool hasCollapsed;
     [System.NonSerialized]
-    public float targetRot, currentRot, wanderAlarm;
+    public float targetRot, currentRot;
 
     // Initialize the private variables
-    float maxForce = 2250f, collapseAlarm;
+    float maxForce = 2500f, collapseAlarm;
 
     // Run this code once at the start
     void Start()
