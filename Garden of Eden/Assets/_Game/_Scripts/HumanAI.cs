@@ -140,7 +140,7 @@ public class HumanAI : Singleton<HumanAI>
         Vector3 currentPosition = transform.position;
         foreach (Transform unit in units)
         {
-            float dist = Vector3.Distance(t.position, currentPosition);
+            float dist = Vector3.Distance(unit.position, currentPosition);
             if (dist < minDistance)
             {
                 closestUnit = unit;

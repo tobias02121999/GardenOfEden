@@ -10,7 +10,7 @@ public class Brush : MonoBehaviour
     public bool debugMode, isDrawing;
     public GameObject drawPoint, drawRecognition;
     public Transform rightHand, head;
-    public TextMesh symbolText;
+    public int handID;
 
     // Initialize the private variables
     float inkAlarm, posAlarm;
@@ -21,6 +21,8 @@ public class Brush : MonoBehaviour
 
     GameObject drawPointObject;
     Transform drawPointParent;
+
+    float input;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,11 @@ public class Brush : MonoBehaviour
         RecognitionInit(); // Initialize the draw recognition
         GetDrawData(); // Get data from the drawing
         GetPos();
+
+        if (handID == 0)
+            input = (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger));
+        else
+            input = (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger));
     }
 
     // Move the cursor around
@@ -56,7 +63,7 @@ public class Brush : MonoBehaviour
     {
         for (var i = 0; i < drawFrequency; i++)
         {
-            if ((OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) != 0f) || (Input.GetButton(drawButton) && debugMode))
+            if (input != 0f || (Input.GetButton(drawButton) && debugMode))
             {
                 if (!isDrawing)
                 {
@@ -92,14 +99,17 @@ public class Brush : MonoBehaviour
         var amount = drawPoints.Count;
         lineRenderer.positionCount = amount;
 
-        for (var i = 0; i < amount; i++)
-            lineRenderer.SetPosition(i, drawPoints[i].position);
+        if (isDrawing)
+        {
+            for (var i = 0; i < amount; i++)
+                lineRenderer.SetPosition(i, drawPoints[i].position);
+        }
     }
 
     // Initialize the draw recognition
     void RecognitionInit()
     {
-        if ((OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) == 0f && !debugMode && isDrawing) || 
+        if ((input == 0f && !debugMode && isDrawing) || 
             (!Input.GetButton(drawButton) && debugMode && isDrawing))
         {
             var scale = Mathf.Max(drawSize.x, drawSize.y);
@@ -109,7 +119,6 @@ public class Brush : MonoBehaviour
             obj.transform.localPosition = new Vector3(drawPivot.x, drawPivot.y, 0f);
 
             obj.GetComponent<DrawRecognition>().scale = scale * recognitionScale;
-            obj.GetComponent<DrawRecognition>().symbolText = symbolText;
             obj.GetComponent<DrawRecognition>().drawPointParent = drawPointParent;
             obj.GetComponent<DrawRecognition>().debugMode = debugMode;
 
@@ -120,29 +129,32 @@ public class Brush : MonoBehaviour
     // Get data from the drawing
     void GetDrawData()
     {
-        for (var i = 0; i < drawPoints.Count; i++)
+        if (isDrawing)
         {
-            var posX = drawPoints[i].localPosition.x;
-            var posY = drawPoints[i].localPosition.y;
+            for (var i = 0; i < drawPoints.Count; i++)
+            {
+                var posX = drawPoints[i].localPosition.x;
+                var posY = drawPoints[i].localPosition.y;
 
-            if (posX < drawEdgeHor.x)
-                drawEdgeHor.x = posX;
+                if (posX < drawEdgeHor.x)
+                    drawEdgeHor.x = posX;
 
-            if (posX > drawEdgeHor.y)
-                drawEdgeHor.y = posX;
+                if (posX > drawEdgeHor.y)
+                    drawEdgeHor.y = posX;
 
-            if (posY < drawEdgeVer.x)
-                drawEdgeVer.x = posY;
+                if (posY < drawEdgeVer.x)
+                    drawEdgeVer.x = posY;
 
-            if (posY > drawEdgeVer.y)
-                drawEdgeVer.y = posY;
+                if (posY > drawEdgeVer.y)
+                    drawEdgeVer.y = posY;
+            }
+
+            drawSize.x = drawEdgeHor.y - drawEdgeHor.x;
+            drawSize.y = drawEdgeVer.y - drawEdgeVer.x;
+
+            drawPivot.x = drawEdgeHor.x + (drawSize.x / 2f);
+            drawPivot.y = drawEdgeVer.x + (drawSize.y / 2f);
         }
-
-        drawSize.x = drawEdgeHor.y - drawEdgeHor.x;
-        drawSize.y = drawEdgeVer.y - drawEdgeVer.x;
-
-        drawPivot.x = drawEdgeHor.x + (drawSize.x / 2f);
-        drawPivot.y = drawEdgeVer.x + (drawSize.y / 2f);
     }
 
     void GetPos()

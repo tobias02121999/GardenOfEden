@@ -1,16 +1,71 @@
 fileFormatVersion: 2
-guid: 6f93cb7a70ec49648aa731fa6ee02949
+guid: 226456c0c8b39524da3ec8ef124cb1e6
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: Cloth
-    2100002: Coal
-    2100004: Wood
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Torch
+    100000: Curtain
+    100002: DoorFrame
+    100004: House
+    100006: //RootNode
+    100008: MidBeams
+    100010: Roof
+    100012: RoofBeam
+    100014: RoofDeco
+    100016: RoofLeaf
+    100018: RoofWindow
+    100020: WindowFrame
+    400000: Curtain
+    400002: DoorFrame
+    400004: House
+    400006: //RootNode
+    400008: MidBeams
+    400010: Roof
+    400012: RoofBeam
+    400014: RoofDeco
+    400016: RoofLeaf
+    400018: RoofWindow
+    400020: WindowFrame
+    2100000: lambert1
+    2100002: HouseBeams_M
+    2100004: MidBeams_M
+    2100006: House_M
+    2100008: HouseInside_M
+    2100010: RoofBeam_M
+    2100012: DoorCurtain_M
+    2100014: Shingles_M
+    2100016: RoofWood_M
+    2100018: Frame_M
+    2100020: RoofLeafs_M
+    2300000: Curtain
+    2300002: DoorFrame
+    2300004: House
+    2300006: MidBeams
+    2300008: Roof
+    2300010: RoofBeam
+    2300012: RoofDeco
+    2300014: RoofLeaf
+    2300016: RoofWindow
+    2300018: WindowFrame
+    3300000: Curtain
+    3300002: DoorFrame
+    3300004: House
+    3300006: MidBeams
+    3300008: Roof
+    3300010: RoofBeam
+    3300012: RoofDeco
+    3300014: RoofLeaf
+    3300016: RoofWindow
+    3300018: WindowFrame
+    4300000: House
+    4300002: MidBeams
+    4300004: WindowFrame
+    4300006: Curtain
+    4300008: DoorFrame
+    4300010: Roof
+    4300012: RoofWindow
+    4300014: RoofBeam
+    4300016: RoofLeaf
+    4300018: RoofDeco
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -42,7 +97,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.1
+    globalScale: 90
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
