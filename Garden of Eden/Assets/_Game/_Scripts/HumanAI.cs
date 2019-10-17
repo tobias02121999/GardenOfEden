@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 
-public enum HumanState {IDLE, CHOPPING, BUILDING, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
+public enum HumanState {RECOVER, IDLE, CHOPPING, BUILDING, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
 
 public class HumanAI : Singleton<HumanAI>
 {
@@ -39,6 +39,8 @@ public class HumanAI : Singleton<HumanAI>
 
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
+        if (humanAnimator.hasCollapsed)
+            currentState = HumanState.RECOVER;
         if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
             currentState = HumanState.BUILDING;
         else if (CheckResources())
@@ -54,6 +56,10 @@ public class HumanAI : Singleton<HumanAI>
         #region State Machine
         switch (currentState)
         {
+            case HumanState.RECOVER:
+                // Do nothing untill recovered.
+                break;
+
             case HumanState.IDLE: // Human wanders about when idle.
                 if (!humanAnimator.hasCollapsed)
                 {
