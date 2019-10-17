@@ -44,7 +44,6 @@ public class RagdollAnimator : MonoBehaviour
     void FixedUpdate()
     {
         Follow(); // Follow the target
-        Move(); // Apply force to the players rigidbodies
     }
 
     // Follow the target
@@ -129,19 +128,5 @@ public class RagdollAnimator : MonoBehaviour
         }
 
         collapseAlarm--;
-    }
-
-    // Apply force to the players rigidbodies
-    void Move()
-    {
-        if (!hasCollapsed)
-        {
-            for (var i = 0; i < bones.Length; i++)
-            {
-                var rb = bones[i].GetComponent<Rigidbody>();
-                var forward = movementParent.forward;
-                rb.AddForce(forward * speed);
-            }
-        }
     }
 }
