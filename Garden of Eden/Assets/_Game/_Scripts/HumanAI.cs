@@ -14,7 +14,6 @@ public class HumanAI : Singleton<HumanAI>
 
     public RagdollAnimator humanAnimator;
     public Transform humanMesh, movementParent, rotationReference;
-    public GameObject home;
     public int secondsSinceLastBuild;
     public float speed, wanderDuration, turnSpeed, fearGauge, fearReductionSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
@@ -102,10 +101,10 @@ public class HumanAI : Singleton<HumanAI>
                 break;
 
             case HumanState.BUILDING:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                    gameObject.SetActive(false);
-                    Instantiate(home, humanMesh.position, Quaternion.identity);
+                gameObject.SetActive(false);
+                ObjectPooler.Instance.SpawnFromPool("House", transform.position, Quaternion.identity);
 
-                    Destroy(gameObject);    // Remove the human from the game when the house is built.
+                Destroy(gameObject);    // Remove the human from the game when the house is built.
 
                 break;
 
