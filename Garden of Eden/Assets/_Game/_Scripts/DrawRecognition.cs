@@ -161,7 +161,7 @@ public class DrawRecognition : MonoBehaviour
                         {
                             if (xx == gridWidth - 1 && yy == gridHeight - 1)
                             {
-                                Instantiate(symbolObjects[c], transform.position, Quaternion.identity);
+                                ObjectPooler.Instance.SpawnFromPool("symbolObjects[c].name", transform.position, Quaternion.identity);
                                 goto End;
                             }
                         }
