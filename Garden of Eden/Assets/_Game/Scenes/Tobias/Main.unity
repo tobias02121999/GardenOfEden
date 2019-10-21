@@ -806,6 +806,13 @@ MonoBehaviour:
     prefab: {fileID: 6538513111818248708, guid: 75489347f09d0164385b4b6a180c2319,
       type: 3}
     poolSize: 30
+  - name: House
+    prefab: {fileID: 8778074915786923238, guid: 9bb295d988821ce4997bd060c8f1c1b1,
+      type: 3}
+    poolSize: 30
+  - name: Cube
+    prefab: {fileID: 148802231449521297, guid: 90850c07c98cd524ba349becd4f7272e, type: 3}
+    poolSize: 30
 --- !u!4 &245787674
 Transform:
   m_ObjectHideFlags: 0
@@ -1347,10 +1354,10 @@ MonoBehaviour:
   m_Script: {fileID: -822479833, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NetworkPort: 7777
+  m_NetworkPort: 2620
   m_ServerBindToIP: 0
   m_ServerBindAddress: 
-  m_NetworkAddress: 10.3.20.17
+  m_NetworkAddress: 25.31.113.175
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
@@ -3800,6 +3807,7 @@ MonoBehaviour:
   - {fileID: 494117853}
   - {fileID: 257007524}
   sun: {fileID: 1386516386}
+  localPlayer: {fileID: 0}
 --- !u!4 &1201948365
 Transform:
   m_ObjectHideFlags: 0
