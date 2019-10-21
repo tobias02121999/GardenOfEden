@@ -2580,7 +2580,7 @@ MonoBehaviour:
   rotationReference: {fileID: 1834327089}
   home: {fileID: 8778074915786923238, guid: 9bb295d988821ce4997bd060c8f1c1b1, type: 3}
   secondsSinceLastBuild: 0
-  speed: 2
+  speed: 4
   wanderDuration: 150
   turnSpeed: 5
   fearGauge: 0
