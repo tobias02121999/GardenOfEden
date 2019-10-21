@@ -268,6 +268,7 @@ public class HumanAI : Singleton<HumanAI>
                 rotationReference.LookAt(GetClosestUnit(colTransforms.ToArray()));
                 var rot = rotationReference.rotation;
                 rot.x = 0f;
+                rot.z = 0f;
 
                 movementParent.rotation = rot;
 

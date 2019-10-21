@@ -11,8 +11,6 @@ public class PlayerControls : NetworkBehaviour
     public GameObject cursor;
     public Transform leftPivot;
     public Transform rightPivot;
-    public GameObject physicsBrush;
-    public GameObject drawingBrush;
     public Camera leftEye;
     public Camera rightEye;
     public Animation handAnimationL, handAnimationR;
