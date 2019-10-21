@@ -7,6 +7,7 @@ public class LightManager : MonoBehaviour
     // Initialize the public variables
     public AuraAPI.AuraLight[] auraLights;
     public Sun sun;
+    public GameObject localPlayer;
 
     // Initialize the private variables
     bool auraIsLit;
@@ -26,11 +27,12 @@ public class LightManager : MonoBehaviour
     // Initialize the aura lights
     void AuraLightsInit()
     {
-        var player = GameObject.FindWithTag("Player");
-
-        if (player != null)
+        if (localPlayer != null)
         {
-            sun.aura = player.GetComponentInChildren<AuraAPI.Aura>();
+            var cam = localPlayer.transform.Find("CenterEyeAnchor").gameObject;
+            cam.AddComponent<AuraAPI.Aura>();
+
+            sun.aura = localPlayer.GetComponentInChildren<AuraAPI.Aura>();
 
             var length = auraLights.Length;
 

@@ -14,6 +14,12 @@ public class PlayerControls : NetworkBehaviour
     public Camera leftEye;
     public Camera rightEye;
     public Animation handAnimationL, handAnimationR;
+    public LightManager lightManager;
+
+    void Start()
+    {
+        lightManager = GameObject.FindObjectOfType<LightManager>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -48,6 +54,8 @@ public class PlayerControls : NetworkBehaviour
             var duration = handAnimationL["Hand Close"].length;
             handAnimationL["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
             handAnimationR["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
+
+            lightManager.localPlayer = this.gameObject;
         }
     }
 }
