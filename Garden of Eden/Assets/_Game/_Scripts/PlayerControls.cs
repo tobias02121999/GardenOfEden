@@ -60,4 +60,16 @@ public class PlayerControls : NetworkBehaviour
             networkPlayers.localPlayer = this.gameObject;
         }
     }
+
+    [Command]
+    public void CmdSetAuthorityServer(NetworkIdentity identity)
+    {
+        identity.AssignClientAuthority(connectionToServer);
+    }
+
+    [Command]
+    public void CmdSetAuthorityClient(NetworkIdentity identity)
+    {
+        identity.AssignClientAuthority(connectionToClient);
+    }
 }
