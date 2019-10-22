@@ -12,35 +12,34 @@ public class HumanSync : NetworkBehaviour
     [HideInInspector]
     public NetworkIdentity identity;
 
-    // Initialize the private variables
-    bool serverInControl;
+    [HideInInspector]
+    public InteractionDetection detection;
 
-    // Start is called before the first frame update
     void Start()
     {
         networkPlayers = FindObjectOfType<NetworkPlayers>();
-        identity = GetComponentInParent<NetworkIdentity>();
+        identity = GetComponent<NetworkIdentity>();
+        detection = GetComponentInChildren<InteractionDetection>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (identity.localPlayerAuthority != serverInControl)
-            identity.localPlayerAuthority = serverInControl;
+        if (detection.localPlayerColliding)
+            CmdSetAuthorityServer();
+
+        if (detection.otherPlayerColliding)
+            CmdSetAuthorityClient();
     }
 
-    // 
-    void OnTriggerEnter(Collider other)
+    [Command]
+    void CmdSetAuthorityServer()
     {
-        var obj = other.GetComponentInParent<PlayerController>().gameObject;
-        if (obj != null && obj == networkPlayers.otherPlayer)
-            serverInControl = false;
-        else
-            serverInControl = true;
+        identity.AssignClientAuthority(connectionToServer);
     }
 
-    void OnTriggerExit(Collider other)
+    [Command]
+    void CmdSetAuthorityClient()
     {
-        serverInControl = true;
+        identity.AssignClientAuthority(connectionToClient);
     }
 }
