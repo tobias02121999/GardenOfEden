@@ -7,7 +7,10 @@ public class LightManager : MonoBehaviour
     // Initialize the public variables
     public AuraAPI.AuraLight[] auraLights;
     public Sun sun;
-    public GameObject localPlayer;
+    public NetworkPlayers networkPlayers;
+
+    // Initialize the private variables
+    GameObject localPlayer;
 
     // Initialize the private variables
     bool auraIsLit;
@@ -15,7 +18,7 @@ public class LightManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        localPlayer = networkPlayers.localPlayer;
     }
 
     // Update is called once per frame

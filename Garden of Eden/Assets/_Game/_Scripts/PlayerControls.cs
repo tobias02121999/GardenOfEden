@@ -14,11 +14,11 @@ public class PlayerControls : NetworkBehaviour
     public Camera leftEye;
     public Camera rightEye;
     public Animation handAnimationL, handAnimationR;
-    public LightManager lightManager;
+    public NetworkPlayers networkPlayers;
 
     void Start()
     {
-        lightManager = GameObject.FindObjectOfType<LightManager>();
+        networkPlayers = GameObject.FindObjectOfType<NetworkPlayers>();
     }
 
     // Update is called once per frame
@@ -28,6 +28,8 @@ public class PlayerControls : NetworkBehaviour
         {
             ovrCameraRig.SetActive(false);
             cursor.SetActive(false);
+
+            networkPlayers.otherPlayer = this.gameObject;
         }
         else
         {
@@ -55,7 +57,7 @@ public class PlayerControls : NetworkBehaviour
             handAnimationL["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
             handAnimationR["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
 
-            lightManager.localPlayer = this.gameObject;
+            networkPlayers.localPlayer = this.gameObject;
         }
     }
 }
