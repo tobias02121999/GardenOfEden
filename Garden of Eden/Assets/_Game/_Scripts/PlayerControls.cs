@@ -62,9 +62,9 @@ public class PlayerControls : NetworkBehaviour
     }
 
     [Command]
-    public void CmdSetAuthorityServer(NetworkIdentity identity)
+    public void CmdClearAuthority(NetworkIdentity identity)
     {
-        identity.AssignClientAuthority(connectionToServer);
+        identity.RemoveClientAuthority(connectionToClient);
     }
 
     [Command]

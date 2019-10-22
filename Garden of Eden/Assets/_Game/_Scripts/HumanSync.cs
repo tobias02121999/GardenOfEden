@@ -24,10 +24,9 @@ public class HumanSync : NetworkBehaviour
 
     void Update()
     {
-        if (detection.localPlayerColliding)
-            networkPlayers.localPlayer.GetComponent<PlayerControls>().CmdSetAuthorityServer(identity);
-
         if (detection.otherPlayerColliding)
             networkPlayers.localPlayer.GetComponent<PlayerControls>().CmdSetAuthorityClient(identity);
+        else
+            networkPlayers.localPlayer.GetComponent<PlayerControls>().CmdClearAuthority(identity);
     }
 }
