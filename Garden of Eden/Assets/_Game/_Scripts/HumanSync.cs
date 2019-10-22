@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class HumanSync : MonoBehaviour
+public class HumanSync : NetworkBehaviour
 {
     // Initialize the public variables
     [HideInInspector]
@@ -25,7 +25,8 @@ public class HumanSync : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        identity.localPlayerAuthority = serverInControl;
+        if (!isServer)
+            identity.localPlayerAuthority = serverInControl;
     }
 
     // 
