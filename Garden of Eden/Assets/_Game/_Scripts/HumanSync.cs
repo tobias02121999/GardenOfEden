@@ -25,7 +25,7 @@ public class HumanSync : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isServer && identity.localPlayerAuthority != serverInControl)
+        if (identity.localPlayerAuthority != serverInControl)
             identity.localPlayerAuthority = serverInControl;
     }
 
@@ -33,7 +33,7 @@ public class HumanSync : NetworkBehaviour
     void OnTriggerEnter(Collider other)
     {
         var obj = other.GetComponentInParent<PlayerController>().gameObject;
-        if (obj == networkPlayers.otherPlayer)
+        if (obj != null && obj == networkPlayers.otherPlayer)
             serverInControl = false;
         else
             serverInControl = true;
