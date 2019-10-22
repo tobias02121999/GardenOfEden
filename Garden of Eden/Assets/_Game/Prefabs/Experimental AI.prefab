@@ -2467,11 +2467,9 @@ GameObject:
   - component: {fileID: 6538513111818616356}
   - component: {fileID: 1438448271049857592}
   - component: {fileID: 1746902633728497879}
-  - component: {fileID: 3395344291767607343}
   - component: {fileID: 6512289002699450569}
   - component: {fileID: 1702152206449172756}
   - component: {fileID: 497717932460592976}
-  - component: {fileID: 4448945172829697148}
   m_Layer: 0
   m_Name: Experimental AI
   m_TagString: Untagged
@@ -2578,20 +2576,6 @@ MonoBehaviour:
   wanderAlarm: 0
   minDistanceFromBuildToCalamity: 0
   gatheredWood: 0
---- !u!114 &3395344291767607343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6538513111818248708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98855e59ef2820b418837615a01b60a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  networkPlayers: {fileID: 0}
-  identity: {fileID: 0}
 --- !u!114 &6512289002699450569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2667,20 +2651,6 @@ MonoBehaviour:
   m_MovementThreshold: 0.001
   m_InterpolateRotation: 0.5
   m_InterpolateMovement: 0.5
---- !u!136 &4448945172829697148
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6538513111818248708}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.7414665
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.89130783, z: 0}
 --- !u!1 &6538513111818248710
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,6 +2984,8 @@ GameObject:
   - component: {fileID: 6538513111818616364}
   - component: {fileID: 6538513111797066473}
   - component: {fileID: 6538513111797066454}
+  - component: {fileID: 4046768807847389014}
+  - component: {fileID: 6261036823992391795}
   m_Layer: 0
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -3069,6 +3041,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.35527033, y: 0.2488533, z: 0.22659811}
   m_Center: {x: 0.000108867884, y: 0.07374436, z: -0.012813583}
+--- !u!136 &4046768807847389014
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538513111818248716}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.759865
+  m_Direction: 1
+  m_Center: {x: -2.6041043e-13, y: -0.12272107, z: -9.432993e-15}
+--- !u!114 &6261036823992391795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538513111818248716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98855e59ef2820b418837615a01b60a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkPlayers: {fileID: 0}
+  identity: {fileID: 0}
 --- !u!1 &6538513111818248718
 GameObject:
   m_ObjectHideFlags: 0

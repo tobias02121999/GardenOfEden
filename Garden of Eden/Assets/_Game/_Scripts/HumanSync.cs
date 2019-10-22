@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class HumanSync : NetworkBehaviour
+public class HumanSync : MonoBehaviour
 {
     // Initialize the public variables
     [HideInInspector]
@@ -19,7 +19,7 @@ public class HumanSync : NetworkBehaviour
     void Start()
     {
         networkPlayers = FindObjectOfType<NetworkPlayers>();
-        identity = GetComponent<NetworkIdentity>();
+        identity = GetComponentInParent<NetworkIdentity>();
     }
 
     // Update is called once per frame
