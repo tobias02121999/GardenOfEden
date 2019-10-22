@@ -25,8 +25,8 @@ public class InteractionDetection : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        var _local = other.GetComponentInParent<PlayerControls>().gameObject;
-        var _other = other.GetComponentInParent<PlayerControls>().gameObject;
+        var _local = other.gameObject.GetComponentInParent<PlayerControls>().gameObject;
+        var _other = other.gameObject.GetComponentInParent<PlayerControls>().gameObject;
 
         if (_local != null && _local == networkPlayers.localPlayer)
             localPlayerColliding = true;
