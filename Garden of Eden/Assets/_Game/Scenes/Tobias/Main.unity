@@ -1319,6 +1319,7 @@ GameObject:
   - component: {fileID: 459819288}
   - component: {fileID: 459819287}
   - component: {fileID: 459819286}
+  - component: {fileID: 459819290}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -1455,6 +1456,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &459819290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459819285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b88d1eb01c67f84d97a9c52677fe8a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localPlayer: {fileID: 0}
+  otherPlayer: {fileID: 0}
 --- !u!1 &490885005
 GameObject:
   m_ObjectHideFlags: 0
@@ -6481,6 +6496,49 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.030774001, y: 0.1105875, z: 0.030774001}
   m_Center: {x: 0.000066626075, y: 0.05529375, z: -0.00030441434}
+--- !u!1 &1857366519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857366521}
+  - component: {fileID: 1857366520}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1857366520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857366519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fb54a6566bb1742aa20fa7e094959c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1857366521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857366519}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 31.3415, y: 28.992622, z: -12.042748}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1869433966
 GameObject:
   m_ObjectHideFlags: 0
