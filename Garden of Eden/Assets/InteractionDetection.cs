@@ -21,10 +21,8 @@ public class InteractionDetection : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        var obj = other.transform.parent.parent.gameObject;
-
         if (!localPlayer.isServer)
-            localPlayer.CmdSetClientAuthority(obj);
+            localPlayer.CmdSetClientAuthority(this.gameObject);
     }
 
     void OnTriggerExit(Collider other)
