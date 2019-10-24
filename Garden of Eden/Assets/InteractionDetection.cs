@@ -31,9 +31,9 @@ public class InteractionDetection : MonoBehaviour
         if (!localPlayer.isServer)
         {
             if (!player.isLocalPlayer)
-                localPlayer.CmdSetClientAuthority(this.gameObject);
+                localPlayer.CmdSetClientAuthority(this.transform.parent.parent.gameObject);
             else
-                localPlayer.CmdClearAuthority(this.gameObject);
+                localPlayer.CmdClearAuthority(this.transform.parent.parent.gameObject);
         }
     }
 }
