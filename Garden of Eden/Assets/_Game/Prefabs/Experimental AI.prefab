@@ -88,7 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5aee069cee22e645a18632fa3286feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isColliding: 0
   localPlayer: {fileID: 0}
 --- !u!1 &4982348979533555723
 GameObject:
@@ -2527,9 +2526,11 @@ GameObject:
   - component: {fileID: 6538513111818616356}
   - component: {fileID: 1438448271049857592}
   - component: {fileID: 1746902633728497879}
+  - component: {fileID: 6265086071783923610}
   - component: {fileID: 3021181330258474364}
   - component: {fileID: 3883674222854765551}
   - component: {fileID: 5871778178067905495}
+  - component: {fileID: 4698193022562941167}
   m_Layer: 0
   m_Name: Experimental AI
   m_TagString: Untagged
@@ -2636,6 +2637,18 @@ MonoBehaviour:
   wanderAlarm: 0
   minDistanceFromBuildToCalamity: 0
   gatheredWood: 0
+--- !u!114 &6265086071783923610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538513111818248708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35cd5ed5c1b36f42a51664083480fe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3021181330258474364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2704,6 +2717,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616364}
+  m_ChildIndex: 0
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_MovementThreshold: 0.001
+  m_InterpolateRotation: 0.5
+  m_InterpolateMovement: 0.5
+--- !u!114 &4698193022562941167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538513111818248708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 0}
   m_ChildIndex: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7

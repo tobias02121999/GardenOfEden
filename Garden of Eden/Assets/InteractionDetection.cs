@@ -7,6 +7,9 @@ public class InteractionDetection : MonoBehaviour
     // Initialize the public variables
     public PlayerControls localPlayer;
 
+    // Initialize the private variables
+    RagdollSetup ragdollSetup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,7 @@ public class InteractionDetection : MonoBehaviour
         
     }
 
+    // 
     void OnTriggerEnter(Collider other)
     {
         var player = other.gameObject.GetComponentInParent<PlayerControls>();

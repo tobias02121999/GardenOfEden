@@ -8,39 +8,37 @@ public class RagdollSetup : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!isServer)
-        {
-            var animator = GetComponent<RagdollAnimator>();
-            var size = animator.bones.Length;
-
-            for (var i = 0; i < size; i++)
-            {
-                var characterJoint = animator.bones[i].GetComponent<CharacterJoint>();
-                var configurableJoint = animator.bones[i].GetComponent<ConfigurableJoint>();
-                var rigidbody = animator.bones[i].GetComponent<Rigidbody>();
-                var collider = animator.bones[i].GetComponent<Collider>();
-
-                if (characterJoint != null)
-                    Destroy(characterJoint);
-
-                if (configurableJoint != null)
-                    Destroy(configurableJoint);
-
-                if (rigidbody != null)
-                    Destroy(rigidbody);
-
-                if (collider != null)
-                    Destroy(collider);
-            }
-
-            Destroy(animator.feetCollider);
-            animator.enabled = false;
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        var identity = GetComponent<NetworkIdentity>();
+        ControlRigidBodies(identity.hasAuthority);
+    }
+
+    // Enable or disable all rigidbodies
+    public void ControlRigidBodies(bool state)
+    {
+        var animator = GetComponent<RagdollAnimator>();
+        var size = animator.bones.Length;
+
+        for (var i = 0; i < size; i++)
+        {
+            var characterJoint = animator.bones[i].GetComponent<CharacterJoint>();
+            var configurableJoint = animator.bones[i].GetComponent<ConfigurableJoint>();
+            var rigidbody = animator.bones[i].GetComponent<Rigidbody>();
+            var collider = animator.bones[i].GetComponent<Collider>();
+
+            if (rigidbody != null)
+                rigidbody.isKinematic = state;
+
+            if (collider != null)
+                collider.enabled = state;
+        }
+
+        animator.feetCollider.enabled = state;
+        animator.enabled = state;
     }
 }
