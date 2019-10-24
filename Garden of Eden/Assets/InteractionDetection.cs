@@ -21,23 +21,17 @@ public class InteractionDetection : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Hands"))
-        {
-            var obj = other.transform.parent.parent.gameObject;
+        var obj = other.transform.parent.parent.gameObject;
 
-            if (!localPlayer.isServer)
-                localPlayer.CmdSetClientAuthority(obj);
-        }
+        if (!localPlayer.isServer)
+            localPlayer.CmdSetClientAuthority(obj);
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Hands"))
-        {
-            var obj = other.transform.parent.parent.gameObject;
+        var obj = other.transform.parent.parent.gameObject;
 
-            if (!localPlayer.isServer)
-                localPlayer.CmdClearAuthority(obj);
-        }
+        if (!localPlayer.isServer)
+            localPlayer.CmdClearAuthority(obj);
     }
 }
