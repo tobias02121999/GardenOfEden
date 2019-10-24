@@ -4145,6 +4145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRig: {fileID: 6532427273485501494}
+  headFollowScript: {fileID: 643875881222111061}
+  headRigidBody: {fileID: 6620702021431099959}
   cursor: {fileID: 5913734073961864708}
   leftPivot: {fileID: 290011361242660828}
   rightPivot: {fileID: 1259975458233020016}
