@@ -8,6 +8,8 @@ using Node = UnityEngine.XR.XRNode;
 public class PlayerControls : NetworkBehaviour
 {
     public GameObject cameraRig;
+    public GameObject headFollowScript;
+    public Rigidbody headRigidBody;
     public GameObject cursor;
     public Transform leftPivot;
     public Transform rightPivot;
@@ -29,6 +31,8 @@ public class PlayerControls : NetworkBehaviour
             cameraRig.SetActive(false);
             cursor.SetActive(false);
             GetComponent<NetworkSpawner>().enabled = false;
+            headFollowScript.SetActive(false);
+            headRigidBody.isKinematic = true;
 
             networkPlayers.otherPlayer = this.gameObject;
         }
