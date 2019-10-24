@@ -29,9 +29,7 @@ public class InteractionDetection : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        var obj = other.transform.parent.parent.gameObject;
-
         if (!localPlayer.isServer)
-            localPlayer.CmdClearAuthority(obj);
+            localPlayer.CmdClearAuthority(this.gameObject);
     }
 }
