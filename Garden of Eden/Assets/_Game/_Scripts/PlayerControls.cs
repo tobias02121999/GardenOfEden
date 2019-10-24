@@ -7,7 +7,7 @@ using Node = UnityEngine.XR.XRNode;
 
 public class PlayerControls : NetworkBehaviour
 {
-    public GameObject ovrCameraRig;
+    public Component[] disableComponents;
     public GameObject cursor;
     public Transform leftPivot;
     public Transform rightPivot;
@@ -26,7 +26,12 @@ public class PlayerControls : NetworkBehaviour
     {
         if (!isLocalPlayer)
         {
-            ovrCameraRig.SetActive(false);
+            for (var i = 0; i < disableComponents.Length; i++)
+            {
+                foreach (Behaviour behaviour in disableComponents[i].GetComponents<Behaviour>())
+                    behaviour.enabled = false;
+            }
+
             cursor.SetActive(false);
             GetComponent<NetworkSpawner>().enabled = false;
 

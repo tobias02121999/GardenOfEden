@@ -4078,7 +4078,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d1e168d61d2554ca5fc321c733e607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ovrCameraRig: {fileID: 6532427273485501494}
+  disableComponents:
+  - {fileID: 6532427273491001798}
+  - {fileID: 6548324590111892844}
+  - {fileID: 6532427273488259634}
+  - {fileID: 6532427273485812354}
+  - {fileID: 6532427273491115680}
+  - {fileID: 3163548026224966288}
+  - {fileID: 6552472596956219778}
+  - {fileID: 6532427273491115680}
+  - {fileID: 6532427273491115680}
+  - {fileID: 6532427273491115680}
   cursor: {fileID: 5913734073961864708}
   leftPivot: {fileID: 290011361242660828}
   rightPivot: {fileID: 1259975458233020016}
