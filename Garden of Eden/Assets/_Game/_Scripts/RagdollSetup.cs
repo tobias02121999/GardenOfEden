@@ -15,7 +15,7 @@ public class RagdollSetup : NetworkBehaviour
     void Update()
     {
         var identity = GetComponent<NetworkIdentity>();
-        ControlRigidBodies(identity.hasAuthority);
+        ControlRigidBodies(!identity.hasAuthority);
     }
 
     // Enable or disable all rigidbodies
