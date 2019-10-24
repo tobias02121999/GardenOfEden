@@ -21,13 +21,14 @@ public class InteractionDetection : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!localPlayer.isServer)
-            localPlayer.CmdSetClientAuthority(this.gameObject);
-    }
+        var player = other.gameObject.GetComponentInParent<PlayerControls>();
 
-    void OnTriggerExit(Collider other)
-    {
         if (!localPlayer.isServer)
-            localPlayer.CmdClearAuthority(this.gameObject);
+        {
+            if (!player.isLocalPlayer)
+                localPlayer.CmdSetClientAuthority(this.gameObject);
+            else
+                localPlayer.CmdClearAuthority(this.gameObject);
+        }
     }
 }

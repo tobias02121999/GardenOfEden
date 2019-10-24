@@ -3921,6 +3921,7 @@ GameObject:
   - component: {fileID: 4153992491835592985}
   - component: {fileID: 4599355509379163981}
   - component: {fileID: 2188905478725846035}
+  - component: {fileID: 5287839584460374462}
   - component: {fileID: 986074901754382071}
   - component: {fileID: 2550984726580657476}
   - component: {fileID: 30219562254307814}
@@ -4039,6 +4040,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 1259975458233020016}
   m_ChildIndex: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_MovementThreshold: 0.001
+  m_InterpolateRotation: 0.5
+  m_InterpolateMovement: 0.5
+--- !u!114 &5287839584460374462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6532427273485501498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 6532427273485342750}
+  m_ChildIndex: 2
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
