@@ -89,7 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localPlayer: {fileID: 0}
-  clientAuthority: 0
 --- !u!1 &4982348979533555723
 GameObject:
   m_ObjectHideFlags: 0
@@ -2705,7 +2704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
@@ -2728,7 +2727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616364}
   m_ChildIndex: 0
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2748,7 +2747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616422}
   m_ChildIndex: 1
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2768,7 +2767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616350}
   m_ChildIndex: 2
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2788,7 +2787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616410}
   m_ChildIndex: 3
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2808,7 +2807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616402}
   m_ChildIndex: 4
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2828,7 +2827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616742}
   m_ChildIndex: 5
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2848,7 +2847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616344}
   m_ChildIndex: 6
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2868,7 +2867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616366}
   m_ChildIndex: 7
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2888,7 +2887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616412}
   m_ChildIndex: 8
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2908,7 +2907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616418}
   m_ChildIndex: 9
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
@@ -2928,7 +2927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616352}
   m_ChildIndex: 10
-  m_SendInterval: 0.05
+  m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
