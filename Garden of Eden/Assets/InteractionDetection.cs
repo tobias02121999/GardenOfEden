@@ -6,6 +6,7 @@ public class InteractionDetection : MonoBehaviour
 {
     // Initialize the public variables
     public PlayerControls localPlayer;
+    public bool clientAuthority;
 
     // Initialize the private variables
     RagdollSetup ragdollSetup;
@@ -35,9 +36,22 @@ public class InteractionDetection : MonoBehaviour
         if (!localPlayer.isServer)
         {
             if (player.isLocalPlayer)
+            {
                 localPlayer.CmdSetClientAuthority(this.transform.parent.parent.gameObject);
+                clientAuthority = true;
+            }
             else
+            {
                 localPlayer.CmdClearAuthority(this.transform.parent.parent.gameObject);
+                clientAuthority = false;
+            }
+        }
+        else
+        {
+            if (player.isLocalPlayer)
+                clientAuthority = false;
+            else
+                clientAuthority = true;
         }
     }
 }
