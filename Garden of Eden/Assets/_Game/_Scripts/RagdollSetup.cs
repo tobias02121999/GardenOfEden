@@ -20,9 +20,9 @@ public class RagdollSetup : NetworkBehaviour
         bool check;
 
         if (isServer)
-            check = !detection.clientAuthority;
-        else
             check = detection.clientAuthority;
+        else
+            check = !detection.clientAuthority;
 
         ControlRigidBodies(check);
     }
