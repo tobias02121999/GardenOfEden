@@ -44,10 +44,10 @@ public class RagdollSetup : NetworkBehaviour
                 rigidbody.isKinematic = state;
 
             if (collider != null)
-                collider.enabled = state;
+                collider.enabled = !state;
         }
 
-        animator.feetCollider.enabled = state;
-        animator.enabled = state;
+        animator.feetCollider.enabled = !state;
+        animator.enabled = !state;
     }
 }
