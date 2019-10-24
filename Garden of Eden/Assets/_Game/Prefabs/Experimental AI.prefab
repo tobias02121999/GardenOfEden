@@ -2467,10 +2467,9 @@ GameObject:
   - component: {fileID: 6538513111818616356}
   - component: {fileID: 1438448271049857592}
   - component: {fileID: 1746902633728497879}
-  - component: {fileID: 962732428353283405}
-  - component: {fileID: 6512289002699450569}
-  - component: {fileID: 4411913938287370218}
-  - component: {fileID: 4597877698182465986}
+  - component: {fileID: 3021181330258474364}
+  - component: {fileID: 3883674222854765551}
+  - component: {fileID: 5871778178067905495}
   m_Layer: 0
   m_Name: Experimental AI
   m_TagString: Untagged
@@ -2577,21 +2576,7 @@ MonoBehaviour:
   wanderAlarm: 0
   minDistanceFromBuildToCalamity: 0
   gatheredWood: 0
---- !u!114 &962732428353283405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6538513111818248708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98855e59ef2820b418837615a01b60a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  networkPlayers: {fileID: 0}
-  identity: {fileID: 0}
---- !u!114 &6512289002699450569
+--- !u!114 &3021181330258474364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2624,7 +2609,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &4411913938287370218
+--- !u!114 &3883674222854765551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2646,7 +2631,7 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &4597877698182465986
+--- !u!114 &5871778178067905495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3000,7 +2985,6 @@ GameObject:
   - component: {fileID: 6538513111797066473}
   - component: {fileID: 6538513111797066454}
   - component: {fileID: 8318907918947669537}
-  - component: {fileID: 7744060256132247955}
   m_Layer: 0
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -3070,18 +3054,6 @@ CapsuleCollider:
   m_Height: 1.7434294
   m_Direction: 1
   m_Center: {x: 1.6298092e-12, y: -0.10662209, z: -9.4398925e-15}
---- !u!114 &7744060256132247955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6538513111818248716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5aee069cee22e645a18632fa3286feb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6538513111818248718
 GameObject:
   m_ObjectHideFlags: 0

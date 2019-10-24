@@ -22,6 +22,8 @@ public class NetworkSpawner : NetworkBehaviour
     void Update()
     {
         Spawn();
+        if (isServer)
+            Debug.Log("Konten");
     }
 
     // Spawn the prefab based on user input
@@ -50,5 +52,13 @@ public class NetworkSpawner : NetworkBehaviour
         //var obj = Instantiate(prefab, spawnPos.position, Quaternion.identity);
         var obj = ObjectPooler.Instance.SpawnFromPool("Humans", spawnPos.position, Quaternion.identity);
         NetworkServer.Spawn(obj);
+    }
+
+    // Shift the authority over to the client
+    [Command]
+    void CmdSetClientAuthority(GameObject instance)
+    {
+        var identity = instance.GetComponent<NetworkIdentity>();
+        identity.AssignClientAuthority(connectionToClient);
     }
 }
