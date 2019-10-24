@@ -28,6 +28,7 @@ public class PlayerControls : NetworkBehaviour
         {
             ovrCameraRig.SetActive(false);
             cursor.SetActive(false);
+            GetComponent<NetworkSpawner>().enabled = false;
 
             networkPlayers.otherPlayer = this.gameObject;
         }

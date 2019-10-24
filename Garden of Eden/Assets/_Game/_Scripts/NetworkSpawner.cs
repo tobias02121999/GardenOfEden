@@ -35,7 +35,7 @@ public class NetworkSpawner : NetworkBehaviour
         {
             if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) != 0f || Input.GetMouseButtonDown(0))
             {
-                CmdSpawn();
+                CmdSpawn(isLocalPlayer);
                 hasSpawned = true;
             }
         }
@@ -48,13 +48,13 @@ public class NetworkSpawner : NetworkBehaviour
 
     // Spawn the prefab over the network
     [Command]
-    void CmdSpawn()
+    void CmdSpawn(bool isLocal)
     {
         //var obj = Instantiate(prefab, spawnPos.position, Quaternion.identity);
         var obj = ObjectPooler.Instance.SpawnFromPool("Humans", spawnPos.position, Quaternion.identity);
         NetworkServer.Spawn(obj);
 
-        if (isLocalPlayer)
+        if (isLocal)
             obj.GetComponentInChildren<InteractionDetection>().localPlayer = GetComponent<PlayerControls>();
     }
 }
