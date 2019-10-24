@@ -3974,7 +3974,7 @@ MonoBehaviour:
   rightEye: {fileID: 6552472596956219778}
   handAnimationL: {fileID: 8687966737579499137}
   handAnimationR: {fileID: 489547755420383549}
-  isLocal: 0
+  networkPlayers: {fileID: 0}
 --- !u!114 &2550984726580657476
 MonoBehaviour:
   m_ObjectHideFlags: 0

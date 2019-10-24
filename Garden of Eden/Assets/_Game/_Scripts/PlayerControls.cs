@@ -61,15 +61,19 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    // Shift the authority over to the client
     [Command]
-    public void CmdClearAuthority(NetworkIdentity identity)
+    public void CmdSetClientAuthority(GameObject instance)
     {
-        identity.RemoveClientAuthority(connectionToClient);
+        var identity = instance.GetComponent<NetworkIdentity>();
+        identity.AssignClientAuthority(connectionToClient);
     }
 
+    // Clear the authority
     [Command]
-    public void CmdSetAuthorityClient(NetworkIdentity identity)
+    public void CmdClearAuthority(GameObject instance)
     {
-        identity.AssignClientAuthority(connectionToClient);
+        var identity = instance.GetComponent<NetworkIdentity>();
+        identity.RemoveClientAuthority(connectionToClient);
     }
 }
