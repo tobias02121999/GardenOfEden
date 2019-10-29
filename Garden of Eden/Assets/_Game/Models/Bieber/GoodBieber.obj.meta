@@ -26,6 +26,13 @@ ModelImporter:
     2100008: Texture4
     2100010: Texture5
     2100012: Texture6
+    2100014: eyeL_hiMat
+    2100016: eyeR_hiMat
+    2100018: skin_hiMat
+    2100020: sockMat
+    2100022: teethLowerMat
+    2100024: teethUpperMat
+    2100026: tongueMat
     2300000: eyeL_hi
     2300002: eyeR_hi
     2300004: skin_hi

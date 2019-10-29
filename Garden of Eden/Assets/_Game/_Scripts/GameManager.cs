@@ -27,10 +27,14 @@ public class GameManager : Singleton<GameManager>
             var go = Instantiate(cube, new Vector3(3, 0, 0), Quaternion.identity);
             fearObjects.Add(go);
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(3))
         {
             Destroy(fearObjects[0]);
             fearObjects.RemoveAt(0);
+        }
+
+        if (Input.GetKeyDown("s")){
+            ObjectPooler.Instance.SpawnFromPool("Humans", transform.position, Quaternion.identity);
         }
     }
 }

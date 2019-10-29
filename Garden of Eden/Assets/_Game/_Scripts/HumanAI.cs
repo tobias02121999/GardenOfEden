@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 
-public enum HumanState {RECOVER, IDLE, CHOPPING, BUILDING, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
+public enum HumanState {RECOVER, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_ALTAR, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
 
 public class HumanAI : Singleton<HumanAI>
 {
@@ -15,17 +15,17 @@ public class HumanAI : Singleton<HumanAI>
     public RagdollAnimator humanAnimator;
     public Transform humanMesh, movementParent, rotationReference;
     public int secondsSinceLastBuild;
-    public float speed, wanderDuration, turnSpeed, fearGauge, fearReductionSpeed;
+    public float speed, wanderDuration, turnSpeed, fear, faith, happiness, fearReductionSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
-
 
     float closestObject = 10000f;
     float closestLingeringObject = 10000f;
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
+    bool _wasInvoked = false;
     bool checkForTree = false;
 
     // Update is called once per frame
@@ -37,13 +37,16 @@ public class HumanAI : Singleton<HumanAI>
             ReduceFearOverTime();
         }
 
+        if (!_wasInvoked)
+            StartCoroutine("IncreaseFaithOverTime");
+
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
         if (humanAnimator.hasCollapsed)
             currentState = HumanState.RECOVER;
         else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
-            currentState = HumanState.BUILDING;
-        else if (CheckResources())
+            currentState = HumanState.BUILDING_HOUSE;
+        else if (CheckResources() && gatheredWood < 30)
             currentState = HumanState.CHOPPING;
         else
             currentState = HumanState.IDLE;
@@ -79,7 +82,6 @@ public class HumanAI : Singleton<HumanAI>
                     if (humanAnimator.currentRot <= humanAnimator.targetRot - turnSpeed)
                         humanAnimator.currentRot += turnSpeed;
 
-
                     movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);              
                 }
 
@@ -100,12 +102,16 @@ public class HumanAI : Singleton<HumanAI>
 
                 break;
 
-            case HumanState.BUILDING:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                gameObject.SetActive(false);
-                ObjectPooler.Instance.SpawnFromPool("House", transform.position, Quaternion.identity);
+            case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
+                Vector3 inFront = transform.position + new Vector3(0, 0, 6);
+                ObjectPooler.Instance.SpawnFromPool("House", inFront, Quaternion.identity);
 
-                Destroy(gameObject);    // Remove the human from the game when the house is built.
+                gatheredWood -= 30;
 
+                break;
+
+            case HumanState.BUILDING_ALTAR:
+                
                 break;
 
             case HumanState.GATHERING_RESOURCES:
@@ -151,7 +157,7 @@ public class HumanAI : Singleton<HumanAI>
         }
         else
         {
-            fearGauge = 0f; // Reset the fear gauge to adjust it (otherwise it will just add onto the former amount.
+            fear = 0f; // Reset the fear gauge to adjust it (otherwise it will just add onto the former amount.
             GameManager.Instance.fearObjects.Clear(); // Reset the list
             for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
             {
@@ -171,18 +177,18 @@ public class HumanAI : Singleton<HumanAI>
             }
 
             // Big Math
-            var distanceToFear = fearGauge + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition);
-            fearGauge = Mathf.Clamp(distanceToFear, 0, 100); // Set fear
+            var distanceToFear = fear + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition);
+            fear = Mathf.Clamp(distanceToFear, 0, 100); // Set fear
             SetSpeed();
         }
     }
 
     void SetSpeed() // Sets the speed of this human based on the amount of fear.
     {
-        if (fearGauge <= 100)
+        if (fear <= 100)
         {
             speed = 0f;
-            var adjustedFear = fearGauge / 20;
+            var adjustedFear = fear / 20;
             speed = Mathf.Clamp(speed + adjustedFear, 2, 5);
             Debug.Log("Speed adjusted to " + speed);
         }
@@ -298,11 +304,29 @@ public class HumanAI : Singleton<HumanAI>
         wasInvoked = false;
     }
 
+    IEnumerator IncreaseFaithOverTime()
+    {
+        _wasInvoked = true;
+
+        if (faith >= 100)
+        {
+            // "Upgrade" to Prophet.
+        }
+        else
+        {
+            yield return new WaitForSeconds(7.5f);
+            faith++;
+            faith = Mathf.Clamp(faith, 0, 100);
+        }
+
+        _wasInvoked = false;
+    }
+
     void ReduceFearOverTime()
     {
         if (GameManager.Instance.fearObjects.Count <= 0)
         {
-            fearGauge = Mathf.Lerp(fearGauge, 0, Time.deltaTime * fearReductionSpeed);
+            fear = Mathf.Lerp(fear, 0, Time.deltaTime * fearReductionSpeed);
             SetSpeed();
         }
     }
