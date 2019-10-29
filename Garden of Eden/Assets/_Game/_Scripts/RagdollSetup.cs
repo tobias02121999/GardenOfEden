@@ -19,10 +19,17 @@ public class RagdollSetup : NetworkBehaviour
     {
         bool check;
 
+        /*
         if (isServer)
             check = detection.clientAuthority;
         else
             check = !detection.clientAuthority;
+        */
+
+        if (isServer)
+            check = !hasAuthority;
+        else
+            check = hasAuthority;
 
         ControlRigidBodies(check);
     }
