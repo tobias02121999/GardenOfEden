@@ -7,7 +7,7 @@ using Node = UnityEngine.XR.XRNode;
 
 public class PlayerControls : NetworkBehaviour
 {
-    public GameObject cameraRig;
+    public GameObject cameraRig, headModel;
     public FollowPivot headFollowScript;
     public Rigidbody headRigidBody;
     public GameObject cursor;
@@ -38,6 +38,8 @@ public class PlayerControls : NetworkBehaviour
         }
         else
         {
+            headModel.SetActive(false);
+
             // Makes sure the local camera's are the main camera's.
             if (leftEye.tag != "MainCamera")
             {
