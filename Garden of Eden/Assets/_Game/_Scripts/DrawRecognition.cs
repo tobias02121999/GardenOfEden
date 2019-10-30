@@ -5,7 +5,6 @@ using UnityEngine;
 public class DrawRecognition : MonoBehaviour
 {
     // Initialize the private variables
-    public NetworkSpawner spawner;
     public GameObject drawPointCollider;
     public Vector2 gridSize;
     public int[,] drawData;
@@ -162,7 +161,7 @@ public class DrawRecognition : MonoBehaviour
                         {
                             if (xx == gridWidth - 1 && yy == gridHeight - 1)
                             {
-                                spawner.CmdSpawn(symbolObjects[c].name, transform.position);
+                                ObjectPooler.Instance.SpawnFromPool(symbolObjects[c].name, transform.position, Quaternion.identity);
                                 goto End;
                             }
                         }

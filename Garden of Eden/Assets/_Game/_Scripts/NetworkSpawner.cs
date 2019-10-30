@@ -45,25 +45,10 @@ public class NetworkSpawner : NetworkBehaviour
 
     // Spawn the prefab over the network
     [Command]
-    public void CmdSpawn(string poolName, Vector3 spawnPosition)
+    void CmdSpawn()
     {
         //var obj = Instantiate(prefab, spawnPos.position, Quaternion.identity);
-        var obj = ObjectPooler.Instance.SpawnFromPool(poolName, spawnPos.position, Quaternion.identity);
+        var obj = ObjectPooler.Instance.SpawnFromPool("Humans", spawnPos.position, Quaternion.identity);
         NetworkServer.Spawn(obj);
-    }
-
-    [Command]
-    public void CmdSpawnHouse(Transform spawnPosition, bool spawnedByHuman)
-    {
-        if (spawnedByHuman)
-        {
-            var house = ObjectPooler.Instance.SpawnFromPool("House", spawnPosition.position + new Vector3(0, 0, 6), Quaternion.identity);
-            NetworkServer.Spawn(house);
-        }
-        else 
-        {
-            var house = ObjectPooler.Instance.SpawnFromPool("House", spawnPosition.position, Quaternion.identity);
-            NetworkServer.Spawn(house);
-        }
     }
 }

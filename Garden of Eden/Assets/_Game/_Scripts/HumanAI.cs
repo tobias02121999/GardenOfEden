@@ -12,7 +12,6 @@ public class HumanAI : Singleton<HumanAI>
 
     [Space]
 
-    public NetworkSpawner spawner;
     public RagdollAnimator humanAnimator;
     public Transform humanMesh, movementParent, rotationReference;
     public int secondsSinceLastBuild;
@@ -105,7 +104,8 @@ public class HumanAI : Singleton<HumanAI>
 
             case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
                 Vector3 inFront = transform.position + new Vector3(0, 0, 6);
-                spawner.CmdSpawn("House", inFront);
+                ObjectPooler.Instance.SpawnFromPool("House", inFront, Quaternion.identity);
+
                 gatheredWood -= 30;
 
                 break;
@@ -280,22 +280,16 @@ public class HumanAI : Singleton<HumanAI>
                 break;
 
             case 2: // ...Nearest altar.
+                List<Transform> altars = new List<Transform>();
+
                 int prayingLayer = 19;
                 int prayingMask = 1 << prayingLayer;
 
                 Collider[] prayingGrounds = Physics.OverlapSphere(humanMesh.position, 25f, prayingMask);
-                List<Transform> altars = new List<Transform>();
                 foreach (Collider altar in prayingGrounds)
                 {
                     altars.Add(altar.transform);
                 }
-                
-                rotationReference.LookAt(GetClosestUnit(altars.ToArray()));
-                rot = rotationReference.rotation;
-                rot.x = 0f;
-                rot.z = 0f;
-
-                movementParent.rotation = rot;
                 break;
         }
     }
