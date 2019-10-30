@@ -13,8 +13,9 @@ public class Sun : MonoBehaviour
     public Color oakColorDay, oakColorNight;
     public Color grassColorDay, grassColorNight;
     public Color plateauColorDay, plateauColorNight;
+    public Color rockColorDay, rockColorNight;
     public Color sandColorDay, sandColorNight;
-    public Material waterMaterial, skyMaterial, birchMaterial, oakMaterial, grassMaterial, plateauMaterial, sandMaterial;
+    public Material waterMaterial, skyMaterial, birchMaterial, oakMaterial, grassMaterial, plateauMaterial, rockMaterial, sandMaterial;
     public ParticleSystem mist;
     public AuraAPI.Aura aura;
 
@@ -43,7 +44,7 @@ public class Sun : MonoBehaviour
         if (rotation >= 360f)
             rotation = 0f;
 
-        Color waterColor, auraColor, mistColor, birchColor, oakColor, grassColor, plateauColor, sandColor;
+        Color waterColor, auraColor, mistColor, birchColor, oakColor, grassColor, plateauColor, rockColor, sandColor;
         float density, ambient;
 
         if (rotation <= 180f)
@@ -58,6 +59,7 @@ public class Sun : MonoBehaviour
             oakColor = Color.Lerp(oakColorDay, oakColorNight, index);
             grassColor = Color.Lerp(grassColorDay, grassColorNight, index);
             plateauColor = Color.Lerp(plateauColorDay, plateauColorNight, index);
+            rockColor = Color.Lerp(rockColorDay, rockColorNight, index);
             sandColor = Color.Lerp(sandColorDay, sandColorNight, index);
         }
         else
@@ -72,6 +74,7 @@ public class Sun : MonoBehaviour
             oakColor = Color.Lerp(oakColorNight, oakColorDay, index);
             grassColor = Color.Lerp(grassColorNight, grassColorDay, index);
             plateauColor = Color.Lerp(plateauColorNight, plateauColorDay, index);
+            rockColor = Color.Lerp(rockColorNight, rockColorDay, index);
             sandColor = Color.Lerp(sandColorNight, sandColorDay, index);
         }
 
@@ -79,6 +82,7 @@ public class Sun : MonoBehaviour
         skyMaterial.color = waterColor;
         grassMaterial.color = grassColor;
         plateauMaterial.color = plateauColor;
+        rockMaterial.color = rockColor;
         sandMaterial.SetColor("_EmissionColor", sandColor);
         birchMaterial.SetColor("_EmissionColor", birchColor);
         oakMaterial.SetColor("_EmissionColor", oakColor);
