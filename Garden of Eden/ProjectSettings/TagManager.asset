@@ -7,6 +7,7 @@ TagManager:
   - FearObject
   - House
   - Tree
+  - Stork
   layers:
   - Default
   - TransparentFX
@@ -29,8 +30,8 @@ TagManager:
   - Birds
   - Praying Grounds
   - Interaction Detection
-  - 
-  - 
+  - Stork
+  - Human
   - 
   - 
   - 
