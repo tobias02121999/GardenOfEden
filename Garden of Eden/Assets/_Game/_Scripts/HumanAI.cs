@@ -20,8 +20,8 @@ public class HumanAI : Singleton<HumanAI>
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
-    float closestObject = 10000f;
-    float closestLingeringObject = 10000f;
+    float closestObject = Mathf.Infinity;
+    float closestLingeringObject = Mathf.Infinity;
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
