@@ -32,7 +32,7 @@ public class NetworkSpawner : NetworkBehaviour
         {
             if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) != 0f || Input.GetMouseButtonDown(0))
             {
-                CmdSpawn();
+                CmdSpawn("Humans", spawnPos.position);
                 hasSpawned = true;
             }
         }
