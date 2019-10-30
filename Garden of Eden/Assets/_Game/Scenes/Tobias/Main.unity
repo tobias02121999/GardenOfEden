@@ -1527,6 +1527,7 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 3652508346319371967, guid: 3fa21b1d78906824d860bd267e837401, type: 3}
   - {fileID: 6538513111818248708, guid: 75489347f09d0164385b4b6a180c2319, type: 3}
+  - {fileID: 3107386266670874818, guid: 261c70dec864f6c4ab642e6a81433513, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -5032,9 +5033,9 @@ MonoBehaviour:
   grassColorDay: {r: 1, g: 1, b: 1, a: 1}
   grassColorNight: {r: 0.2784314, g: 0.33333334, b: 0.4627451, a: 1}
   plateauColorDay: {r: 1, g: 1, b: 1, a: 1}
-  plateauColorNight: {r: 0.3025744, g: 0.24203454, b: 0.46226418, a: 1}
+  plateauColorNight: {r: 0.50482106, g: 0.45136172, b: 0.6509434, a: 1}
   rockColorDay: {r: 1, g: 1, b: 1, a: 1}
-  rockColorNight: {r: 0.3019608, g: 0.24313726, b: 0.4627451, a: 1}
+  rockColorNight: {r: 0.5058824, g: 0.4509804, b: 0.6509804, a: 1}
   sandColorDay: {r: 0.58431375, g: 0.5764706, b: 0.50980395, a: 1}
   sandColorNight: {r: 0.31527448, g: 0.30153078, b: 0.5283019, a: 1}
   waterMaterial: {fileID: 2100000, guid: cf75bbe88de8a7e4db86bccf7258ec20, type: 2}
@@ -5639,7 +5640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1465138754}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 12.92, z: 0}
+  m_LocalPosition: {x: 2.11, y: 12.92, z: 0.82}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 129740068}
