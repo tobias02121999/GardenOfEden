@@ -28,6 +28,8 @@ public class HumanAI : Singleton<HumanAI>
     bool wasInvoked = false;
     bool _wasInvoked = false; 
     bool checkForTree = false; 
+    List<GameObject> houses = new List<GameObject>();
+    List<GameObject> people = new List<GameObject>();
 
     // Update is called once per frame
     void Update()
@@ -106,10 +108,16 @@ public class HumanAI : Singleton<HumanAI>
                 break;
 
             case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                Vector3 inFront = transform.position + new Vector3(0, 0, 6);
-                ObjectPooler.Instance.SpawnFromPool("House", inFront, Quaternion.identity);
+                if (houses.Count < people.Count)
+                {
+                    Vector3 inFront = transform.position + new Vector3(0, 0, 6);
+                    var house = ObjectPooler.Instance.SpawnFromPool("House", inFront, Quaternion.identity);
 
-                gatheredWood -= 30;
+                    houses.Add(house);
+
+                    gatheredWood -= 30;
+                    secondsSinceLastBuild = 0;
+                }
 
                 break;
 
@@ -140,6 +148,7 @@ public class HumanAI : Singleton<HumanAI>
         Transform closestUnit = null;
         float minDistance = Mathf.Infinity;
         Vector3 currentPosition = transform.position;
+
         foreach (Transform unit in units)
         {
             float dist = Vector3.Distance(unit.position, currentPosition);
@@ -212,7 +221,7 @@ public class HumanAI : Singleton<HumanAI>
         Collider[] cols = Physics.OverlapSphere(humanMesh.position, 100f);  // Check in a radius of 100f (DONT FORGET TO ADD A LAYERMASK TO IGNORE HUMANS AND BUILDINGS).
         foreach (Collider col in cols)
         {
-            if (col.tag == "Tree")
+            if (col.CompareTag("Tree"))
             {
                 CheckForSufficientRoom();
                 return true;
