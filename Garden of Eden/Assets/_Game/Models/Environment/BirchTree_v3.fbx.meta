@@ -1,27 +1,25 @@
 fileFormatVersion: 2
-guid: c7ade609609213c40864434d814aa788
+guid: fdd1e0f891e795341b228e442c6e1963
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: OakTree_v3_TreeTop_Leafs_FixedLeaf_v18
-    100004: TreeTop
+    100002: BirchTree_v4_Treetop_Leafs_polySurface3
+    100004: Treetop
     400000: //RootNode
-    400002: OakTree_v3_TreeTop_Leafs_FixedLeaf_v18
-    400004: TreeTop
-    2100000: LoafTree_M
-    2100002: TreeRings_M
-    2100004: Branch_M
-    2100006: Leaf_M
+    400002: BirchTree_v4_Treetop_Leafs_polySurface3
+    400004: Treetop
+    2100000: Tree_M
+    2100002: Leaf_M
     2300000: //RootNode
-    2300002: OakTree_v3_TreeTop_Leafs_FixedLeaf_v18
-    2300004: TreeTop
+    2300002: BirchTree_v4_Treetop_Leafs_polySurface3
+    2300004: Treetop
     3300000: //RootNode
-    3300002: OakTree_v3_TreeTop_Leafs_FixedLeaf_v18
-    3300004: TreeTop
-    4300000: OakTree_v3
-    4300002: TreeTop
-    4300004: OakTree_v3_TreeTop_Leafs_FixedLeaf_v18
+    3300002: BirchTree_v4_Treetop_Leafs_polySurface3
+    3300004: Treetop
+    4300000: BirchTree_v4
+    4300002: Treetop
+    4300004: BirchTree_v4_Treetop_Leafs_polySurface3
   externalObjects: {}
   materials:
     importMaterials: 1

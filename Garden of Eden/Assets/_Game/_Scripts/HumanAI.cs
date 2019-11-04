@@ -41,6 +41,8 @@ public class HumanAI : Singleton<HumanAI>
         if (!_wasInvoked)
             StartCoroutine("IncreaseFaithOverTime");
 
+        AddForce();
+
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
         if (humanAnimator.hasCollapsed)
@@ -190,7 +192,7 @@ public class HumanAI : Singleton<HumanAI>
         {
             speed = 0f;
             var adjustedFear = fear / 20;
-            speed = Mathf.Clamp(speed + adjustedFear, 4, 5);
+            speed = Mathf.Clamp(speed + adjustedFear, 10, 20);
             Debug.Log("Speed adjusted to " + speed);
         }
     }
@@ -201,7 +203,7 @@ public class HumanAI : Singleton<HumanAI>
         for (var i = 0; i < length; i++)
         {
             var bone = humanAnimator.bones[i].GetComponent<Rigidbody>();
-            bone.AddForce(bone.transform.forward * speed);
+            bone.AddForce(humanAnimator.movementParent.forward * speed);
         }
     }
 
