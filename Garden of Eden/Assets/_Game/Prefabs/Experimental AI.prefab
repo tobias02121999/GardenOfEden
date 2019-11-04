@@ -2314,8 +2314,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6171444308595301860}
   m_LocalRotation: {x: -0.00000048531905, y: 0.000005399778, z: -0.00017537715, w: 1}
-  m_LocalPosition: {x: -0, y: -0.917, z: -0.004}
-  m_LocalScale: {x: 0.5247899, y: 0.08517432, z: 0.52479}
+  m_LocalPosition: {x: -0, y: -0.977, z: -0.004}
+  m_LocalScale: {x: 0.7, y: 0.08517432, z: 0.7}
   m_Children: []
   m_Father: {fileID: 6538513111818616364}
   m_RootOrder: 3
@@ -2642,7 +2642,9 @@ MonoBehaviour:
   speed: 4
   wanderDuration: 150
   turnSpeed: 5
-  fearGauge: 0
+  fear: 0
+  faith: 0
+  happiness: 0
   fearReductionSpeed: 1.5
   wanderAlarm: 0
   minDistanceFromBuildToCalamity: 0

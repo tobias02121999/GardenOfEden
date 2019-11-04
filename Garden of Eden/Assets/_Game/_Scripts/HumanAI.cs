@@ -189,7 +189,7 @@ public class HumanAI : Singleton<HumanAI>
         {
             speed = 0f;
             var adjustedFear = fear / 20;
-            speed = Mathf.Clamp(speed + adjustedFear, 2, 5);
+            speed = Mathf.Clamp(speed + adjustedFear, 4, 5);
             Debug.Log("Speed adjusted to " + speed);
         }
     }

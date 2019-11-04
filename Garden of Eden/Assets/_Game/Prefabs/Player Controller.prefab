@@ -256,7 +256,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -329,7 +329,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -838,6 +838,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3426841134936368074, guid: 322195173e805cb4cb52c47ea7007c50,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3426841134936368072, guid: 322195173e805cb4cb52c47ea7007c50,
         type: 3}
       propertyPath: sensitivity
@@ -869,11 +874,6 @@ PrefabInstance:
       propertyPath: symbolText
       value: 
       objectReference: {fileID: 3324912244752505551}
-    - target: {fileID: 3426841134936368074, guid: 322195173e805cb4cb52c47ea7007c50,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4392758505490392908, guid: 322195173e805cb4cb52c47ea7007c50,
         type: 3}
       propertyPath: m_Parameters.widthMultiplier
