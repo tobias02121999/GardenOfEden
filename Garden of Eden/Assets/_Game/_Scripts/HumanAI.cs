@@ -13,6 +13,7 @@ public class HumanAI : Singleton<HumanAI>
     [Space]
 
     public RagdollAnimator humanAnimator;
+    public Rigidbody hips;
     public Transform humanMesh, movementParent, rotationReference;
     public int secondsSinceLastBuild;
     public float speed, wanderDuration, turnSpeed, fear, faith, happiness, fearReductionSpeed;
@@ -25,8 +26,8 @@ public class HumanAI : Singleton<HumanAI>
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
-    bool _wasInvoked = false;
-    bool checkForTree = false;
+    bool _wasInvoked = false; 
+    bool checkForTree = false; 
 
     // Update is called once per frame
     void Update()
@@ -194,6 +195,16 @@ public class HumanAI : Singleton<HumanAI>
         }
     }
 
+    void AddForce()
+    {
+        var length = humanAnimator.bones.Length;
+        for (var i = 0; i < length; i++)
+        {
+            var bone = humanAnimator.bones[i].GetComponent<Rigidbody>();
+            bone.AddForce(bone.transform.forward * speed);
+        }
+    }
+
     bool CheckResources()   // Check if there are enough resources (Phony mechanic).
     {
         Collider[] cols = Physics.OverlapSphere(humanMesh.position, 100f);  // Check in a radius of 100f (DONT FORGET TO ADD A LAYERMASK TO IGNORE HUMANS AND BUILDINGS).
@@ -236,13 +247,19 @@ public class HumanAI : Singleton<HumanAI>
     {
         int buildingLayer = 16;
         int resourceLayer = 17;
+        int playerLayer = 23;
+        int handsLayer = 14;
         int buildingMask = 1 << buildingLayer;
         int resourceMask = 1 << resourceLayer;
+        int playerMask = 1 << playerLayer;
+        int handsMask = 1 << handsLayer;
 
         Vector3 halfExtends = new Vector3(3.5f, 3f, 3.5f);
         Collider[] homes = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, buildingMask);
         Collider[] trees = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, resourceMask);
-        if (homes.Length > 0 || trees.Length > 0)
+        Collider[] player = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, playerMask);
+        Collider[] hands = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, handsMask);
+        if (homes.Length > 0 || trees.Length > 0 || player.Length > 0 || hands.Length > 0)
         {
             return false;
         }
@@ -314,7 +331,7 @@ public class HumanAI : Singleton<HumanAI>
         }
         else
         {
-            yield return new WaitForSeconds(7.5f);
+            yield return new WaitForSeconds(5f);
             faith++;
             faith = Mathf.Clamp(faith, 0, 100);
         }
