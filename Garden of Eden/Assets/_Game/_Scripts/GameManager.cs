@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    public List<GameObject> TeamOneHumans = new List<GameObject>();
+    public List<GameObject> TeamTwoHumans = new List<GameObject>();
+    public List<GameObject> NeutralHumans = new List<GameObject>();
 
     public GameObject cube;
 

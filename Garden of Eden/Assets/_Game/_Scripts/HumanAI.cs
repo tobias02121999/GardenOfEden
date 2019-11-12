@@ -4,11 +4,21 @@ using UnityEngine;
 
 
 public enum HumanState {RECOVER, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_ALTAR, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
+public enum HumanDesire {HOUSING, FOOD, TO_ASCEND}
 
 public class HumanAI : Singleton<HumanAI>
 {
     [Header("Current AI State:")]
     public HumanState currentState;
+
+    [Header("This human currently desires:")]
+    public HumanDesire currentDesire;
+
+    [Header("Focus Vars")]
+    public float fear;
+    public float faith = 1;
+    public float happiness;
+    public bool hunger = false;
 
     [Space]
 
@@ -16,7 +26,7 @@ public class HumanAI : Singleton<HumanAI>
     public Rigidbody hips;
     public Transform humanMesh, movementParent, rotationReference;
     public int secondsSinceLastBuild;
-    public float speed, wanderDuration, turnSpeed, fear, faith, happiness, fearReductionSpeed;
+    public float speed, wanderDuration, turnSpeed, fearReductionSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
@@ -28,12 +38,29 @@ public class HumanAI : Singleton<HumanAI>
     bool wasInvoked = false;
     bool _wasInvoked = false; 
     bool checkForTree = false; 
+    bool readyToAscend = false;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
+        if (fear >= 100f || happiness <= 0f) // Neutralize human's faith.
+        {
+                // give player a chance to please the human before making him leave.
+            faith = 0;
+
+            if (GameManager.Instance.TeamOneHumans.Contains(gameObject)) GameManager.Instance.TeamOneHumans.Remove(gameObject);
+            if (GameManager.Instance.TeamTwoHumans.Contains(gameObject)) GameManager.Instance.TeamTwoHumans.Remove(gameObject);
+
+            GameManager.Instance.NeutralHumans.Add(gameObject);
+        }
+
+        if (hunger)
+        {
+
+        }
+
         if (!wasInvoked)
         {
             StartCoroutine("BuildTimer");   // Continually runs the build timer.
@@ -43,7 +70,12 @@ public class HumanAI : Singleton<HumanAI>
         if (!_wasInvoked)
             StartCoroutine("IncreaseFaithOverTime");
 
-        AddForce();
+        if (!humanAnimator.hasCollapsed){
+            AddForce();
+        }
+
+        if (readyToAscend) 
+            currentDesire = HumanDesire.TO_ASCEND;
 
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
@@ -161,7 +193,7 @@ public class HumanAI : Singleton<HumanAI>
         return closestUnit;
     }
 
-    void GaugeFear()    // Add or remove fear based on the specified circumstances.
+    void GaugeFear()    // Add or remove fear based on the specified circumstances.     OBSOLETE. SIMPLIFY BY ADDING OR SUBTRACTING STANDARD AMOUNT TO FEAR VAR.
     {
         if (GameManager.Instance.fearObjects.Count <= 0)    // If there are no fear objects in the scene fail this task.
         {
@@ -338,7 +370,7 @@ public class HumanAI : Singleton<HumanAI>
 
         if (faith >= 100)
         {
-            // "Upgrade" to Prophet.
+            readyToAscend = true;
         }
         else
         {
@@ -357,5 +389,10 @@ public class HumanAI : Singleton<HumanAI>
             fear = Mathf.Lerp(fear, 0, Time.deltaTime * fearReductionSpeed);
             SetSpeed();
         }
+    }
+
+    void ReduceHappinessOverTime()
+    {
+
     }
 }
