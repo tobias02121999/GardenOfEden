@@ -8,6 +8,8 @@ TagManager:
   - House
   - Tree
   - Stork
+  - BerryBush
+  - Human
   layers:
   - Default
   - TransparentFX
@@ -32,7 +34,7 @@ TagManager:
   - Interaction Detection
   - Stork
   - Human
-  - 
+  - Berries
   - 
   - 
   - 
