@@ -34,6 +34,7 @@ public class LightManager : MonoBehaviour
         {
             var cam = localPlayer.transform.Find("CenterEyeAnchor").gameObject;
             cam.AddComponent<AuraAPI.Aura>();
+            Debug.Log("Component Added");
 
             sun.aura = localPlayer.GetComponentInChildren<AuraAPI.Aura>();
 

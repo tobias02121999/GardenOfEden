@@ -11,6 +11,7 @@ public class DrawRecognition : MonoBehaviour
     public int symbolCount, symbolVariation;
     public TextMesh drawDataText;
     public GameObject[] symbolObjects;
+    public PaintRenderer paintRenderer;
 
     public static string returnShape;
 
@@ -161,7 +162,9 @@ public class DrawRecognition : MonoBehaviour
                         {
                             if (xx == gridWidth - 1 && yy == gridHeight - 1)
                             {
-                                ObjectPooler.Instance.SpawnFromPool(symbolObjects[c].name, transform.position, Quaternion.identity);
+                                var obj = ObjectPooler.Instance.SpawnFromPool(symbolObjects[c].name, transform.position, Quaternion.identity);
+                                obj.GetComponentInChildren<Hologram>().paintRenderer = paintRenderer;
+                                paintRenderer.targetObject = obj;
                                 goto End;
                             }
                         }
