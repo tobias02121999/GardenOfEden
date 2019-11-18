@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 
-public enum HumanState {RECOVER, HUNGRY, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_ALTAR, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
+public enum HumanState {RECOVER, HUNGRY, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND}
 
 public class HumanAI : MonoBehaviour
@@ -33,6 +33,7 @@ public class HumanAI : MonoBehaviour
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
+    GameObject sun;
     float closestObject = Mathf.Infinity;
     float closestLingeringObject = Mathf.Infinity;
     Vector3 closestObjectPosition = Vector3.zero;
@@ -44,6 +45,11 @@ public class HumanAI : MonoBehaviour
     bool readyToAscend = false;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
+
+    private void Start()
+    {
+        sun = GameObject.Find("Sun");
+    }
 
     // Update is called once per frame
     void Update() 
@@ -83,6 +89,10 @@ public class HumanAI : MonoBehaviour
         // Building has #1 priority, then comes chopping trees.
         if (humanAnimator.hasCollapsed)
             currentState = HumanState.RECOVER;
+        else if (sun.transform.rotation.x >= 90 && sun.transform.rotation.x <= 180)
+            currentState = HumanState.PRAYING;
+        else if (sun.transform.rotation.x > 180 && sun.transform.rotation.x <= -90)
+            currentState = HumanState.SLEEPING;
         else if (hungry)
         {
             if (happinessDecreasing == false)
@@ -176,7 +186,7 @@ public class HumanAI : MonoBehaviour
 
                 break;
 
-            case HumanState.BUILDING_ALTAR:
+            case HumanState.BUILDING_CHURCH:
                 
                 break;
 
@@ -189,6 +199,21 @@ public class HumanAI : MonoBehaviour
 
             case HumanState.PRAYING:
                 MoveToDestination(2);
+
+                var objects = Physics.OverlapBox(humanMesh.position, new Vector3(2f, 2f, 2f));
+                for (int i = 0; i < objects.Length; i++)
+                {
+                    if (!objects[i].CompareTag("Shrine"))
+                        continue;
+
+                    if (hungry){ /* praatwolkje met eten actief zetten*/ }
+                    else if (houses.Count < people.Count){/* praatwolkje met huisje actief zetten */ }
+
+                }
+
+                break;
+
+            case HumanState.SLEEPING:
 
                 break;
 
@@ -379,27 +404,7 @@ public class HumanAI : MonoBehaviour
 
                 break;
 
-            case 2: // ...Nearest altar.
-                int prayingLayer = 19;
-                int prayingMask = 1 << prayingLayer;
-
-                Collider[] prayingGrounds = Physics.OverlapSphere(humanMesh.position, 25f, prayingMask);
-                List<Transform> altars = new List<Transform>();
-                foreach (Collider altar in prayingGrounds)
-                {
-                    altars.Add(altar.transform);
-                }
-
-                rotationReference.LookAt(GetClosestUnit(altars.ToArray()));
-                var altarRot = rotationReference.rotation;
-                altarRot.x = 0f;
-                altarRot.z = 0f;
-
-                movementParent.rotation = altarRot;
-
-                break;
-
-            case 3: // ... the Shrine
+            case 2: // ... the Shrine
                 if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
                 {
                     rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
@@ -423,6 +428,34 @@ public class HumanAI : MonoBehaviour
                 }
 
                 break;
+
+            case 3: // ... nearest house
+                int houseLayerTeamOne = 25;
+                int houseLayerTeamTwo = 26;
+                int houseMaskTeamOne = 1 << houseLayerTeamOne;
+                int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
+                
+                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                {
+                    Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 50f, houseMaskTeamOne);
+                    List<Transform> homeTransforms = new List<Transform>();
+                    foreach (Collider home in homesTeamOne)
+                    {
+                        homeTransforms.Add(home.transform);
+                    }
+
+                    rotationReference.LookAt(GetClosestUnit(homeTransforms.ToArray()));
+                    var homeRot = rotationReference.rotation;
+                    homeRot.x = 0f;
+                    homeRot.z = 0f;
+
+                    movementParent.rotation = homeRot;
+                }
+
+                //ADD THE EXACT SAME FOR HOMES ON TEAM 2'S LAYER TOO;
+
+                break;
+
         }
     }
 
