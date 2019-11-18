@@ -10,17 +10,20 @@ public class Brush : MonoBehaviour
     public bool debugMode, isDrawing;
     public GameObject drawPoint, drawRecognition;
     public Transform rightHand, head;
-    public int handID;
+    public int handID, confirmDuration;
 
     // Initialize the private variables
-    float inkAlarm, posAlarm;
+    float posAlarm;
     List<Transform> drawPoints = new List<Transform>();
     LineRenderer lineRenderer;
+    PaintRenderer paintRenderer;
     Vector2 drawEdgeHor, drawEdgeVer, drawPivot, drawSize;
     Vector3 posOld, posNew;
 
     GameObject drawPointObject;
     Transform drawPointParent;
+
+    int confirmAlarm;
 
     float input;
 
@@ -30,7 +33,8 @@ public class Brush : MonoBehaviour
         drawPointObject = new GameObject();
         drawPointParent = drawPointObject.transform;
 
-        lineRenderer = GetComponent<LineRenderer>();
+        paintRenderer = GameObject.Find("Paint Renderer").GetComponent<PaintRenderer>();
+        lineRenderer = paintRenderer.lineRenderer;
     }
 
     // Update is called once per frame
@@ -38,7 +42,6 @@ public class Brush : MonoBehaviour
     {
         Move(); // Move the cursor around
         SetDrawPoints(); // Instantiate the draw points
-        DrawLine(); // Draw the line between the draw points
         RecognitionInit(); // Initialize the draw recognition
         GetDrawData(); // Get data from the drawing
         GetPos();
@@ -47,6 +50,9 @@ public class Brush : MonoBehaviour
             input = (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger));
         else
             input = (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger));
+
+        paintRenderer.isDrawing = isDrawing;
+        paintRenderer.drawPoints = drawPoints;
     }
 
     // Move the cursor around
@@ -72,6 +78,9 @@ public class Brush : MonoBehaviour
                     if (!debugMode)
                         drawPointParent.rotation = Quaternion.Euler(0f, head.rotation.eulerAngles.y, 0f);
 
+                    if (paintRenderer.targetObject != null)
+                        Destroy(paintRenderer.targetObject);
+
                     drawPointParent.position = transform.position;
                     isDrawing = true;
                 }
@@ -93,19 +102,6 @@ public class Brush : MonoBehaviour
         }
     }
 
-    // Draw the line between the draw points
-    void DrawLine()
-    {
-        var amount = drawPoints.Count;
-        lineRenderer.positionCount = amount;
-
-        if (isDrawing)
-        {
-            for (var i = 0; i < amount; i++)
-                lineRenderer.SetPosition(i, drawPoints[i].position);
-        }
-    }
-
     // Initialize the draw recognition
     void RecognitionInit()
     {
@@ -118,9 +114,11 @@ public class Brush : MonoBehaviour
             obj.transform.parent = drawPointParent;
             obj.transform.localPosition = new Vector3(drawPivot.x, drawPivot.y, 0f);
 
-            obj.GetComponent<DrawRecognition>().scale = scale * recognitionScale;
-            obj.GetComponent<DrawRecognition>().drawPointParent = drawPointParent;
-            obj.GetComponent<DrawRecognition>().debugMode = debugMode;
+            var drawRecog = obj.GetComponent<DrawRecognition>();
+            drawRecog.scale = scale * recognitionScale;
+            drawRecog.drawPointParent = drawPointParent;
+            drawRecog.debugMode = debugMode;
+            drawRecog.paintRenderer = paintRenderer;
 
             isDrawing = false;
         }
