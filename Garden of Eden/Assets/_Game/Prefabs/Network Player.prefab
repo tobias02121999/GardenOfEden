@@ -5628,6 +5628,8 @@ MonoBehaviour:
   - {fileID: 1501264241037122558}
   currentToolL: 0
   currentToolR: 0
+  maxPaint: 100
+  paint: 100
 --- !u!1 &6532427273485501500
 GameObject:
   m_ObjectHideFlags: 0

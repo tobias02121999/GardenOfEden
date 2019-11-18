@@ -7,9 +7,11 @@ public class PlayerInventory : MonoBehaviour
     // Initialize the public variables
     public GameObject[] toolsL, toolsR;
     public int currentToolL, currentToolR;
+    public float maxPaint;
 
     // Initialize the private variables
-    private bool switchButtonLPressed, switchButtonRPressed;
+    bool switchButtonLPressed, switchButtonRPressed;
+    public float paint, paintToSpend;
 
     // Start is called before the first frame update
     void Start()

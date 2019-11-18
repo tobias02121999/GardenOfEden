@@ -478,6 +478,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPrefab: {fileID: 8778074915786923238, guid: 9bb295d988821ce4997bd060c8f1c1b1,
     type: 3}
+  paintRenderer: {fileID: 0}
+  paintCost: 33
 --- !u!95 &2866794844857960684
 Animator:
   serializedVersion: 3
