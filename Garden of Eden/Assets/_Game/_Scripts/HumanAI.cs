@@ -17,6 +17,7 @@ public class HumanAI : MonoBehaviour
     [Header("Focus Vars")]
     public float fear;
     public float faith = 1;
+    public GameObject halo;
     public float happiness = 100;
     public bool hungry = false;
     public bool isAscended = false;
@@ -48,20 +49,20 @@ public class HumanAI : MonoBehaviour
     void Update() 
     {
         if (isAscended)
-        {
-            // add some additional abilities if the human has ascended (100 faith).
-        }
+            halo.SetActive(true);
+        else
+            halo.SetActive(false);
 
-        if (fear >= 100f || happiness <= 0f) // Neutralize human's faith.
-        {
-                // give player a chance to please the human before making him leave.
-            faith = 0;
+        //if (fear >= 100f || happiness <= 0f) // Neutralize human's faith.
+        //{
+        //        // give player a chance to please the human before making him leave.
+        //    faith = 0;
 
-            if (GameManager.Instance.TeamOneHumans.Contains(gameObject)) GameManager.Instance.TeamOneHumans.Remove(gameObject);
-            if (GameManager.Instance.TeamTwoHumans.Contains(gameObject)) GameManager.Instance.TeamTwoHumans.Remove(gameObject);
+        //    if (GameManager.Instance.TeamOneHumans.Contains(gameObject)) GameManager.Instance.TeamOneHumans.Remove(gameObject);
+        //    if (GameManager.Instance.TeamTwoHumans.Contains(gameObject)) GameManager.Instance.TeamTwoHumans.Remove(gameObject);
 
-            GameManager.Instance.NeutralHumans.Add(gameObject);
-        }
+        //    GameManager.Instance.NeutralHumans.Add(gameObject);
+        //}
 
         if (!wasInvoked)
         {
@@ -108,7 +109,6 @@ public class HumanAI : MonoBehaviour
                 break;
 
             case HumanState.HUNGRY:
-                happiness -= 10;
                 MoveToDestination(0);
 
                 int berryLayer = 23;
@@ -256,7 +256,7 @@ public class HumanAI : MonoBehaviour
         {
             speed = 0f;
             var adjustedFear = fear / 20;
-            speed = Mathf.Clamp(speed + adjustedFear, 10, 20);
+            speed = Mathf.Clamp(speed + adjustedFear, 2, 8);
             Debug.Log("Speed adjusted to " + speed);
         }
     }
@@ -396,6 +396,31 @@ public class HumanAI : MonoBehaviour
                 altarRot.z = 0f;
 
                 movementParent.rotation = altarRot;
+
+                break;
+
+            case 3: // ... the Shrine
+                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
+
+                    var shrineRot = rotationReference.rotation;
+                    shrineRot.x = 0f;
+                    shrineRot.z = 0f;
+
+                    movementParent.rotation = shrineRot;
+                }
+
+                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GameManager.Instance.shrines[1].transform.position);
+
+                    var shrineRot = rotationReference.rotation;
+                    shrineRot.x = 0f;
+                    shrineRot.y = 0f;
+
+                    movementParent.rotation = shrineRot;
+                }
 
                 break;
         }
