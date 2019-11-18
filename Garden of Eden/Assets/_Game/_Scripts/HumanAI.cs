@@ -3,20 +3,31 @@ using System.Collections;
 using UnityEngine;
 
 
-public enum HumanState {RECOVER, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_ALTAR, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
+public enum HumanState {RECOVER, HUNGRY, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_ALTAR, GATHERING_RESOURCES, FIGHTING, PRAYING, SPREADING_RELIGION};
+public enum HumanDesire {HOUSING, FOOD, TO_ASCEND}
 
-public class HumanAI : Singleton<HumanAI>
+public class HumanAI : MonoBehaviour
 {
     [Header("Current AI State:")]
     public HumanState currentState;
+
+    [Header("This human currently desires:")]
+    public HumanDesire currentDesire;
+
+    [Header("Focus Vars")]
+    public float fear;
+    public float faith = 1;
+    public float happiness = 100;
+    public bool hungry = false;
+    public bool isAscended = false;
 
     [Space]
 
     public RagdollAnimator humanAnimator;
     public Rigidbody hips;
     public Transform humanMesh, movementParent, rotationReference;
-    public int secondsSinceLastBuild;
-    public float speed, wanderDuration, turnSpeed, fear, faith, happiness, fearReductionSpeed;
+    public int secondsSinceLastBuild, fearReductionSpeed;
+    public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
@@ -26,12 +37,32 @@ public class HumanAI : Singleton<HumanAI>
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
-    bool _wasInvoked = false; 
+    bool _wasInvoked = false;
+    bool happinessDecreasing = false;
     bool checkForTree = false; 
+    bool readyToAscend = false;
+    List<GameObject> houses = new List<GameObject>();
+    List<GameObject> people = new List<GameObject>();
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
+        if (isAscended)
+        {
+            // add some additional abilities if the human has ascended (100 faith).
+        }
+
+        if (fear >= 100f || happiness <= 0f) // Neutralize human's faith.
+        {
+                // give player a chance to please the human before making him leave.
+            faith = 0;
+
+            if (GameManager.Instance.TeamOneHumans.Contains(gameObject)) GameManager.Instance.TeamOneHumans.Remove(gameObject);
+            if (GameManager.Instance.TeamTwoHumans.Contains(gameObject)) GameManager.Instance.TeamTwoHumans.Remove(gameObject);
+
+            GameManager.Instance.NeutralHumans.Add(gameObject);
+        }
+
         if (!wasInvoked)
         {
             StartCoroutine("BuildTimer");   // Continually runs the build timer.
@@ -39,14 +70,24 @@ public class HumanAI : Singleton<HumanAI>
         }
 
         if (!_wasInvoked)
-            StartCoroutine("IncreaseFaithOverTime");
+            StartCoroutine("IncreaseFaithOverTime");    // Continually gain levels of faith.
 
-        AddForce();
+        if (!humanAnimator.hasCollapsed)
+            AddForce();
+
+        if (readyToAscend) 
+            currentDesire = HumanDesire.TO_ASCEND;
 
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
         if (humanAnimator.hasCollapsed)
             currentState = HumanState.RECOVER;
+        else if (hungry)
+        {
+            if (happinessDecreasing == false)
+                StartCoroutine("ReduceHappinessOverTime");
+            currentState = HumanState.HUNGRY;
+        }
         else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
             currentState = HumanState.BUILDING_HOUSE;
         else if (CheckResources() && gatheredWood < 30)
@@ -64,6 +105,22 @@ public class HumanAI : Singleton<HumanAI>
         {
             case HumanState.RECOVER:
                 // Do nothing untill recovered.
+                break;
+
+            case HumanState.HUNGRY:
+                happiness -= 10;
+                MoveToDestination(0);
+
+                int berryLayer = 23;
+                int berryMask = 1 << berryLayer;
+
+                Collider[] berries = Physics.OverlapSphere(humanMesh.position, 1.5f, berryMask);
+                foreach (Collider berry in berries)
+                {
+                    Destroy(berry.gameObject);
+                    hungry = false;
+                }
+
                 break;
 
             case HumanState.IDLE: // Human wanders about when idle.
@@ -89,7 +146,7 @@ public class HumanAI : Singleton<HumanAI>
                 }
 
                 break;
-
+                
             case HumanState.CHOPPING: // The human chops a tree.
                 MoveToDestination(1);   // Move to the tree first.
 
@@ -106,10 +163,16 @@ public class HumanAI : Singleton<HumanAI>
                 break;
 
             case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                Vector3 inFront = transform.position + new Vector3(0, 0, 6);
-                ObjectPooler.Instance.SpawnFromPool("House", inFront, Quaternion.identity);
+                if (houses.Count < people.Count)
+                {
+                    Vector3 inFront = transform.position + new Vector3(0, 0, 6);
+                    var house = ObjectPooler.Instance.SpawnFromPool("House", inFront, Quaternion.identity);
 
-                gatheredWood -= 30;
+                    houses.Add(house);
+
+                    gatheredWood -= 30;
+                    secondsSinceLastBuild = 0;
+                }
 
                 break;
 
@@ -140,6 +203,7 @@ public class HumanAI : Singleton<HumanAI>
         Transform closestUnit = null;
         float minDistance = Mathf.Infinity;
         Vector3 currentPosition = transform.position;
+
         foreach (Transform unit in units)
         {
             float dist = Vector3.Distance(unit.position, currentPosition);
@@ -152,7 +216,7 @@ public class HumanAI : Singleton<HumanAI>
         return closestUnit;
     }
 
-    void GaugeFear()    // Add or remove fear based on the specified circumstances.
+    void GaugeFear()    // Add or remove fear based on the specified circumstances.     OBSOLETE. SIMPLIFY BY ADDING OR SUBTRACTING STANDARD AMOUNT TO FEAR VAR.
     {
         if (GameManager.Instance.fearObjects.Count <= 0)    // If there are no fear objects in the scene fail this task.
         {
@@ -212,7 +276,7 @@ public class HumanAI : Singleton<HumanAI>
         Collider[] cols = Physics.OverlapSphere(humanMesh.position, 100f);  // Check in a radius of 100f (DONT FORGET TO ADD A LAYERMASK TO IGNORE HUMANS AND BUILDINGS).
         foreach (Collider col in cols)
         {
-            if (col.tag == "Tree")
+            if (col.CompareTag("Tree"))
             {
                 CheckForSufficientRoom();
                 return true;
@@ -275,7 +339,24 @@ public class HumanAI : Singleton<HumanAI>
     {
         switch (destinationIndex)   // Goto...
         {
-            case 0: // ...Nearest house.
+            case 0: // ...Nearest food source.
+                int foodLayer = 23;
+                int foodMask = 1 << foodLayer;
+
+                Collider[] berries = Physics.OverlapSphere(humanMesh.position, 50f, foodMask);
+                List<Transform> berryTransforms = new List<Transform>();
+                foreach (Collider col in berries)
+                {
+                    berryTransforms.Add(col.transform);
+                }
+
+                rotationReference.LookAt(GetClosestUnit(berryTransforms.ToArray()));
+                var berryRot = rotationReference.rotation;
+                berryRot.x = 0f;
+                berryRot.z = 0f;
+
+                movementParent.rotation = berryRot;
+
                 break;
 
             case 1: // ...Nearest tree.
@@ -290,25 +371,32 @@ public class HumanAI : Singleton<HumanAI>
                 }
 
                 rotationReference.LookAt(GetClosestUnit(colTransforms.ToArray()));
-                var rot = rotationReference.rotation;
-                rot.x = 0f;
-                rot.z = 0f;
+                var treeRot = rotationReference.rotation;
+                treeRot.x = 0f;
+                treeRot.z = 0f;
 
-                movementParent.rotation = rot;
+                movementParent.rotation = treeRot;
 
                 break;
 
             case 2: // ...Nearest altar.
-                List<Transform> altars = new List<Transform>();
-
                 int prayingLayer = 19;
                 int prayingMask = 1 << prayingLayer;
 
                 Collider[] prayingGrounds = Physics.OverlapSphere(humanMesh.position, 25f, prayingMask);
+                List<Transform> altars = new List<Transform>();
                 foreach (Collider altar in prayingGrounds)
                 {
                     altars.Add(altar.transform);
                 }
+
+                rotationReference.LookAt(GetClosestUnit(altars.ToArray()));
+                var altarRot = rotationReference.rotation;
+                altarRot.x = 0f;
+                altarRot.z = 0f;
+
+                movementParent.rotation = altarRot;
+
                 break;
         }
     }
@@ -329,7 +417,7 @@ public class HumanAI : Singleton<HumanAI>
 
         if (faith >= 100)
         {
-            // "Upgrade" to Prophet.
+            readyToAscend = true;
         }
         else
         {
@@ -348,5 +436,15 @@ public class HumanAI : Singleton<HumanAI>
             fear = Mathf.Lerp(fear, 0, Time.deltaTime * fearReductionSpeed);
             SetSpeed();
         }
+    }
+
+    IEnumerator ReduceHappinessOverTime()
+    {
+        happinessDecreasing = true;
+
+        yield return new WaitForSeconds(30f);
+        happiness -= 10;
+
+        happinessDecreasing = false;
     }
 }
