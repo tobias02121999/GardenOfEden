@@ -11,6 +11,8 @@ public class BirdSpawner : NetworkBehaviour
     public Vector2 spawnDuration, spawnHeight;
     public Transform target;
     public float flightDeviation;
+    public bool isStork;
+    public GameManager gameManager;
 
     // Initialize the private variables
     int spawnAlarm;
@@ -55,6 +57,9 @@ public class BirdSpawner : NetworkBehaviour
         lookPos.y = 0f;
         var rotation = Quaternion.LookRotation(lookPos);
         obj.transform.rotation = rotation;
+
+        if (isStork)
+            obj.GetComponent<Stork>().gameManager = gameManager;
 
         NetworkServer.Spawn(obj);
     }
