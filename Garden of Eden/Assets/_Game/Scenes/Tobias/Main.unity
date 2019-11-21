@@ -5219,7 +5219,7 @@ MonoBehaviour:
   bird: {fileID: 3107386266670874818, guid: 261c70dec864f6c4ab642e6a81433513, type: 3}
   spawnPoints:
   - {fileID: 205502536}
-  spawnDuration: {x: 10000, y: 10000}
+  spawnDuration: {x: 1000, y: 1000}
   spawnHeight: {x: 0, y: 0}
   target: {fileID: 1118660132}
   flightDeviation: 5
