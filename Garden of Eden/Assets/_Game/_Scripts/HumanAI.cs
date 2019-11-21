@@ -86,31 +86,35 @@ public class HumanAI : MonoBehaviour
 
         #region State Declaration
         // Building has #1 priority, then comes chopping trees.
-        if (humanAnimator.hasCollapsed)
-            currentState = HumanState.RECOVER;
-        else if (sun.transform.rotation.x >= 90 && sun.transform.rotation.x <= 180)
-            currentState = HumanState.PRAYING;
-        else if (sun.transform.rotation.x > 180 && sun.transform.rotation.x <= -90)
-            currentState = HumanState.SLEEPING;
-        else if (hungry)
+        if (sun.transform.rotation.x < 90 && sun.transform.rotation.x >= 270)
         {
-            if (happinessDecreasing == false)
-                StartCoroutine("ReduceHappinessOverTime");
-            currentState = HumanState.HUNGRY;
+            if (humanAnimator.hasCollapsed)
+                currentState = HumanState.RECOVER;
+            else if (hungry)
+            {
+                if (happinessDecreasing == false)
+                    StartCoroutine("ReduceHappinessOverTime");
+                currentState = HumanState.HUNGRY;
+            }
+            else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom())
+                currentState = HumanState.BUILDING_HOUSE;
+            else
+                currentState = HumanState.IDLE;
         }
-        else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom() && gatheredWood >= 30)
-            currentState = HumanState.BUILDING_HOUSE;
-        else if (CheckResources() && gatheredWood < 30)
-            currentState = HumanState.CHOPPING;
-        else
-            currentState = HumanState.IDLE;
-        
+
+        if (sun.transform.rotation.x >= 90 && sun.transform.rotation.x < 270)
+        {
+            if (sun.transform.rotation.x >= 90 && sun.transform.rotation.x <= 180)
+                currentState = HumanState.PRAYING;
+            else if (sun.transform.rotation.x > 180 && sun.transform.rotation.x < 270)
+                currentState = HumanState.SLEEPING;
+        }
         // Keep gauging fear over time.
         if (GameManager.Instance.fearObjects.Count > 0)
             GaugeFear();
         #endregion
 
-        #region State Machine
+        #region State Machine Day
         switch (currentState)
         {
             case HumanState.RECOVER:
@@ -157,6 +161,8 @@ public class HumanAI : MonoBehaviour
                 break;
                 
             case HumanState.CHOPPING: // The human chops a tree.
+                if (gatheredWood >= 30)
+                    currentState = HumanState.BUILDING_HOUSE;
                 MoveToDestination(1);   // Move to the tree first.
 
                 int layer = 17;
@@ -172,6 +178,9 @@ public class HumanAI : MonoBehaviour
                 break;
 
             case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
+                if (gatheredWood < 30)
+                    currentState = HumanState.CHOPPING;
+
                 if (houses.Count < people.Count)
                 {
                     Vector3 inFront = transform.position + new Vector3(0, 0, 6);
@@ -196,6 +205,14 @@ public class HumanAI : MonoBehaviour
             case HumanState.FIGHTING:
                 break;
 
+            case HumanState.SPREADING_RELIGION:
+                break;
+        }
+        #endregion
+
+        #region State Machine Night
+        switch (currentState)
+        {
             case HumanState.PRAYING:
                 MoveToDestination(2);
 
@@ -205,8 +222,10 @@ public class HumanAI : MonoBehaviour
                     if (!objects[i].CompareTag("Shrine"))
                         continue;
 
-                    if (hungry){ Debug.Log("One of your humans says: 'I require sustenence'"); }
-                    else if (houses.Count < people.Count){ Debug.Log("One of your humans says: 'Me sad, no house :('"); }
+                    if (hungry)
+                    { Debug.Log("One of your humans says: 'I require sustenence'"); }
+                    else if (houses.Count < people.Count)
+                    { Debug.Log("One of your humans says: 'Me sad, no house :('"); }
 
                 }
 
@@ -251,9 +270,6 @@ public class HumanAI : MonoBehaviour
                 }
 
                 break;
-
-            case HumanState.SPREADING_RELIGION:
-                break;
         }
         #endregion
     }
@@ -278,47 +294,28 @@ public class HumanAI : MonoBehaviour
 
     void GaugeFear()    // Add or remove fear based on the specified circumstances.     OBSOLETE. SIMPLIFY BY ADDING OR SUBTRACTING STANDARD AMOUNT TO FEAR VAR.
     {
-        if (GameManager.Instance.fearObjects.Count <= 0)    // If there are no fear objects in the scene fail this task.
+        var fear = 0f; // Reset the fear gauge to adjust it (otherwise it will just add onto the former amount.
+        GameManager.Instance.fearObjects.Clear(); // Reset the list
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
         {
-            SetSpeed();
+            GameManager.Instance.fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);   // Add all the fear objects back into the scene.
         }
-        else
+
+        for (int i = 0; i < GameManager.Instance.fearObjects.Count; i++)    // Scan through all objects that can instill fear.
         {
-            fear = 0f; // Reset the fear gauge to adjust it (otherwise it will just add onto the former amount.
-            GameManager.Instance.fearObjects.Clear(); // Reset the list
-            for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
+            // Determine the current objects distance.
+            float currentObjectDistance = Vector3.Distance(humanMesh.position, GameManager.Instance.fearObjects[i].transform.position);
+
+            if (currentObjectDistance < closestObject) // If an objects distance is smaller than the former distance, the current objects distance will be the new closest distance.
             {
-                GameManager.Instance.fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);   // Add all the fear objects back into the scene.
+                closestObject = currentObjectDistance;
+                closestObjectPosition = GameManager.Instance.fearObjects[i].transform.position;
             }
-
-            for (int i = 0; i < GameManager.Instance.fearObjects.Count; i++)    // Scan through all objects that can instill fear.
-            {
-                // Determine the current objects distance.
-                float currentObjectDistance = Vector3.Distance(humanMesh.position, GameManager.Instance.fearObjects[i].transform.position);
-
-                if (currentObjectDistance < closestObject) // If an objects distance is smaller than the former distance, the current objects distance will be the new closest distance.
-                {
-                    closestObject = currentObjectDistance;
-                    closestObjectPosition = GameManager.Instance.fearObjects[i].transform.position;
-                }
-            }
-
-            // Big Math
-            var distanceToFear = fear + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition);
-            fear = Mathf.Clamp(distanceToFear, 0, 100); // Set fear
-            SetSpeed();
         }
-    }
 
-    void SetSpeed() // Sets the speed of this human based on the amount of fear.
-    {
-        if (fear <= 100)
-        {
-            speed = 0f;
-            var adjustedFear = fear / 20;
-            speed = Mathf.Clamp(speed + adjustedFear, 10, 20);
-            Debug.Log("Speed adjusted to " + speed);
-        }
+        // Big Math
+        var distanceToFear = fear + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition);
+        fear = Mathf.Clamp(distanceToFear, 0, 100); // Set fear
     }
 
     void AddForce()
@@ -541,7 +538,6 @@ public class HumanAI : MonoBehaviour
         if (GameManager.Instance.fearObjects.Count <= 0)
         {
             fear = Mathf.Lerp(fear, 0, Time.deltaTime * fearReductionSpeed);
-            SetSpeed();
         }
     }
 

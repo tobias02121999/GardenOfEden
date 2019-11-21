@@ -10,8 +10,6 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> TeamTwoHumans = new List<GameObject>();
     public List<GameObject> NeutralHumans = new List<GameObject>();
 
-    public GameObject cube;
-
     public List<GameObject> emptyHomes = new List<GameObject>();
     public List<GameObject> sleepingHumans = new List<GameObject>();
     public List<GameObject> fearObjects = new List<GameObject>();
@@ -30,11 +28,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(2))
-        {
-            var go = Instantiate(cube, new Vector3(3, 0, 0), Quaternion.identity);
-            fearObjects.Add(go);
-        }
         if (Input.GetMouseButtonDown(3))
         {
             Destroy(fearObjects[0]);
