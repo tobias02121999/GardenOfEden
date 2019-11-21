@@ -12,6 +12,8 @@ public class GameManager : Singleton<GameManager>
 
     public GameObject cube;
 
+    public List<GameObject> emptyHomes = new List<GameObject>();
+    public List<GameObject> sleepingHumans = new List<GameObject>();
     public List<GameObject> fearObjects = new List<GameObject>();
     public List<GameObject> lingeringFearObjects = new List<GameObject>();
 
@@ -24,7 +26,6 @@ public class GameManager : Singleton<GameManager>
         {
             fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);
         }
-        
     }
 
     private void Update()

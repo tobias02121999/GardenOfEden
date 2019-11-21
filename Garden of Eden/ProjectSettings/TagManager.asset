@@ -9,6 +9,8 @@ TagManager:
   - Tree
   - Stork
   - Hammer
+  - Human
+  - BerryBush
   layers:
   - Default
   - TransparentFX

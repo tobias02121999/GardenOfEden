@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-
 public enum HumanState {RECOVER, HUNGRY, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND}
 
@@ -206,14 +205,50 @@ public class HumanAI : MonoBehaviour
                     if (!objects[i].CompareTag("Shrine"))
                         continue;
 
-                    if (hungry){ /* praatwolkje met eten actief zetten*/ }
-                    else if (houses.Count < people.Count){/* praatwolkje met huisje actief zetten */ }
+                    if (hungry){ Debug.Log("One of your humans says: 'I require sustenence'"); }
+                    else if (houses.Count < people.Count){ Debug.Log("One of your humans says: 'Me sad, no house :('"); }
 
                 }
 
                 break;
 
             case HumanState.SLEEPING:
+                GameObject[] homes = GameObject.FindGameObjectsWithTag("House");
+                foreach (GameObject house in homes)
+                {
+                    GameManager.Instance.emptyHomes.Add(house);
+                }
+
+                MoveToDestination(3);
+
+                int houseLayerTeamOne = 25;
+                int houseLayerTeamTwo = 26;
+                int houseMaskTeamOne = 1 << houseLayerTeamOne;
+                int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
+
+                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                {
+                    Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamOne);
+                    foreach (Collider go in homesTeamOne)
+                    {
+                        GameManager.Instance.sleepingHumans.Add(gameObject);
+                        gameObject.SetActive(false);
+                        GameManager.Instance.emptyHomes.Remove(go.gameObject);
+                        break;
+                    }
+                }
+
+                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                {
+                    Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamTwo);
+                    foreach (Collider collider in homesTeamTwo)
+                    {
+                        GameManager.Instance.sleepingHumans.Add(gameObject);
+                        gameObject.SetActive(false);
+                        GameManager.Instance.emptyHomes.Remove(collider.gameObject);
+                        break;
+                    }
+                }
 
                 break;
 
@@ -281,7 +316,7 @@ public class HumanAI : MonoBehaviour
         {
             speed = 0f;
             var adjustedFear = fear / 20;
-            speed = Mathf.Clamp(speed + adjustedFear, 2, 8);
+            speed = Mathf.Clamp(speed + adjustedFear, 10, 20);
             Debug.Log("Speed adjusted to " + speed);
         }
     }
@@ -452,10 +487,24 @@ public class HumanAI : MonoBehaviour
                     movementParent.rotation = homeRot;
                 }
 
-                //ADD THE EXACT SAME FOR HOMES ON TEAM 2'S LAYER TOO;
+                else if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                {
+                    Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 50f, houseMaskTeamTwo);
+                    List<Transform> homeTransforms = new List<Transform>();
+                    foreach (Collider home in homesTeamTwo)
+                    {
+                        homeTransforms.Add(home.transform);
+                    }
+
+                    rotationReference.LookAt(GetClosestUnit(homeTransforms.ToArray()));
+                    var homeRot = rotationReference.rotation;
+                    homeRot.x = 0f;
+                    homeRot.z = 0f;
+
+                    movementParent.rotation = homeRot;
+                }
 
                 break;
-
         }
     }
 
