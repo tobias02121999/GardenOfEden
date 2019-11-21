@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 public enum HumanState {RECOVER, HUNGRY, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
-public enum HumanDesire {HOUSING, FOOD, TO_ASCEND}
+public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
 public class HumanAI : MonoBehaviour
 {
@@ -26,13 +26,13 @@ public class HumanAI : MonoBehaviour
     public RagdollAnimator humanAnimator;
     public Rigidbody hips;
     public Transform humanMesh, movementParent, rotationReference;
+    public Sun sun;
     public int secondsSinceLastBuild, fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
-    GameObject sun;
     float closestObject = Mathf.Infinity;
     float closestLingeringObject = Mathf.Infinity;
     Vector3 closestObjectPosition = Vector3.zero;
@@ -44,11 +44,6 @@ public class HumanAI : MonoBehaviour
     bool readyToAscend = false;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
-
-    private void Start()
-    {
-        sun = GameObject.Find("Sun");
-    }
 
     // Update is called once per frame
     void Update() 
@@ -85,9 +80,9 @@ public class HumanAI : MonoBehaviour
             currentDesire = HumanDesire.TO_ASCEND;
 
         #region State Declaration
-        // Building has #1 priority, then comes chopping trees.
-        if (sun.transform.rotation.x < 90 && sun.transform.rotation.x >= 270)
+        if ((sun.rotation < 90 && sun.rotation >= 0) || (sun.transform.rotation.x > 270 && sun.rotation <= 360))
         {
+            Debug.Log("Sthinki");
             if (humanAnimator.hasCollapsed)
                 currentState = HumanState.RECOVER;
             else if (hungry)
@@ -102,13 +97,15 @@ public class HumanAI : MonoBehaviour
                 currentState = HumanState.IDLE;
         }
 
-        if (sun.transform.rotation.x >= 90 && sun.transform.rotation.x < 270)
+        if (sun.rotation >= 90 && sun.rotation <= 180)
         {
-            if (sun.transform.rotation.x >= 90 && sun.transform.rotation.x <= 180)
-                currentState = HumanState.PRAYING;
-            else if (sun.transform.rotation.x > 180 && sun.transform.rotation.x < 270)
-                currentState = HumanState.SLEEPING;
+            Debug.Log("Testing 1231");
+            currentState = HumanState.PRAYING;
         }
+        else if (sun.rotation > 180 && sun.rotation <= 270)
+            currentState = HumanState.SLEEPING;
+        
+
         // Keep gauging fear over time.
         if (GameManager.Instance.fearObjects.Count > 0)
             GaugeFear();
@@ -163,6 +160,7 @@ public class HumanAI : MonoBehaviour
             case HumanState.CHOPPING: // The human chops a tree.
                 if (gatheredWood >= 30)
                     currentState = HumanState.BUILDING_HOUSE;
+
                 MoveToDestination(1);   // Move to the tree first.
 
                 int layer = 17;

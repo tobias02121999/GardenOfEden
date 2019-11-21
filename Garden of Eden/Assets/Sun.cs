@@ -20,7 +20,7 @@ public class Sun : MonoBehaviour
     public AuraAPI.Aura aura;
 
     // Initialize the private variables
-    float rotation;
+    public float rotation;
     ParticleSystem.Particle[] grassParticles;
 
     // Start is called before the first frame update
