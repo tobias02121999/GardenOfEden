@@ -26,7 +26,7 @@ public class Hologram : MonoBehaviour
     {
         inventory.paintToSpend = paintCost;
 
-        if (hasCollided && inventory.paint >= paintCost)
+        if (hasCollided && inventory.paint >= paintCost && spawnPrefab != null)
         {
             Instantiate(spawnPrefab, transform.position, transform.rotation);
             paintRenderer.lineRenderer.positionCount = 0;
@@ -37,7 +37,8 @@ public class Hologram : MonoBehaviour
 
     void OnDestroy()
     {
-        inventory.paintToSpend = 0f;
+        if (inventory != null)
+            inventory.paintToSpend = 0f;
     }
 
     // Check if the player is touching the hologram

@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 602698371143440950}
   - component: {fileID: 602698371142473974}
   - component: {fileID: 3147756539607426936}
+  - component: {fileID: 3111037272412943369}
   m_Layer: 14
   m_Name: Head
   m_TagString: Hammer
@@ -286,6 +287,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300002, guid: 4a607f6a364807749b340e8627b95bed, type: 3}
+--- !u!54 &3111037272412943369
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602698371140273712}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &602698371140273716
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +422,7 @@ MeshCollider:
   m_GameObject: {fileID: 602698371140273718}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -850,7 +867,7 @@ MeshCollider:
   m_GameObject: {fileID: 2826429345691587420}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -1070,6 +1087,7 @@ GameObject:
   - component: {fileID: 3971477668461425271}
   - component: {fileID: 7248256841200090851}
   - component: {fileID: 8029697391200905515}
+  - component: {fileID: 1047214540574863138}
   m_Layer: 14
   m_Name: Head
   m_TagString: Hammer
@@ -1150,6 +1168,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300002, guid: 4a607f6a364807749b340e8627b95bed, type: 3}
+--- !u!54 &1047214540574863138
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580373623377440558}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3591031823817135720
 GameObject:
   m_ObjectHideFlags: 0
@@ -5630,6 +5664,7 @@ MonoBehaviour:
   currentToolR: 0
   maxPaint: 100
   paint: 100
+  paintToSpend: 0
 --- !u!1 &6532427273485501500
 GameObject:
   m_ObjectHideFlags: 0
