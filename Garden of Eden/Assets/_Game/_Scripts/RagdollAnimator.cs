@@ -11,7 +11,7 @@ public class RagdollAnimator : MonoBehaviour
     public float collisionImpact, impactRecovery, collapseMinimum, collapseDuration;
     public BoxCollider feetCollider;
     public Transform movementParent;
-    [System.NonSerialized]
+    //[System.NonSerialized]
     public bool hasCollapsed;
     [System.NonSerialized]
     public float targetRot, currentRot;

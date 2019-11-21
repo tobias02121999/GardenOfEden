@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1882574586427226282
 Transform:
   m_ObjectHideFlags: 0
@@ -2622,6 +2622,7 @@ MonoBehaviour:
   collapseDuration: 120
   feetCollider: {fileID: 6171444308595301858}
   movementParent: {fileID: 4982348979533985199}
+  hasCollapsed: 0
 --- !u!114 &1746902633728497879
 MonoBehaviour:
   m_ObjectHideFlags: 0

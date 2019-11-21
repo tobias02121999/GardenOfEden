@@ -1689,7 +1689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea69989a5b7a3e645af5ba170be616e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 4
   animation: {fileID: 1807326308733712985}
   ragdoll: {fileID: 3498153910972168789}
 --- !u!114 &2654944061777172966
@@ -1723,6 +1723,11 @@ MonoBehaviour:
   humanParent: {fileID: 7899605655202580752}
   human: {fileID: 0}
   humanHips: {fileID: 0}
+  teamID: 0
+  teamMaterial:
+  - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
+  - {fileID: 2100000, guid: 5ed9631728e831e42ac14040f977cb1d, type: 2}
+  gameManager: {fileID: 0}
 --- !u!1 &3498153910972168789
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,8 @@ public class Smashable : MonoBehaviour
 {
     // Initialize the public variables
     public float sturdiness;
+    public GameObject poofEffect;
+    public Transform poofLocation;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,9 @@ public class Smashable : MonoBehaviour
     // Get destroyed
     void Smashed()
     {
+        var obj = Instantiate(poofEffect, poofLocation.position, Quaternion.identity);
+        obj.transform.parent = null;
+
         Destroy(this.gameObject);
     }
 }
