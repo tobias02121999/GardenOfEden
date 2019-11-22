@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public enum HumanState {RECOVER, HUNGRY, IDLE, CHOPPING, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
+public enum HumanState {RECOVER, HUNGRY, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
 public class HumanAI : MonoBehaviour
@@ -20,6 +20,7 @@ public class HumanAI : MonoBehaviour
     public float happiness = 100;
     public bool hungry = false;
     public bool isAscended = false;
+    public GameObject house;
 
     [Space]
 
@@ -42,6 +43,7 @@ public class HumanAI : MonoBehaviour
     bool happinessDecreasing = false;
     bool checkForTree = false; 
     bool readyToAscend = false;
+    bool isDayTime = false;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
 
@@ -80,9 +82,9 @@ public class HumanAI : MonoBehaviour
             currentDesire = HumanDesire.TO_ASCEND;
 
         #region State Declaration
-        if ((sun.rotation < 90 && sun.rotation >= 0) || (sun.transform.rotation.x > 270 && sun.rotation <= 360))
+        if ((sun.rotation < 90 && sun.rotation >= 0) || (sun.rotation > 270 && sun.rotation <= 360))
         {
-            Debug.Log("Sthinki");
+            isDayTime = true;
             if (humanAnimator.hasCollapsed)
                 currentState = HumanState.RECOVER;
             else if (hungry)
@@ -91,7 +93,7 @@ public class HumanAI : MonoBehaviour
                     StartCoroutine("ReduceHappinessOverTime");
                 currentState = HumanState.HUNGRY;
             }
-            else if (CheckForCalamitySites() && CheckResources() && secondsSinceLastBuild >= 5 && CheckForSufficientRoom())
+            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5)
                 currentState = HumanState.BUILDING_HOUSE;
             else
                 currentState = HumanState.IDLE;
@@ -99,175 +101,186 @@ public class HumanAI : MonoBehaviour
 
         if (sun.rotation >= 90 && sun.rotation <= 180)
         {
-            Debug.Log("Testing 1231");
+            isDayTime = false;
             currentState = HumanState.PRAYING;
         }
         else if (sun.rotation > 180 && sun.rotation <= 270)
+        {
+            isDayTime = false;
             currentState = HumanState.SLEEPING;
-        
-
+        }
+            
         // Keep gauging fear over time.
         if (GameManager.Instance.fearObjects.Count > 0)
             GaugeFear();
         #endregion
 
         #region State Machine Day
-        switch (currentState)
+        if (isDayTime)
         {
-            case HumanState.RECOVER:
-                // Do nothing untill recovered.
-                break;
+            Debug.Log("dayTime");
 
-            case HumanState.HUNGRY:
-                MoveToDestination(0);
+            switch (currentState)
+            {
+                case HumanState.RECOVER:
+                    // Do nothing untill recovered.
+                    break;
 
-                int berryLayer = 23;
-                int berryMask = 1 << berryLayer;
+                case HumanState.HUNGRY:
+                    MoveToDestination(0);
 
-                Collider[] berries = Physics.OverlapSphere(humanMesh.position, 1.5f, berryMask);
-                foreach (Collider berry in berries)
-                {
-                    Destroy(berry.gameObject);
-                    hungry = false;
-                }
+                    int berryLayer = 23;
+                    int berryMask = 1 << berryLayer;
 
-                break;
-
-            case HumanState.IDLE: // Human wanders about when idle.
-                if (!humanAnimator.hasCollapsed)
-                {
-                    if (wanderAlarm <= 0f)
+                    Collider[] berries = Physics.OverlapSphere(humanMesh.position, 1.5f, berryMask);
+                    foreach (Collider berry in berries)
                     {
-                        humanAnimator.targetRot = Random.Range(0f, 360f);
-                        wanderAlarm = wanderDuration;
-
-                        Debug.Log("Randomize");
+                        Destroy(berry.gameObject);
+                        hungry = false;
                     }
 
-                    wanderAlarm--;
+                    break;
 
-                    if (humanAnimator.currentRot >= humanAnimator.targetRot + turnSpeed)
-                        humanAnimator.currentRot -= turnSpeed;
+                case HumanState.IDLE: // Human wanders about when idle.
+                    Debug.Log("Idling");
 
-                    if (humanAnimator.currentRot <= humanAnimator.targetRot - turnSpeed)
-                        humanAnimator.currentRot += turnSpeed;
+                    if (!humanAnimator.hasCollapsed)
+                    {
+                        if (wanderAlarm <= 0f)
+                        {
+                            humanAnimator.targetRot = Random.Range(0f, 360f);
+                            wanderAlarm = wanderDuration;
 
-                    movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);              
-                }
+                            Debug.Log("Randomize");
+                        }
 
-                break;
-                
-            case HumanState.CHOPPING: // The human chops a tree.
-                if (gatheredWood >= 30)
-                    currentState = HumanState.BUILDING_HOUSE;
+                        wanderAlarm--;
 
-                MoveToDestination(1);   // Move to the tree first.
+                        if (humanAnimator.currentRot >= humanAnimator.targetRot + turnSpeed)
+                            humanAnimator.currentRot -= turnSpeed;
 
-                int layer = 17;
-                int mask = 1 << layer;
+                        if (humanAnimator.currentRot <= humanAnimator.targetRot - turnSpeed)
+                            humanAnimator.currentRot += turnSpeed;
 
-                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
-                foreach (Collider tree in trees)
-                {
-                    Destroy(tree.gameObject);   // Then destroy all nearby trees.
-                    gatheredWood += 10;
-                }
+                        movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);
+                    }
 
-                break;
+                    break;
 
-            case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                if (gatheredWood < 30)
-                    currentState = HumanState.CHOPPING;
+                case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
+                    Debug.Log("Building");
 
-                if (houses.Count < people.Count)
-                {
-                    Vector3 inFront = transform.position + new Vector3(0, 0, 6);
-                    var house = ObjectPooler.Instance.SpawnFromPool("House", inFront, Quaternion.identity);
+                    if (gatheredWood < 30)
+                    {
+                        // Chopping
+                        MoveToDestination(1);   // Move to the tree first.
 
-                    houses.Add(house);
+                        int layer = 17;
+                        int mask = 1 << layer;
 
-                    gatheredWood -= 30;
-                    secondsSinceLastBuild = 0;
-                }
+                        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
+                        foreach (Collider tree in trees)
+                        {
+                            Destroy(tree.gameObject);   // Then destroy all nearby trees.
+                            gatheredWood += 10;
+                        }
+                    }
+                    else
+                    {
+                        // Building
+                        if (GameManager.Instance.emptyHomes.Count < GameManager.Instance.TeamOneHumans.Count /*&& CheckForSufficientRoom()*/)
+                        {
+                            Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+                            var obj = Instantiate(house, inFront, Quaternion.identity);
 
-                break;
+                            GameManager.Instance.emptyHomes.Add(obj);
 
-            case HumanState.BUILDING_CHURCH:
-                
-                break;
+                            gatheredWood -= 30;
+                            secondsSinceLastBuild = 0;
+                        }
+                    }
 
-            case HumanState.GATHERING_RESOURCES:
-                // Obsolete State? See chopping.
-                break;
+                    break;
 
-            case HumanState.FIGHTING:
-                break;
+                case HumanState.BUILDING_CHURCH:
 
-            case HumanState.SPREADING_RELIGION:
-                break;
+                    break;
+
+                case HumanState.GATHERING_RESOURCES:
+                    // Obsolete State? See chopping.
+                    break;
+
+                case HumanState.FIGHTING:
+                    break;
+
+                case HumanState.SPREADING_RELIGION:
+                    break;
+            }
         }
         #endregion
 
         #region State Machine Night
-        switch (currentState)
+        if (!isDayTime)
         {
-            case HumanState.PRAYING:
-                MoveToDestination(2);
+            switch (currentState)
+            {
+                case HumanState.PRAYING:
+                    MoveToDestination(2);
 
-                var objects = Physics.OverlapBox(humanMesh.position, new Vector3(2f, 2f, 2f));
-                for (int i = 0; i < objects.Length; i++)
-                {
-                    if (!objects[i].CompareTag("Shrine"))
-                        continue;
-
-                    if (hungry)
-                    { Debug.Log("One of your humans says: 'I require sustenence'"); }
-                    else if (houses.Count < people.Count)
-                    { Debug.Log("One of your humans says: 'Me sad, no house :('"); }
-
-                }
-
-                break;
-
-            case HumanState.SLEEPING:
-                GameObject[] homes = GameObject.FindGameObjectsWithTag("House");
-                foreach (GameObject house in homes)
-                {
-                    GameManager.Instance.emptyHomes.Add(house);
-                }
-
-                MoveToDestination(3);
-
-                int houseLayerTeamOne = 25;
-                int houseLayerTeamTwo = 26;
-                int houseMaskTeamOne = 1 << houseLayerTeamOne;
-                int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
-
-                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                {
-                    Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamOne);
-                    foreach (Collider go in homesTeamOne)
+                    /*
+                    var objects = Physics.OverlapBox(humanMesh.position, new Vector3(2f, 2f, 2f));
+                    for (int i = 0; i < objects.Length; i++)
                     {
-                        GameManager.Instance.sleepingHumans.Add(gameObject);
-                        gameObject.SetActive(false);
-                        GameManager.Instance.emptyHomes.Remove(go.gameObject);
-                        break;
-                    }
-                }
+                        if (hungry)
+                        { Debug.Log("One of your humans says: 'I require sustenence'"); }
+                        else if (houses.Count < people.Count)
+                        { Debug.Log("One of your humans says: 'Me sad, no house :('"); }
 
-                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                {
-                    Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamTwo);
-                    foreach (Collider collider in homesTeamTwo)
+                    }
+                    */
+
+                    break;
+
+                case HumanState.SLEEPING:
+                    GameObject[] homes = GameObject.FindGameObjectsWithTag("House");
+                    foreach (GameObject house in homes)
                     {
-                        GameManager.Instance.sleepingHumans.Add(gameObject);
-                        gameObject.SetActive(false);
-                        GameManager.Instance.emptyHomes.Remove(collider.gameObject);
-                        break;
+                        GameManager.Instance.emptyHomes.Add(house);
                     }
-                }
 
-                break;
+                    MoveToDestination(3);
+
+                    int houseLayerTeamOne = 25;
+                    int houseLayerTeamTwo = 26;
+                    int houseMaskTeamOne = 1 << houseLayerTeamOne;
+                    int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
+
+                    if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                    {
+                        Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamOne);
+                        foreach (Collider go in homesTeamOne)
+                        {
+                            GameManager.Instance.sleepingHumans.Add(gameObject);
+                            gameObject.SetActive(false);
+                            GameManager.Instance.emptyHomes.Remove(go.gameObject);
+                            break;
+                        }
+                    }
+
+                    if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                    {
+                        Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamTwo);
+                        foreach (Collider collider in homesTeamTwo)
+                        {
+                            GameManager.Instance.sleepingHumans.Add(gameObject);
+                            gameObject.SetActive(false);
+                            GameManager.Instance.emptyHomes.Remove(collider.gameObject);
+                            break;
+                        }
+                    }
+
+                    break;
+            }
         }
         #endregion
     }
