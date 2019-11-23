@@ -21,13 +21,13 @@ public class HumanAI : MonoBehaviour
     public bool hungry = false;
     public bool isAscended = false;
     public GameObject house;
+    public bool isDayTime = false;
 
     [Space]
 
     public RagdollAnimator humanAnimator;
     public Rigidbody hips;
     public Transform humanMesh, movementParent, rotationReference;
-    public Sun sun;
     public int secondsSinceLastBuild, fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
@@ -43,7 +43,6 @@ public class HumanAI : MonoBehaviour
     bool happinessDecreasing = false;
     bool checkForTree = false; 
     bool readyToAscend = false;
-    bool isDayTime = false;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
 
@@ -82,7 +81,7 @@ public class HumanAI : MonoBehaviour
             currentDesire = HumanDesire.TO_ASCEND;
 
         #region State Declaration
-        if ((sun.rotation < 90 && sun.rotation >= 0) || (sun.rotation > 270 && sun.rotation <= 360))
+        if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360))
         {
             isDayTime = true;
             if (humanAnimator.hasCollapsed)
@@ -99,12 +98,12 @@ public class HumanAI : MonoBehaviour
                 currentState = HumanState.IDLE;
         }
 
-        if (sun.rotation >= 90 && sun.rotation <= 180)
+        if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180)
         {
             isDayTime = false;
             currentState = HumanState.PRAYING;
         }
-        else if (sun.rotation > 180 && sun.rotation <= 270)
+        else if (Sun.Instance.rotation > 180 && Sun.Instance.rotation <= 270)
         {
             isDayTime = false;
             currentState = HumanState.SLEEPING;
@@ -225,6 +224,7 @@ public class HumanAI : MonoBehaviour
             switch (currentState)
             {
                 case HumanState.PRAYING:
+                    Debug.Log("Praying");
                     MoveToDestination(2);
 
                     /*
@@ -242,42 +242,42 @@ public class HumanAI : MonoBehaviour
                     break;
 
                 case HumanState.SLEEPING:
-                    GameObject[] homes = GameObject.FindGameObjectsWithTag("House");
-                    foreach (GameObject house in homes)
-                    {
-                        GameManager.Instance.emptyHomes.Add(house);
-                    }
-
+                    Debug.Log("Sleeping");
                     MoveToDestination(3);
 
-                    int houseLayerTeamOne = 25;
-                    int houseLayerTeamTwo = 26;
-                    int houseMaskTeamOne = 1 << houseLayerTeamOne;
-                    int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
+                    //int houseLayerTeamOne = 25;
+                    //int houseLayerTeamTwo = 26;
+                    //int houseMaskTeamOne = 1 << houseLayerTeamOne;
+                    //int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
 
-                    if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                    {
-                        Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamOne);
-                        foreach (Collider go in homesTeamOne)
-                        {
-                            GameManager.Instance.sleepingHumans.Add(gameObject);
-                            gameObject.SetActive(false);
-                            GameManager.Instance.emptyHomes.Remove(go.gameObject);
-                            break;
-                        }
-                    }
+                    //if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                    //{
+                    //    Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 2f, houseMaskTeamOne);
+                    //    foreach (Collider go in homesTeamOne)
+                    //    {
+                    //        Debug.Log(go.tag);
+                    //        if (go.CompareTag("House"))
+                    //        {
+                    //            GameManager.Instance.sleepingHumans.Add(gameObject);
+                    //            gameObject.SetActive(false);
+                    //            GameManager.Instance.emptyHomes.Remove(go.gameObject);
 
-                    if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                    {
-                        Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamTwo);
-                        foreach (Collider collider in homesTeamTwo)
-                        {
-                            GameManager.Instance.sleepingHumans.Add(gameObject);
-                            gameObject.SetActive(false);
-                            GameManager.Instance.emptyHomes.Remove(collider.gameObject);
-                            break;
-                        }
-                    }
+                    //            break;
+                    //        }
+                    //    }
+                    //}
+
+                    //if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                    //{
+                    //    Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamTwo);
+                    //    foreach (Collider collider in homesTeamTwo)
+                    //    {
+                    //        GameManager.Instance.sleepingHumans.Add(gameObject);
+                    //        gameObject.SetActive(false);
+                    //        GameManager.Instance.emptyHomes.Remove(collider.gameObject);
+                    //        break;
+                    //    }
+                    //}
 
                     break;
             }
@@ -473,44 +473,12 @@ public class HumanAI : MonoBehaviour
                 break;
 
             case 3: // ... nearest house
-                int houseLayerTeamOne = 25;
-                int houseLayerTeamTwo = 26;
-                int houseMaskTeamOne = 1 << houseLayerTeamOne;
-                int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
-                
-                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                {
-                    Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 50f, houseMaskTeamOne);
-                    List<Transform> homeTransforms = new List<Transform>();
-                    foreach (Collider home in homesTeamOne)
-                    {
-                        homeTransforms.Add(home.transform);
-                    }
+                rotationReference.LookAt(GetClosestUnit(GameManager.Instance.homes));
+                var homeRot = rotationReference.rotation;
+                homeRot.x = 0f;
+                homeRot.z = 0f;
 
-                    rotationReference.LookAt(GetClosestUnit(homeTransforms.ToArray()));
-                    var homeRot = rotationReference.rotation;
-                    homeRot.x = 0f;
-                    homeRot.z = 0f;
-
-                    movementParent.rotation = homeRot;
-                }
-
-                else if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                {
-                    Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 50f, houseMaskTeamTwo);
-                    List<Transform> homeTransforms = new List<Transform>();
-                    foreach (Collider home in homesTeamTwo)
-                    {
-                        homeTransforms.Add(home.transform);
-                    }
-
-                    rotationReference.LookAt(GetClosestUnit(homeTransforms.ToArray()));
-                    var homeRot = rotationReference.rotation;
-                    homeRot.x = 0f;
-                    homeRot.z = 0f;
-
-                    movementParent.rotation = homeRot;
-                }
+                movementParent.rotation = homeRot;
 
                 break;
         }
