@@ -11,6 +11,11 @@ TagManager:
   - Hammer
   - Human
   - BerryBush
+  - Hand
+  - Paintbrush
+  - Lookingglass
+  - LeftHand
+  - RightHand
   layers:
   - Default
   - TransparentFX
@@ -39,7 +44,7 @@ TagManager:
   - Hologram
   - Home(T1)
   - Home(T2)
-  - 
+  - ToolSlot
   - 
   - 
   - 
