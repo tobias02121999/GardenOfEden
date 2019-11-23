@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sun : MonoBehaviour
+public class Sun : Singleton<Sun>
 {
     // Initialize the public variables
     public float dayNightSpeed, densityDay, densityNight, ambientDay, ambientNight;
