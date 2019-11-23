@@ -141,28 +141,7 @@ public class HumanAI : MonoBehaviour
                     break;
 
                 case HumanState.IDLE: // Human wanders about when idle.
-                    Debug.Log("Idling");
-
-                    if (!humanAnimator.hasCollapsed)
-                    {
-                        if (wanderAlarm <= 0f)
-                        {
-                            humanAnimator.targetRot = Random.Range(0f, 360f);
-                            wanderAlarm = wanderDuration;
-
-                            Debug.Log("Randomize");
-                        }
-
-                        wanderAlarm--;
-
-                        if (humanAnimator.currentRot >= humanAnimator.targetRot + turnSpeed)
-                            humanAnimator.currentRot -= turnSpeed;
-
-                        if (humanAnimator.currentRot <= humanAnimator.targetRot - turnSpeed)
-                            humanAnimator.currentRot += turnSpeed;
-
-                        movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);
-                    }
+                    Idling();
 
                     break;
 
@@ -187,8 +166,14 @@ public class HumanAI : MonoBehaviour
                     else
                     {
                         // Building
-                        if (GameManager.Instance.emptyHomes.Count < GameManager.Instance.TeamOneHumans.Count /*&& CheckForSufficientRoom()*/)
+                        if (GameManager.Instance.emptyHomes.Count < GameManager.Instance.TeamOneHumans.Count)
                         {
+                            if (!CheckForSufficientRoom())
+                            {
+                                Debug.Log("IK KAN NIETS VINDEN HELP ER IS GEEN PLEK WTF");
+                                Idling();
+                            }
+
                             Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
                             var obj = Instantiate(house, inFront, Quaternion.identity);
 
@@ -227,62 +212,50 @@ public class HumanAI : MonoBehaviour
                     Debug.Log("Praying");
                     MoveToDestination(2);
 
-                    /*
-                    var objects = Physics.OverlapBox(humanMesh.position, new Vector3(2f, 2f, 2f));
-                    for (int i = 0; i < objects.Length; i++)
-                    {
-                        if (hungry)
+                    if (hungry)
                         { Debug.Log("One of your humans says: 'I require sustenence'"); }
-                        else if (houses.Count < people.Count)
+                    else if (houses.Count < people.Count)
                         { Debug.Log("One of your humans says: 'Me sad, no house :('"); }
-
-                    }
-                    */
 
                     break;
 
                 case HumanState.SLEEPING:
                     Debug.Log("Sleeping");
-                    MoveToDestination(3);
-
-                    //int houseLayerTeamOne = 25;
-                    //int houseLayerTeamTwo = 26;
-                    //int houseMaskTeamOne = 1 << houseLayerTeamOne;
-                    //int houseMaskTeamTwo = 1 << houseLayerTeamTwo;
-
-                    //if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                    //{
-                    //    Collider[] homesTeamOne = Physics.OverlapSphere(humanMesh.position, 2f, houseMaskTeamOne);
-                    //    foreach (Collider go in homesTeamOne)
-                    //    {
-                    //        Debug.Log(go.tag);
-                    //        if (go.CompareTag("House"))
-                    //        {
-                    //            GameManager.Instance.sleepingHumans.Add(gameObject);
-                    //            gameObject.SetActive(false);
-                    //            GameManager.Instance.emptyHomes.Remove(go.gameObject);
-
-                    //            break;
-                    //        }
-                    //    }
-                    //}
-
-                    //if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                    //{
-                    //    Collider[] homesTeamTwo = Physics.OverlapSphere(humanMesh.position, 1f, houseMaskTeamTwo);
-                    //    foreach (Collider collider in homesTeamTwo)
-                    //    {
-                    //        GameManager.Instance.sleepingHumans.Add(gameObject);
-                    //        gameObject.SetActive(false);
-                    //        GameManager.Instance.emptyHomes.Remove(collider.gameObject);
-                    //        break;
-                    //    }
-                    //}
+                    if ((GameManager.Instance.TeamOneHumans.Contains(gameObject) && GameManager.Instance.TeamOneHomes.Count > 0) ||
+                         GameManager.Instance.TeamTwoHumans.Contains(gameObject) && GameManager.Instance.TeamTwoHomes.Count > 0)
+                        MoveToDestination(3);
+                    else
+                        Idling();
 
                     break;
             }
         }
         #endregion
+    }
+
+    void Idling()
+    {
+        Debug.Log("Idling");
+        if (!humanAnimator.hasCollapsed)
+        {
+            if (wanderAlarm <= 0f)
+            {
+                humanAnimator.targetRot = Random.Range(0f, 360f);
+                wanderAlarm = wanderDuration;
+
+                Debug.Log("Randomize");
+            }
+
+            wanderAlarm--;
+
+            if (humanAnimator.currentRot >= humanAnimator.targetRot + turnSpeed)
+                humanAnimator.currentRot -= turnSpeed;
+
+            if (humanAnimator.currentRot <= humanAnimator.targetRot - turnSpeed)
+                humanAnimator.currentRot += turnSpeed;
+
+            movementParent.rotation = Quaternion.Euler(0f, humanAnimator.currentRot, 0f);
+        }
     }
 
     Transform GetClosestUnit(Transform[] units)
@@ -473,12 +446,25 @@ public class HumanAI : MonoBehaviour
                 break;
 
             case 3: // ... nearest house
-                rotationReference.LookAt(GetClosestUnit(GameManager.Instance.homes));
-                var homeRot = rotationReference.rotation;
-                homeRot.x = 0f;
-                homeRot.z = 0f;
+                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GetClosestUnit(GameManager.Instance.TeamOneHomes.ToArray()));
+                    var homeRot = rotationReference.rotation;
+                    homeRot.x = 0f;
+                    homeRot.z = 0f;
 
-                movementParent.rotation = homeRot;
+                    movementParent.rotation = homeRot;
+                }
+
+                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GetClosestUnit(GameManager.Instance.TeamTwoHomes.ToArray()));
+                    var homeRot = rotationReference.rotation;
+                    homeRot.x = 0f;
+                    homeRot.z = 0f;
+
+                    movementParent.rotation = homeRot;
+                }
 
                 break;
         }
