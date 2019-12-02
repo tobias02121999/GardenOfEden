@@ -7,6 +7,8 @@ public class ToolbeltSlot : MonoBehaviour
     // Initialize the public variables
     public GameObject[] toolMesh;
     public int toolID;
+    public int handType;
+    public string handTag;
 
     // Initialize the private variables
     bool hasInteracted;
@@ -28,13 +30,15 @@ public class ToolbeltSlot : MonoBehaviour
     {
         if (!hasInteracted)
         {
-            var handTag = other.GetComponentInParent<FollowPivot>().tag;
-            int handType;
-
-            if (handTag == "HandLeft")
+            var hand = other.GetComponentInParent<FollowPivot>();
+            
+            if (hand.CompareTag("HandLeft"))
                 handType = 0;
-            else
+            
+            if (hand.CompareTag("HandRight"))
                 handType = 1;
+
+            handTag = hand.tag;
 
             var ID = GetToolID(other.tag);
             var inv = other.GetComponentInParent<PlayerInventory>();
@@ -64,6 +68,8 @@ public class ToolbeltSlot : MonoBehaviour
         {
             newID = targetInv.currentToolR;
             targetInv.currentToolR = toolID;
+
+            Debug.Log("A!");
         }
 
         toolID = newID;
@@ -99,7 +105,7 @@ public class ToolbeltSlot : MonoBehaviour
                 ID = 2;
                 break;
 
-            case "Lookingglass":
+            case "Paintjar":
                 ID = 3;
                 break;
         }
