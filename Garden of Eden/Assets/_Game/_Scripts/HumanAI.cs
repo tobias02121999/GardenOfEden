@@ -21,6 +21,7 @@ public class HumanAI : MonoBehaviour
     public bool hungry = false;
     public bool isAscended = false;
     public GameObject house;
+    public GameObject hologram;
     public bool isDayTime = false;
 
     [Space]
@@ -40,6 +41,7 @@ public class HumanAI : MonoBehaviour
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
     bool _wasInvoked = false;
+    bool buildingHouse = false;
     bool happinessDecreasing = false;
     bool checkForTree = false; 
     bool readyToAscend = false;
@@ -92,7 +94,7 @@ public class HumanAI : MonoBehaviour
                     StartCoroutine("ReduceHappinessOverTime");
                 currentState = HumanState.HUNGRY;
             }
-            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5)
+            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5 && !buildingHouse)
                 currentState = HumanState.BUILDING_HOUSE;
             else
                 currentState = HumanState.IDLE;
@@ -148,6 +150,15 @@ public class HumanAI : MonoBehaviour
                 case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
                     Debug.Log("Building");
 
+                    if (CheckForSufficientRoom() && !buildingHouse)
+                    {
+                        buildingHouse = true;
+
+                        Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+                        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        obj.transform.position = inFront;
+                    }
+
                     if (gatheredWood < 30)
                     {
                         // Chopping
@@ -173,14 +184,17 @@ public class HumanAI : MonoBehaviour
                                 Debug.Log("IK KAN NIETS VINDEN HELP ER IS GEEN PLEK WTF");
                                 Idling();
                             }
+                            else
+                            {
+                                Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+                                var obj = Instantiate(house, inFront, Quaternion.identity);
 
-                            Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
-                            var obj = Instantiate(house, inFront, Quaternion.identity);
+                                GameManager.Instance.emptyHomes.Add(obj);
 
-                            GameManager.Instance.emptyHomes.Add(obj);
-
-                            gatheredWood -= 30;
-                            secondsSinceLastBuild = 0;
+                                gatheredWood -= 30;
+                                secondsSinceLastBuild = 0;
+                                buildingHouse = false;
+                            }
                         }
                     }
 

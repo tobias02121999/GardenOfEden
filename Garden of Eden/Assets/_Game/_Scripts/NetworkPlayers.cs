@@ -5,18 +5,5 @@ using UnityEngine;
 public class NetworkPlayers : MonoBehaviour
 {
     // Initialize the public variables
-    
     public GameObject localPlayer, otherPlayer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
