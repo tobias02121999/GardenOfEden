@@ -11,7 +11,8 @@ public class HumanAI : MonoBehaviour
     public HumanState currentState;
 
     [Header("This human currently desires:")]
-    public HumanDesire currentDesire;
+    public HumanDesire currentDesire = HumanDesire.NOTHING;
+    public UnityEngine.UI.Image[] desireClouds;
 
     [Header("Focus Vars")]
     public float fear;
@@ -42,6 +43,7 @@ public class HumanAI : MonoBehaviour
     bool wasInvoked = false;
     bool _wasInvoked = false;
     bool buildingHouse = false;
+    bool desireStated = false;
     bool happinessDecreasing = false;
     bool checkForTree = false; 
     bool readyToAscend = false;
@@ -90,6 +92,7 @@ public class HumanAI : MonoBehaviour
                 currentState = HumanState.RECOVER;
             else if (hungry)
             {
+                currentDesire = HumanDesire.FOOD;
                 if (happinessDecreasing == false)
                     StartCoroutine("ReduceHappinessOverTime");
                 currentState = HumanState.HUNGRY;
@@ -182,6 +185,7 @@ public class HumanAI : MonoBehaviour
                             if (!CheckForSufficientRoom())
                             {
                                 Debug.Log("IK KAN NIETS VINDEN HELP ER IS GEEN PLEK WTF");
+                                currentDesire = HumanDesire.HOUSING;
                                 Idling();
                             }
                             else
@@ -226,15 +230,17 @@ public class HumanAI : MonoBehaviour
                     Debug.Log("Praying");
                     MoveToDestination(2);
 
-                    if (hungry)
-                        { Debug.Log("One of your humans says: 'I require sustenence'"); }
-                    else if (houses.Count < people.Count)
-                        { Debug.Log("One of your humans says: 'Me sad, no house :('"); }
+                    if (!desireStated)
+                        StateDesire();
 
                     break;
 
                 case HumanState.SLEEPING:
                     Debug.Log("Sleeping");
+
+                    foreach (UnityEngine.UI.Image cloud in desireClouds)
+                        cloud.enabled = false;  // Deactivate all the desire clouds.
+
                     if ((GameManager.Instance.TeamOneHumans.Contains(gameObject) && GameManager.Instance.TeamOneHomes.Count > 0) ||
                          GameManager.Instance.TeamTwoHumans.Contains(gameObject) && GameManager.Instance.TeamTwoHomes.Count > 0)
                         MoveToDestination(3);
@@ -480,6 +486,24 @@ public class HumanAI : MonoBehaviour
                     movementParent.rotation = homeRot;
                 }
 
+                break;
+        }
+    }
+
+    void StateDesire()
+    {
+        desireStated = true;
+
+        switch (currentDesire)
+        {
+            case HumanDesire.FOOD:
+                Debug.Log("I want food!");
+                desireClouds[0].enabled = true;
+                break;
+
+            case HumanDesire.HOUSING:
+                Debug.Log("I want a house!");
+                desireClouds[1].enabled = true;
                 break;
         }
     }
