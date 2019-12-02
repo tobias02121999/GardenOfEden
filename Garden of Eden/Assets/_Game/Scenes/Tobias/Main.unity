@@ -1273,10 +1273,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shrines:
   - {fileID: 837838799}
+  homes: []
   TeamOneHumans:
   - {fileID: 0}
   TeamTwoHumans: []
   NeutralHumans: []
+  TeamOneHomes: []
+  TeamTwoHomes: []
   emptyHomes: []
   sleepingHumans: []
   fearObjects: []

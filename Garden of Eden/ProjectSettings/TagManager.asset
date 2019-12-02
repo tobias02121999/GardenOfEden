@@ -14,8 +14,9 @@ TagManager:
   - Hand
   - Paintbrush
   - Lookingglass
-  - LeftHand
-  - RightHand
+  - HandLeft
+  - HandRight
+  - Paintjar
   layers:
   - Default
   - TransparentFX
