@@ -33,6 +33,7 @@ public class HumanAI : MonoBehaviour
     public int secondsSinceLastBuild, fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
+    public bool atShrine;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
@@ -50,6 +51,10 @@ public class HumanAI : MonoBehaviour
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
 
+    private void Start()
+    {
+        currentDesire = HumanDesire.NOTHING;
+    }
     // Update is called once per frame
     void Update() 
     {
@@ -185,7 +190,9 @@ public class HumanAI : MonoBehaviour
                             if (!CheckForSufficientRoom())
                             {
                                 Debug.Log("IK KAN NIETS VINDEN HELP ER IS GEEN PLEK WTF");
-                                currentDesire = HumanDesire.HOUSING;
+                                if (currentDesire != HumanDesire.FOOD)
+                                    currentDesire = HumanDesire.HOUSING;
+
                                 Idling();
                             }
                             else
@@ -228,9 +235,11 @@ public class HumanAI : MonoBehaviour
             {
                 case HumanState.PRAYING:
                     Debug.Log("Praying");
+
+                    GameManager.Instance.CheckForFood();
                     MoveToDestination(2);
 
-                    if (!desireStated)
+                    if (!desireStated && atShrine)
                         StateDesire();
 
                     break;
@@ -238,6 +247,7 @@ public class HumanAI : MonoBehaviour
                 case HumanState.SLEEPING:
                     Debug.Log("Sleeping");
 
+                    desireStated = false;
                     foreach (UnityEngine.UI.Image cloud in desireClouds)
                         cloud.enabled = false;  // Deactivate all the desire clouds.
 
@@ -496,14 +506,17 @@ public class HumanAI : MonoBehaviour
 
         switch (currentDesire)
         {
-            case HumanDesire.FOOD:
-                Debug.Log("I want food!");
+            case HumanDesire.FOOD:  // This unit is hungry or out of food.
                 desireClouds[0].enabled = true;
                 break;
 
-            case HumanDesire.HOUSING:
-                Debug.Log("I want a house!");
-                desireClouds[1].enabled = true;
+            case HumanDesire.HOUSING:   // This unit has no housing or doesn't have enough room to build one.
+                desireClouds[1].gameObject.SetActive(true);
+                break;
+
+            case HumanDesire.TO_ASCEND:
+                Debug.Log("I am ready to ascend, allmighty one.");
+                // set ascension cloud active.
                 break;
         }
     }
