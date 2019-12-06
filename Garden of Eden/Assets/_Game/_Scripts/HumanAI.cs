@@ -19,6 +19,7 @@ public class HumanAI : MonoBehaviour
     public float faith = 1;
     public GameObject halo;
     public float happiness = 100;
+    public bool hasWood = false;
     public bool hungry = false;
     public bool isAscended = false;
     public GameObject house;
@@ -165,12 +166,17 @@ public class HumanAI : MonoBehaviour
                         Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
                         GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         obj.transform.position = inFront;
+                        obj.tag = "House Blueprint";
                     }
 
                     if (gatheredWood < 30)
                     {
                         // Chopping
-                        MoveToDestination(1);   // Move to the tree first.
+                        if (!hasWood)
+                            MoveToDestination(1);   // Move to the tree first.
+                        else
+                            MoveToDestination(4);   // Then, if the player has chopped a tree, move to the house that he's building.
+                        
 
                         int layer = 17;
                         int mask = 1 << layer;
@@ -180,6 +186,7 @@ public class HumanAI : MonoBehaviour
                         {
                             Destroy(tree.gameObject);   // Then destroy all nearby trees.
                             gatheredWood += 10;
+                            hasWood = true;
                         }
                     }
                     else
@@ -450,6 +457,7 @@ public class HumanAI : MonoBehaviour
 
                 break;
 
+
             case 2: // ... the Shrine
                 if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
                 {
@@ -495,6 +503,24 @@ public class HumanAI : MonoBehaviour
 
                     movementParent.rotation = homeRot;
                 }
+
+                break;
+
+            case 4: // ... Nearest home being built.
+                Collider[] homesBeingBuilt = Physics.OverlapSphere(humanMesh.position, 50f);
+                List<Transform> builtHomes = new List<Transform>();
+                foreach (Collider home in homesBeingBuilt)
+                {
+                    if (home.CompareTag("House Blueprint"))
+                        builtHomes.Add(home.transform);
+                }
+
+                rotationReference.LookAt(GetClosestUnit(builtHomes.ToArray()));
+                var builtHomeRot = rotationReference.rotation;
+                builtHomeRot.x = 0f;
+                builtHomeRot.z = 0f;
+
+                movementParent.rotation = builtHomeRot;
 
                 break;
         }
