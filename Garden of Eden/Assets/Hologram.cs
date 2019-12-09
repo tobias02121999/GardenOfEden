@@ -44,6 +44,7 @@ public class Hologram : MonoBehaviour
     // Check if the player is touching the hologram
     void OnTriggerEnter(Collider other)
     {
-        hasCollided = true;
+        if (other.CompareTag("Hand"))
+            hasCollided = true;
     }
 }
