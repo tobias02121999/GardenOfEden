@@ -530,6 +530,9 @@ public class HumanAI : MonoBehaviour
     {
         desireStated = true;
 
+        if (currentDesire != HumanDesire.FOOD && houses.Count < people.Count)
+            currentDesire = HumanDesire.HOUSING; Debug.Log("I NEED A HOME!");
+
         switch (currentDesire)
         {
             case HumanDesire.FOOD:  // This unit is hungry or out of food.
