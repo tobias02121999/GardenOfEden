@@ -11,16 +11,19 @@ public class HumanAI : MonoBehaviour
     public HumanState currentState;
 
     [Header("This human currently desires:")]
-    public HumanDesire currentDesire;
+    public HumanDesire currentDesire = HumanDesire.NOTHING;
+    public UnityEngine.UI.Image[] desireClouds;
 
     [Header("Focus Vars")]
     public float fear;
     public float faith = 1;
     public GameObject halo;
     public float happiness = 100;
+    public bool hasWood = false;
     public bool hungry = false;
     public bool isAscended = false;
     public GameObject house;
+    public GameObject hologram;
     public bool isDayTime = false;
 
     [Space]
@@ -31,6 +34,7 @@ public class HumanAI : MonoBehaviour
     public int secondsSinceLastBuild, fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
+    public bool atShrine;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
@@ -40,12 +44,18 @@ public class HumanAI : MonoBehaviour
     Vector3 closestLingeringObjectPosition = Vector3.zero;
     bool wasInvoked = false;
     bool _wasInvoked = false;
+    bool buildingHouse = false;
+    bool desireStated = false;
     bool happinessDecreasing = false;
     bool checkForTree = false; 
     bool readyToAscend = false;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
 
+    private void Start()
+    {
+        currentDesire = HumanDesire.NOTHING;
+    }
     // Update is called once per frame
     void Update() 
     {
@@ -88,11 +98,12 @@ public class HumanAI : MonoBehaviour
                 currentState = HumanState.RECOVER;
             else if (hungry)
             {
+                currentDesire = HumanDesire.FOOD;
                 if (happinessDecreasing == false)
                     StartCoroutine("ReduceHappinessOverTime");
                 currentState = HumanState.HUNGRY;
             }
-            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5)
+            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5 && !buildingHouse)
                 currentState = HumanState.BUILDING_HOUSE;
             else
                 currentState = HumanState.IDLE;
@@ -148,10 +159,24 @@ public class HumanAI : MonoBehaviour
                 case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
                     Debug.Log("Building");
 
+                    if (CheckForSufficientRoom() && !buildingHouse)
+                    {
+                        buildingHouse = true;
+
+                        Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+                        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        obj.transform.position = inFront;
+                        obj.tag = "House Blueprint";
+                    }
+
                     if (gatheredWood < 30)
                     {
                         // Chopping
-                        MoveToDestination(1);   // Move to the tree first.
+                        if (!hasWood)
+                            MoveToDestination(1);   // Move to the tree first.
+                        else
+                            MoveToDestination(4);   // Then, if the player has chopped a tree, move to the house that he's building.
+                        
 
                         int layer = 17;
                         int mask = 1 << layer;
@@ -161,6 +186,7 @@ public class HumanAI : MonoBehaviour
                         {
                             Destroy(tree.gameObject);   // Then destroy all nearby trees.
                             gatheredWood += 10;
+                            hasWood = true;
                         }
                     }
                     else
@@ -171,16 +197,22 @@ public class HumanAI : MonoBehaviour
                             if (!CheckForSufficientRoom())
                             {
                                 Debug.Log("IK KAN NIETS VINDEN HELP ER IS GEEN PLEK WTF");
+                                if (currentDesire != HumanDesire.FOOD)
+                                    currentDesire = HumanDesire.HOUSING;
+
                                 Idling();
                             }
+                            else
+                            {
+                                Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+                                var obj = Instantiate(house, inFront, Quaternion.identity);
 
-                            Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
-                            var obj = Instantiate(house, inFront, Quaternion.identity);
+                                GameManager.Instance.emptyHomes.Add(obj);
 
-                            GameManager.Instance.emptyHomes.Add(obj);
-
-                            gatheredWood -= 30;
-                            secondsSinceLastBuild = 0;
+                                gatheredWood -= 30;
+                                secondsSinceLastBuild = 0;
+                                buildingHouse = false;
+                            }
                         }
                     }
 
@@ -210,17 +242,22 @@ public class HumanAI : MonoBehaviour
             {
                 case HumanState.PRAYING:
                     Debug.Log("Praying");
+
+                    GameManager.Instance.CheckForFood();
                     MoveToDestination(2);
 
-                    if (hungry)
-                        { Debug.Log("One of your humans says: 'I require sustenence'"); }
-                    else if (houses.Count < people.Count)
-                        { Debug.Log("One of your humans says: 'Me sad, no house :('"); }
+                    if (!desireStated && atShrine)
+                        StateDesire();
 
                     break;
 
                 case HumanState.SLEEPING:
                     Debug.Log("Sleeping");
+
+                    desireStated = false;
+                    foreach (UnityEngine.UI.Image cloud in desireClouds)
+                        cloud.enabled = false;  // Deactivate all the desire clouds.
+
                     if ((GameManager.Instance.TeamOneHumans.Contains(gameObject) && GameManager.Instance.TeamOneHomes.Count > 0) ||
                          GameManager.Instance.TeamTwoHumans.Contains(gameObject) && GameManager.Instance.TeamTwoHomes.Count > 0)
                         MoveToDestination(3);
@@ -420,6 +457,7 @@ public class HumanAI : MonoBehaviour
 
                 break;
 
+
             case 2: // ... the Shrine
                 if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
                 {
@@ -466,6 +504,45 @@ public class HumanAI : MonoBehaviour
                     movementParent.rotation = homeRot;
                 }
 
+                break;
+
+            case 4: // ... Nearest home being built.
+                Collider[] homesBeingBuilt = Physics.OverlapSphere(humanMesh.position, 50f);
+                List<Transform> builtHomes = new List<Transform>();
+                foreach (Collider home in homesBeingBuilt)
+                {
+                    if (home.CompareTag("House Blueprint"))
+                        builtHomes.Add(home.transform);
+                }
+
+                rotationReference.LookAt(GetClosestUnit(builtHomes.ToArray()));
+                var builtHomeRot = rotationReference.rotation;
+                builtHomeRot.x = 0f;
+                builtHomeRot.z = 0f;
+
+                movementParent.rotation = builtHomeRot;
+
+                break;
+        }
+    }
+
+    void StateDesire()
+    {
+        desireStated = true;
+
+        switch (currentDesire)
+        {
+            case HumanDesire.FOOD:  // This unit is hungry or out of food.
+                desireClouds[0].enabled = true;
+                break;
+
+            case HumanDesire.HOUSING:   // This unit has no housing or doesn't have enough room to build one.
+                desireClouds[1].gameObject.SetActive(true);
+                break;
+
+            case HumanDesire.TO_ASCEND:
+                Debug.Log("I am ready to ascend, allmighty one.");
+                // set ascension cloud active.
                 break;
         }
     }

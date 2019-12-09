@@ -6,14 +6,17 @@ public class Shrine : MonoBehaviour
 {
 
     bool hasRun;
+    GameObject human;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Human"))
         {
             hasRun = false;
+            collision.gameObject.GetComponentInParent<HumanAI>().atShrine = true;
             collision.gameObject.GetComponentInParent<HumanAI>().speed = 0;
             collision.gameObject.GetComponentInParent<RagdollAnimator>().enabled = false;
+            
         }
     }
 
@@ -24,12 +27,14 @@ public class Shrine : MonoBehaviour
             hasRun = true;
             foreach (GameObject human in GameManager.Instance.TeamOneHumans)
             {
+                human.gameObject.GetComponentInParent<HumanAI>().atShrine = false;
                 human.gameObject.GetComponentInParent<HumanAI>().speed = 15;
                 human.gameObject.GetComponentInParent<RagdollAnimator>().enabled = true;
             }
 
             foreach (GameObject human in GameManager.Instance.TeamTwoHumans)
             {
+                human.gameObject.GetComponentInParent<HumanAI>().atShrine = false;
                 human.gameObject.GetComponentInParent<HumanAI>().speed = 15;
                 human.gameObject.GetComponentInParent<RagdollAnimator>().enabled = true;
             }

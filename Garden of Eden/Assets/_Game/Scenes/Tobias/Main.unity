@@ -10003,6 +10003,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PaintJar
       objectReference: {fileID: 0}
+    - target: {fileID: 9171000669206935496, guid: 11747bfd54c295847a2da59af4f6f8c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9171000669207096296, guid: 11747bfd54c295847a2da59af4f6f8c3,
         type: 3}
       propertyPath: m_LocalPosition.x

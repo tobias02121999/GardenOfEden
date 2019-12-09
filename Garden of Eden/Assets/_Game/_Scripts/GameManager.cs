@@ -47,7 +47,7 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    void CheckForFood()
+    public void CheckForFood()
     {
         GameObject[] food = GameObject.FindGameObjectsWithTag("BerryBush");
         GameObject[] humans = GameObject.FindGameObjectsWithTag("Human");
