@@ -18,6 +18,7 @@ TagManager:
   - HandRight
   - Paintjar
   - HumanBodypart
+  - House Blueprint
   layers:
   - Default
   - TransparentFX
@@ -47,7 +48,7 @@ TagManager:
   - Home(T1)
   - Home(T2)
   - ToolSlot
-  - 
+  - Building In Progress
   - 
   - 
   - 

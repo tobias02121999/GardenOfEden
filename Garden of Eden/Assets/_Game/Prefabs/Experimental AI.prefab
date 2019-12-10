@@ -73,8 +73,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
   m_BlockingMask:
@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2455d132ba5ed7141be52b13433e4f1e, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   players: {fileID: 0}
   localCentreEyeCamera: {fileID: 0}
   canvas: {fileID: 157527978}
@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71e923bfdb75c924ea68c2c14e488851, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &195965484
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -256,8 +256,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -359,8 +359,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5aee069cee22e645a18632fa3286feb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   localPlayer: {fileID: 0}
   clientAuthority: 0
 --- !u!1 &4982348979533555723
@@ -2712,7 +2712,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000006405699, y: 0.3898611, z: 0.05227399}
+  m_ConnectedAnchor: {x: 0.00000017436159, y: 0.3898611, z: 0.05227399}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -2849,8 +2849,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9f12d2013e0c4341952d173d17e7c8f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   bones:
   - {fileID: 6538513111818616364}
   - {fileID: 6538513111818616422}
@@ -2906,8 +2906,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4fbe2e96f5c09846b538af2d3607d6c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   currentState: 0
   currentDesire: 0
   desireClouds:
@@ -2920,8 +2920,9 @@ MonoBehaviour:
   hasWood: 0
   hungry: 0
   isAscended: 0
-  house: {fileID: 0}
-  hologram: {fileID: 0}
+  house: {fileID: 8778074915786923238, guid: 9bb295d988821ce4997bd060c8f1c1b1, type: 3}
+  hologram: {fileID: 7619618193510316101, guid: 61eea877429507c4f9575de168fc6d44,
+    type: 3}
   isDayTime: 0
   humanAnimator: {fileID: 1438448271049857592}
   hips: {fileID: 6538513111797066473}
@@ -2930,7 +2931,7 @@ MonoBehaviour:
   rotationReference: {fileID: 1834327089}
   secondsSinceLastBuild: 0
   fearReductionSpeed: 1
-  speed: 10
+  speed: 20
   wanderDuration: 150
   turnSpeed: 5
   wanderAlarm: 0
@@ -2948,8 +2949,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e35cd5ed5c1b36f42a51664083480fe1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3021181330258474364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2960,8 +2961,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_SceneId:
     m_Value: 0
   m_AssetId:
@@ -2993,8 +2994,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
   m_SendInterval: 0.05
   m_SyncRotationAxis: 7
@@ -3015,8 +3016,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616364}
   m_ChildIndex: 0
   m_SendInterval: 0.05
@@ -3035,8 +3036,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616422}
   m_ChildIndex: 1
   m_SendInterval: 0.05
@@ -3055,8 +3056,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616350}
   m_ChildIndex: 2
   m_SendInterval: 0.05
@@ -3075,8 +3076,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616410}
   m_ChildIndex: 3
   m_SendInterval: 0.05
@@ -3095,8 +3096,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616402}
   m_ChildIndex: 4
   m_SendInterval: 0.05
@@ -3115,8 +3116,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616742}
   m_ChildIndex: 5
   m_SendInterval: 0.05
@@ -3135,8 +3136,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616344}
   m_ChildIndex: 6
   m_SendInterval: 0.05
@@ -3155,8 +3156,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616366}
   m_ChildIndex: 7
   m_SendInterval: 0.05
@@ -3175,8 +3176,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616412}
   m_ChildIndex: 8
   m_SendInterval: 0.05
@@ -3195,8 +3196,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616418}
   m_ChildIndex: 9
   m_SendInterval: 0.05
@@ -3215,8 +3216,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Target: {fileID: 6538513111818616352}
   m_ChildIndex: 10
   m_SendInterval: 0.05
@@ -3463,7 +3464,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000011525117, y: 0.21441895, z: 0.00000036880374}
+  m_ConnectedAnchor: {x: 0.00000014225952, y: 0.21441922, z: 0.00000040233135}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3691,7 +3692,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.17763525, y: 0.2046964, z: -0.0021308586}
+  m_ConnectedAnchor: {x: -0.17763501, y: 0.2046945, z: -0.002130963}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -4132,7 +4133,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.17763512, y: 0.20478727, z: -0.0038073435}
+  m_ConnectedAnchor: {x: 0.17763536, y: 0.20478536, z: -0.003807446}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -5380,7 +5381,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000000053551048, y: 0.44986954, z: -0.00000015314436}
+  m_ConnectedAnchor: {x: -0.00000006635673, y: 0.44986764, z: -0.00000014941907}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -5553,7 +5554,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000373017, y: 0.19817124, z: -0.010740443}
+  m_ConnectedAnchor: {x: 0.00003753945, y: 0.19816934, z: -0.010740443}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -5937,7 +5938,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000006821938, y: 0.4498623, z: 0.00000014062971}
+  m_ConnectedAnchor: {x: 0.00000018393621, y: 0.4498604, z: 0.00000016996637}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -6139,7 +6140,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.08763138, y: -0.050682653, z: -0.004517946}
+  m_ConnectedAnchor: {x: 0.08763114, y: -0.050682653, z: -0.004517946}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -6258,8 +6259,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71e923bfdb75c924ea68c2c14e488851, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6770589802834305732
 GameObject:
   m_ObjectHideFlags: 0

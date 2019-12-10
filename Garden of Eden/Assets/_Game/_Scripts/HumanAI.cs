@@ -49,6 +49,7 @@ public class HumanAI : MonoBehaviour
     bool happinessDecreasing = false;
     bool checkForTree = false;
     bool readyToAscend = false;
+    GameObject _house;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
 
@@ -103,7 +104,7 @@ public class HumanAI : MonoBehaviour
                     StartCoroutine("ReduceHappinessOverTime");
                 currentState = HumanState.HUNGRY;
             }
-            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5 && !buildingHouse)
+            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5)
                 currentState = HumanState.BUILDING_HOUSE;
             else
                 currentState = HumanState.IDLE;
@@ -159,71 +160,71 @@ public class HumanAI : MonoBehaviour
                 case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
                     Debug.Log("Building");
 
+                    int layer = 17;
+                    int mask = 1 << layer;
+
+                    Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
+
                     if (CheckForSufficientRoom() && !buildingHouse)
                     {
                         buildingHouse = true;
 
                         Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+                        inFront.y = 33f;
+
                         GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         obj.transform.position = inFront;
+                        obj.layer = 28;
                         obj.tag = "House Blueprint";
+                        _house = obj;
                     }
 
-                    if (gatheredWood < 30)
+                    if (gatheredWood <= 30)
                     {
                         // Chopping
-                        if (!hasWood)
-                            MoveToDestination(1);   // Move to the tree first.
+                        if (hasWood)
+                            MoveToDestination(4);   // Move to the tree first.
                         else
-                            MoveToDestination(4);   // Then, if the player has chopped a tree, move to the house that he's building.
+                            rotationReference.LookAt(_house.transform.position);
+                            var _houseRot = rotationReference.rotation;
+                            _houseRot.x = 0f;
+                            _houseRot.z = 0f;
 
+                            movementParent.rotation = _houseRot;  // Then, if the player has chopped a tree, move (look at) to the house that he's building.
 
-                        int layer = 17;
-                        int mask = 1 << layer;
-
-                        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
                         foreach (Collider tree in trees)
                         {
                             Destroy(tree.gameObject);   // Then destroy all nearby trees.
                             gatheredWood += 10;
                             hasWood = true;
                         }
+
+                        if (true)
+                        {
+                            hasWood = false;
+                            // Advance the building to the next stage.
+                        }
                     }
                     else
                     {
-                        // Building
-                        if (GameManager.Instance.emptyHomes.Count < GameManager.Instance.TeamOneHumans.Count)
+                        MoveToDestination(1);
+
+                        if (true)
                         {
-                            if (!CheckForSufficientRoom())
-                            {
-                                Debug.Log("IK KAN NIETS VINDEN HELP ER IS GEEN PLEK WTF");
-                                if (currentDesire != HumanDesire.FOOD)
-                                    currentDesire = HumanDesire.HOUSING;
+                            GameObject home = Instantiate(house, building.transform.position, Quaternion.identity);
+                            home.layer = 16;
 
-                                Idling();
-                            }
-                            else
-                            {
-                                Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
-                                var obj = Instantiate(house, inFront, Quaternion.identity);
+                            GameManager.Instance.emptyHomes.Add(home);
 
-                                GameManager.Instance.emptyHomes.Add(obj);
-
-                                gatheredWood -= 30;
-                                secondsSinceLastBuild = 0;
-                                buildingHouse = false;
-                            }
+                            gatheredWood -= 30;
+                            secondsSinceLastBuild = 0;
+                            buildingHouse = false;
                         }
                     }
 
                     break;
 
                 case HumanState.BUILDING_CHURCH:
-
-                    break;
-
-                case HumanState.GATHERING_RESOURCES:
-                    // Obsolete State? See chopping.
                     break;
 
                 case HumanState.FIGHTING:
