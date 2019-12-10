@@ -45,7 +45,7 @@ public class HumanAI : MonoBehaviour
     bool wasInvoked = false;
     bool _wasInvoked = false;
     bool buildingHouse = false;
-    bool desireStated = false;
+    public bool desireStated = false;
     bool happinessDecreasing = false;
     bool checkForTree = false; 
     bool readyToAscend = false;
@@ -530,10 +530,13 @@ public class HumanAI : MonoBehaviour
     {
         desireStated = true;
 
+        Debug.Log("Stating desire...");
+        // Desire priority code goes here.
+
         switch (currentDesire)
         {
             case HumanDesire.FOOD:  // This unit is hungry or out of food.
-                desireClouds[0].enabled = true;
+                desireClouds[0].gameObject.SetActive(true);
                 break;
 
             case HumanDesire.HOUSING:   // This unit has no housing or doesn't have enough room to build one.
