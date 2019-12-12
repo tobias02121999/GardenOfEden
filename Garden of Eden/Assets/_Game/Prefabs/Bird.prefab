@@ -467,9 +467,10 @@ MonoBehaviour:
   ragdoll: {fileID: 2964503074790966312}
   waypoint: {fileID: 0}
   maxEnergy: 500
-  restDistance: 1
+  restDistance: 0.5
   takeoffAngle: 25
   restDuration: {x: 500, y: 2500}
+  modelAnimation: {fileID: 9030784016587494156}
   energy: 0
   state: 0
   restAlarm: 0
@@ -2252,6 +2253,7 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 2e25360a81eecbd49a313cb8d137d7c8, type: 3}
   m_Animations:
+  - {fileID: 7400000, guid: a41e02d1c63b773449ecacd91b785ee6, type: 3}
   - {fileID: 7400000, guid: 2e25360a81eecbd49a313cb8d137d7c8, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1

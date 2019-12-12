@@ -52,7 +52,7 @@ ModelImporter:
     2100004: Beak
     2100006: Tail
     4300000: Bird
-    7400000: Armature|ArmatureAction
+    7400000: Bird Flying
     9500000: //RootNode
     11100000: //RootNode
     13700000: Bird
@@ -85,7 +85,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|ArmatureAction
+      name: Bird Flying
       takeName: Armature|ArmatureAction
       firstFrame: 0
       lastFrame: 185

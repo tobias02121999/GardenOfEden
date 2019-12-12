@@ -15,6 +15,7 @@ public class Bird : MonoBehaviour
     public float restDistance;
     public float takeoffAngle;
     public Vector2 restDuration;
+    public Animation modelAnimation;
 
     // Initialize the private variables
     public int energy;
@@ -116,6 +117,7 @@ public class Bird : MonoBehaviour
         {
             rb.velocity = new Vector3(0f, 0f, 0f);
             restAlarm = Mathf.RoundToInt(Random.Range(restDuration.x - .45f, restDuration.y + .45f));
+            modelAnimation.Play("Bird Resting");
             state = States.RESTING;
         } 
     }
@@ -140,6 +142,7 @@ public class Bird : MonoBehaviour
         if (restAlarm <= 0)
         {
             energy = Mathf.RoundToInt(Random.Range(-.49f, maxEnergy + .49f));
+            modelAnimation.Play("Bird Flying");
             state = States.TAKEOFF;
         }
     }

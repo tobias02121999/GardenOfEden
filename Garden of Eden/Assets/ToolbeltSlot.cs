@@ -69,8 +69,6 @@ public class ToolbeltSlot : MonoBehaviour
         {
             newID = targetInv.currentToolR;
             targetInv.currentToolR = toolID;
-
-            Debug.Log("A!");
         }
 
         toolID = newID;

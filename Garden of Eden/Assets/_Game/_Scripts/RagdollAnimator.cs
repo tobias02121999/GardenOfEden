@@ -15,6 +15,7 @@ public class RagdollAnimator : MonoBehaviour
     public bool hasCollapsed;
     [System.NonSerialized]
     public float targetRot, currentRot;
+    public AudioSource audioSource;
 
     // Initialize the private variables
     float maxForce = 2750f, collapseAlarm;
@@ -116,6 +117,9 @@ public class RagdollAnimator : MonoBehaviour
                     animationControl[i] = 0f;
 
                 collapseAlarm = collapseDuration;
+
+                audioSource.pitch = Random.Range(.5f, 1.5f);
+                audioSource.Play(); // AAA!
 
                 feetCollider.enabled = false;
                 hasCollapsed = true;
