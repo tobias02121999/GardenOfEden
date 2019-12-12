@@ -19,7 +19,8 @@ public class Stork : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        teamID = Mathf.RoundToInt(Random.Range(0f, 1f));
+        //teamID = Mathf.RoundToInt(Random.Range(0f, 1f));
+        teamID = 0;
 
         CmdSpawnHuman();
 

@@ -19,6 +19,7 @@ public class Brush : MonoBehaviour
     PaintRenderer paintRenderer;
     Vector2 drawEdgeHor, drawEdgeVer, drawPivot, drawSize;
     Vector3 posOld, posNew;
+    AudioSource audioSource;
 
     GameObject drawPointObject;
     Transform drawPointParent;
@@ -35,6 +36,8 @@ public class Brush : MonoBehaviour
 
         paintRenderer = GameObject.Find("Paint Renderer").GetComponent<PaintRenderer>();
         lineRenderer = paintRenderer.lineRenderer;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -53,6 +56,17 @@ public class Brush : MonoBehaviour
 
         paintRenderer.isDrawing = isDrawing;
         paintRenderer.drawPoints = drawPoints;
+
+        if (input != 0f)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+        }
     }
 
     // Move the cursor around
@@ -87,7 +101,6 @@ public class Brush : MonoBehaviour
 
                 var dist = Vector3.Distance(posOld, transform.position);
 
-
                 var obj = Instantiate(drawPoint, transform.position, Quaternion.identity);
                 obj.transform.parent = drawPointParent;
                 obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, 0f);
@@ -113,6 +126,7 @@ public class Brush : MonoBehaviour
             var obj = Instantiate(drawRecognition, transform.position, Quaternion.identity);
             obj.transform.parent = drawPointParent;
             obj.transform.localPosition = new Vector3(drawPivot.x, drawPivot.y, 0f);
+            obj.GetComponent<DrawRecognition>().playerInventory = GetComponentInParent<PlayerInventory>();
 
             var drawRecog = obj.GetComponent<DrawRecognition>();
             drawRecog.scale = scale * recognitionScale;

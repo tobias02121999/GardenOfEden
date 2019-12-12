@@ -17,6 +17,8 @@ TagManager:
   - HandLeft
   - HandRight
   - Paintjar
+  - Book
+  - Bird
   - HumanBodypart
   - House Blueprint
   layers:

@@ -1690,7 +1690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  animation: {fileID: 1807326308733712985}
+  anim: {fileID: 1807326308733712985}
   ragdoll: {fileID: 3498153910972168789}
 --- !u!114 &2654944061777172966
 MonoBehaviour:
