@@ -466,7 +466,7 @@ MonoBehaviour:
   anim: {fileID: 9030784016576531144}
   ragdoll: {fileID: 2964503074790966312}
   waypoint: {fileID: 0}
-  maxEnergy: 500
+  maxEnergy: 1500
   restDistance: 0.5
   takeoffAngle: 25
   restDuration: {x: 500, y: 2500}

@@ -23,6 +23,8 @@ public class RagdollAnimator : MonoBehaviour
     // Run this code once at the start
     void Start()
     {
+        audioSource.pitch = Random.Range(.75f, 1.25f);
+
         for (var i = 0; i < bones.Length; i++)
         {
             bones[i].gameObject.AddComponent<RagdollCollider>();
@@ -117,8 +119,6 @@ public class RagdollAnimator : MonoBehaviour
                     animationControl[i] = 0f;
 
                 collapseAlarm = collapseDuration;
-
-                audioSource.pitch = Random.Range(.5f, 1.5f);
                 audioSource.Play(); // AAA!
 
                 feetCollider.enabled = false;

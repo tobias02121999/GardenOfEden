@@ -310,11 +310,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bird Waypoint
       objectReference: {fileID: 0}
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -369,11 +364,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Radius
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9, type: 3}
