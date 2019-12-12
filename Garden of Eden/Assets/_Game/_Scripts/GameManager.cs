@@ -12,12 +12,6 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> TeamTwoHumans = new List<GameObject>();
     public List<GameObject> NeutralHumans = new List<GameObject>();
 
-    [Header("Houses")]
-    public List<Transform> TeamOneHomes = new List<Transform>();
-    public List<Transform> TeamTwoHomes = new List<Transform>();
-    // Neutral Homes?
-
-    public List<GameObject> emptyHomes = new List<GameObject>();
     public List<GameObject> sleepingHumans = new List<GameObject>();
     public List<GameObject> fearObjects = new List<GameObject>();
     public List<GameObject> lingeringFearObjects = new List<GameObject>();

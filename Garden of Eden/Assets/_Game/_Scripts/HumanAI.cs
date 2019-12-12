@@ -22,6 +22,7 @@ public class HumanAI : MonoBehaviour
     public bool hasWood = false;
     public bool hungry = false;
     public bool isAscended = false;
+    public bool isDepressed = false;
     public GameObject house;
     public GameObject hologram;
     public bool isDayTime = false;
@@ -31,7 +32,7 @@ public class HumanAI : MonoBehaviour
     public RagdollAnimator humanAnimator;
     public Rigidbody hips;
     public Transform humanMesh, movementParent, rotationReference;
-    public int secondsSinceLastBuild, fearReductionSpeed;
+    public int fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
     public bool atShrine;
@@ -45,9 +46,11 @@ public class HumanAI : MonoBehaviour
     bool wasInvoked = false;
     bool _wasInvoked = false;
     bool buildingHouse = false;
+    bool statsTweaked = false;
     public bool desireStated = false;
     bool happinessDecreasing = false;
     bool checkForTree = false;
+    bool hasHome = false;
     bool readyToAscend = false;
     GameObject _house;
     List<GameObject> houses = new List<GameObject>();
@@ -65,17 +68,6 @@ public class HumanAI : MonoBehaviour
         else
             halo.SetActive(false);
 
-        //if (fear >= 100f || happiness <= 0f) // Neutralize human's faith.
-        //{
-        //        // give player a chance to please the human before making him leave.
-        //    faith = 0;
-
-        //    if (GameManager.Instance.TeamOneHumans.Contains(gameObject)) GameManager.Instance.TeamOneHumans.Remove(gameObject);
-        //    if (GameManager.Instance.TeamTwoHumans.Contains(gameObject)) GameManager.Instance.TeamTwoHumans.Remove(gameObject);
-
-        //    GameManager.Instance.NeutralHumans.Add(gameObject);
-        //}
-
         if (!wasInvoked)
         {
             StartCoroutine("BuildTimer");   // Continually runs the build timer.
@@ -92,38 +84,44 @@ public class HumanAI : MonoBehaviour
             currentDesire = HumanDesire.TO_ASCEND;
 
         #region State Declaration
-        if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360))
+        if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360) && !isDepressed)
         {
             isDayTime = true;
+            if (!statsTweaked)
+                TweakStats();
+
             if (humanAnimator.hasCollapsed)
                 currentState = HumanState.RECOVER;
             else if (hungry)
             {
                 currentDesire = HumanDesire.FOOD;
-                if (happinessDecreasing == false)
-                    StartCoroutine("ReduceHappinessOverTime");
                 currentState = HumanState.HUNGRY;
             }
-            else if (CheckForCalamitySites() && secondsSinceLastBuild >= 5)
+            else if (!hasHome)
                 currentState = HumanState.BUILDING_HOUSE;
             else
                 currentState = HumanState.IDLE;
         }
 
-        if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180)
+        if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && !isDepressed)
         {
             isDayTime = false;
             currentState = HumanState.PRAYING;
         }
-        else if (Sun.Instance.rotation > 180 && Sun.Instance.rotation <= 270)
+        else if (Sun.Instance.rotation > 180 && Sun.Instance.rotation <= 270 && !isDepressed)
         {
             isDayTime = false;
             currentState = HumanState.SLEEPING;
         }
 
-        // Keep gauging fear over time.
-        if (GameManager.Instance.fearObjects.Count > 0)
-            GaugeFear();
+        // Depressed states (Human becomes depressed if the happiness value drops below 15).
+        if (humanAnimator.hasCollapsed && isDepressed)
+            currentState = HumanState.RECOVER;
+        else if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && isDepressed)
+            currentState = HumanState.PRAYING;
+        else if (isDepressed)
+            currentState = HumanState.IDLE;
+            
         #endregion
 
         #region State Machine Day
@@ -173,18 +171,30 @@ public class HumanAI : MonoBehaviour
                         inFront.y = 33f;
 
                         GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        obj.GetComponent<Collider>().enabled = false;
+                        obj.transform.parent = transform;
                         obj.transform.position = inFront;
                         obj.layer = 28;
                         obj.tag = "House Blueprint";
                         _house = obj;
                     }
 
-                    if (gatheredWood <= 30)
+                    if (gatheredWood < 30)
                     {
                         // Chopping
-                        if (hasWood)
-                            MoveToDestination(4);   // Move to the tree first.
+                        if (!hasWood)
+                        {
+                            MoveToDestination(1);   // Move to the tree first.
+
+                            foreach (Collider tree in trees)
+                            {
+                                Destroy(tree.gameObject);   // Then destroy all nearby trees.
+                                gatheredWood += 10;
+                                hasWood = true;
+                            }
+                        }
                         else
+                        {
                             rotationReference.LookAt(_house.transform.position);
                             var _houseRot = rotationReference.rotation;
                             _houseRot.x = 0f;
@@ -192,33 +202,28 @@ public class HumanAI : MonoBehaviour
 
                             movementParent.rotation = _houseRot;  // Then, if the player has chopped a tree, move (look at) to the house that he's building.
 
-                        foreach (Collider tree in trees)
-                        {
-                            Destroy(tree.gameObject);   // Then destroy all nearby trees.
-                            gatheredWood += 10;
-                            hasWood = true;
-                        }
-
-                        if (true)
-                        {
-                            hasWood = false;
-                            // Advance the building to the next stage.
+                            if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
+                            {
+                                hasWood = false;
+                                // Advance the building to the next stage.
+                            }
                         }
                     }
                     else
                     {
-                        MoveToDestination(1);
+                        MoveToDestination(4);
 
-                        if (true)
+                        if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
                         {
-                            GameObject home = Instantiate(house, building.transform.position, Quaternion.identity);
+                            GameObject home = Instantiate(house, _house.transform.position, Quaternion.identity);
+                            home.transform.parent = transform;
+                            Destroy(_house);
+
                             home.layer = 16;
-
-                            GameManager.Instance.emptyHomes.Add(home);
-
                             gatheredWood -= 30;
-                            secondsSinceLastBuild = 0;
                             buildingHouse = false;
+                            hasWood = false;
+                            hasHome = true;
                         }
                     }
 
@@ -256,11 +261,11 @@ public class HumanAI : MonoBehaviour
                     Debug.Log("Sleeping");
 
                     desireStated = false;
+                    statsTweaked = false;
                     foreach (UnityEngine.UI.Image cloud in desireClouds)
                         cloud.enabled = false;  // Deactivate all the desire clouds.
 
-                    if ((GameManager.Instance.TeamOneHumans.Contains(gameObject) && GameManager.Instance.TeamOneHomes.Count > 0) ||
-                         GameManager.Instance.TeamTwoHumans.Contains(gameObject) && GameManager.Instance.TeamTwoHomes.Count > 0)
+                    if (transform.Find("House") != null)
                         MoveToDestination(3);
                     else
                         Idling();
@@ -269,6 +274,100 @@ public class HumanAI : MonoBehaviour
             }
         }
         #endregion
+    }
+
+    void MoveToDestination(int destinationIndex)
+    {
+        switch (destinationIndex)   // Goto...
+        {
+            case 0: // ...Nearest food source.
+                int foodLayer = 23;
+                int foodMask = 1 << foodLayer;
+
+                Collider[] berries = Physics.OverlapSphere(humanMesh.position, 50f, foodMask);
+                List<Transform> berryTransforms = new List<Transform>();
+                foreach (Collider col in berries)
+                {
+                    berryTransforms.Add(col.transform);
+                }
+
+                rotationReference.LookAt(GetClosestUnit(berryTransforms.ToArray()));
+                var berryRot = rotationReference.rotation;
+                berryRot.x = 0f;
+                berryRot.z = 0f;
+
+                movementParent.rotation = berryRot;
+
+                break;
+
+            case 1: // ...Nearest tree.
+                int layer = 17;
+                int mask = 1 << layer;
+
+                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 50f, mask);
+                List<Transform> colTransforms = new List<Transform>();
+                foreach (Collider col in trees)
+                {
+                    colTransforms.Add(col.transform);
+                }
+
+                rotationReference.LookAt(GetClosestUnit(colTransforms.ToArray()));
+                var treeRot = rotationReference.rotation;
+                treeRot.x = 0f;
+                treeRot.z = 0f;
+
+                movementParent.rotation = treeRot;
+
+                break;
+
+
+            case 2: // ... the Shrine
+                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
+
+                    var shrineRot = rotationReference.rotation;
+                    shrineRot.x = 0f;
+                    shrineRot.z = 0f;
+
+                    movementParent.rotation = shrineRot;
+                }
+
+                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GameManager.Instance.shrines[1].transform.position);
+
+                    var shrineRot = rotationReference.rotation;
+                    shrineRot.x = 0f;
+                    shrineRot.z = 0f;
+
+                    movementParent.rotation = shrineRot;
+                }
+
+                break;
+
+            case 3: // ... nearest house
+                rotationReference.LookAt(transform.Find("House").transform.position);
+
+                var homeRot = rotationReference.rotation;
+                homeRot.x = 0f;
+                homeRot.z = 0f;
+
+                movementParent.rotation = homeRot;
+
+                break;
+
+            case 4: // ... Nearest home being built.
+                rotationReference.LookAt(_house.transform.position);
+
+                var builtHomeRot = rotationReference.rotation;
+                builtHomeRot.x = 0f;
+                builtHomeRot.z = 0f;
+
+                movementParent.rotation = builtHomeRot;
+
+                break;
+        }
     }
 
     void Idling()
@@ -414,125 +513,12 @@ public class HumanAI : MonoBehaviour
         }
     }
 
-    void MoveToDestination(int destinationIndex)
-    {
-        switch (destinationIndex)   // Goto...
-        {
-            case 0: // ...Nearest food source.
-                int foodLayer = 23;
-                int foodMask = 1 << foodLayer;
-
-                Collider[] berries = Physics.OverlapSphere(humanMesh.position, 50f, foodMask);
-                List<Transform> berryTransforms = new List<Transform>();
-                foreach (Collider col in berries)
-                {
-                    berryTransforms.Add(col.transform);
-                }
-
-                rotationReference.LookAt(GetClosestUnit(berryTransforms.ToArray()));
-                var berryRot = rotationReference.rotation;
-                berryRot.x = 0f;
-                berryRot.z = 0f;
-
-                movementParent.rotation = berryRot;
-
-                break;
-
-            case 1: // ...Nearest tree.
-                int layer = 17;
-                int mask = 1 << layer;
-
-                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 50f, mask);
-                List<Transform> colTransforms = new List<Transform>();
-                foreach (Collider col in trees)
-                {
-                    colTransforms.Add(col.transform);
-                }
-
-                rotationReference.LookAt(GetClosestUnit(colTransforms.ToArray()));
-                var treeRot = rotationReference.rotation;
-                treeRot.x = 0f;
-                treeRot.z = 0f;
-
-                movementParent.rotation = treeRot;
-
-                break;
-
-
-            case 2: // ... the Shrine
-                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                {
-                    rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
-
-                    var shrineRot = rotationReference.rotation;
-                    shrineRot.x = 0f;
-                    shrineRot.z = 0f;
-
-                    movementParent.rotation = shrineRot;
-                }
-
-                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                {
-                    rotationReference.LookAt(GameManager.Instance.shrines[1].transform.position);
-
-                    var shrineRot = rotationReference.rotation;
-                    shrineRot.x = 0f;
-                    shrineRot.y = 0f;
-
-                    movementParent.rotation = shrineRot;
-                }
-
-                break;
-
-            case 3: // ... nearest house
-                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                {
-                    rotationReference.LookAt(GetClosestUnit(GameManager.Instance.TeamOneHomes.ToArray()));
-                    var homeRot = rotationReference.rotation;
-                    homeRot.x = 0f;
-                    homeRot.z = 0f;
-
-                    movementParent.rotation = homeRot;
-                }
-
-                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                {
-                    rotationReference.LookAt(GetClosestUnit(GameManager.Instance.TeamTwoHomes.ToArray()));
-                    var homeRot = rotationReference.rotation;
-                    homeRot.x = 0f;
-                    homeRot.z = 0f;
-
-                    movementParent.rotation = homeRot;
-                }
-
-                break;
-
-            case 4: // ... Nearest home being built.
-                Collider[] homesBeingBuilt = Physics.OverlapSphere(humanMesh.position, 50f);
-                List<Transform> builtHomes = new List<Transform>();
-                foreach (Collider home in homesBeingBuilt)
-                {
-                    if (home.CompareTag("House Blueprint"))
-                        builtHomes.Add(home.transform);
-                }
-
-                rotationReference.LookAt(GetClosestUnit(builtHomes.ToArray()));
-                var builtHomeRot = rotationReference.rotation;
-                builtHomeRot.x = 0f;
-                builtHomeRot.z = 0f;
-
-                movementParent.rotation = builtHomeRot;
-
-                break;
-        }
-    }
-
     void StateDesire()
     {
         desireStated = true;
 
         if (currentDesire != HumanDesire.FOOD && houses.Count < people.Count)
-            currentDesire = HumanDesire.HOUSING; Debug.Log("I NEED A HOME!");
+            currentDesire = HumanDesire.HOUSING;
 
         switch (currentDesire)
         {
@@ -551,14 +537,26 @@ public class HumanAI : MonoBehaviour
         }
     }
 
-    IEnumerator BuildTimer()    // To make sure humans don't go building houses the second they are born.
+    void ReduceFearOverTime()
     {
-        wasInvoked = true;
+        if (GameManager.Instance.fearObjects.Count <= 0)
+        {
+            fear = Mathf.Lerp(fear, 0, Time.deltaTime * fearReductionSpeed);
+        }
+    }
 
-        yield return new WaitForSeconds(1); // Wait for one second.
-        secondsSinceLastBuild++;
+    void TweakStats()
+    {
+        if (currentDesire == HumanDesire.HOUSING)
+            happiness -= 20;
+        else if (currentDesire == HumanDesire.FOOD)
+            happiness -= 40;
+        else if (currentDesire == HumanDesire.TO_ASCEND)
+            happiness -= 10;
+        else if (currentDesire == HumanDesire.NOTHING)
+            faith += 30;
 
-        wasInvoked = false;
+        statsTweaked = true;
     }
 
     IEnumerator IncreaseFaithOverTime()
@@ -577,23 +575,5 @@ public class HumanAI : MonoBehaviour
         }
 
         _wasInvoked = false;
-    }
-
-    void ReduceFearOverTime()
-    {
-        if (GameManager.Instance.fearObjects.Count <= 0)
-        {
-            fear = Mathf.Lerp(fear, 0, Time.deltaTime * fearReductionSpeed);
-        }
-    }
-
-    IEnumerator ReduceHappinessOverTime()
-    {
-        happinessDecreasing = true;
-
-        yield return new WaitForSeconds(30f);
-        happiness -= 10;
-
-        happinessDecreasing = false;
     }
 }
