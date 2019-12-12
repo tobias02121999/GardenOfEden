@@ -9,29 +9,17 @@ public class House : MonoBehaviour
     RagdollAnimator human;
     HumanAI AI;
 
-    private void Start()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.transform.name);
-        if (Sun.Instance.rotation >= 180 && Sun.Instance.rotation <= 270 && collision.transform.CompareTag("Human")) // Check human layer during nighttime.
+        if (Sun.Instance.rotation >= 180 && Sun.Instance.rotation <= 270 && collision.transform.CompareTag("HunanBodypart")) // Check human layer during nighttime.
         {
-            if (GameManager.Instance.emptyHomes.Contains(gameObject))
-            {
-                hasRun = false;
-                GameManager.Instance.emptyHomes.Remove(gameObject);
+            hasRun = false;
 
-                human = collision.gameObject.GetComponentInParent<RagdollAnimator>();
-                AI = collision.gameObject.GetComponentInParent<HumanAI>();
+            human = collision.gameObject.GetComponentInParent<RagdollAnimator>();
+            AI = collision.gameObject.GetComponentInParent<HumanAI>();
 
-                collision.gameObject.GetComponentInParent<RagdollAnimator>().gameObject.SetActive(false);
-
-                if (GameManager.Instance.emptyHomes.Contains(gameObject))
-                    GameManager.Instance.emptyHomes.Remove(gameObject);
-            }
+            collision.gameObject.GetComponentInParent<RagdollAnimator>().gameObject.SetActive(false);
         }
     }
 
@@ -42,7 +30,6 @@ public class House : MonoBehaviour
             Debug.Log("Daytime");
             human.gameObject.SetActive(true);
 
-            GameManager.Instance.emptyHomes.Add(gameObject);
             hasRun = true;
         }
     }

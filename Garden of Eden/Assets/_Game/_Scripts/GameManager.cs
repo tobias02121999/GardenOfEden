@@ -6,22 +6,16 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject[] shrines;
     public Transform[] homes;
-    
+
     [Header("Humans")]
     public List<GameObject> TeamOneHumans = new List<GameObject>();
     public List<GameObject> TeamTwoHumans = new List<GameObject>();
     public List<GameObject> NeutralHumans = new List<GameObject>();
 
-    [Header("Houses")]
-    public List<Transform> TeamOneHomes = new List<Transform>();
-    public List<Transform> TeamTwoHomes = new List<Transform>();
-    // Neutral Homes?
-
     [Header("Farms")]
     public List<Transform> teamOneFarms = new List<Transform>();
     public List<Transform> teamTwoFarms = new List<Transform>();
 
-    public List<GameObject> emptyHomes = new List<GameObject>();
     public List<GameObject> sleepingHumans = new List<GameObject>();
     public List<GameObject> fearObjects = new List<GameObject>();
     public List<GameObject> lingeringFearObjects = new List<GameObject>();
