@@ -45,9 +45,9 @@ public class HumanAI : MonoBehaviour
     bool wasInvoked = false;
     bool _wasInvoked = false;
     bool buildingHouse = false;
-    public bool desireStated = false;
+    bool desireStated = false;
     bool happinessDecreasing = false;
-    bool checkForTree = false;
+    bool checkForTree = false; 
     bool readyToAscend = false;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
@@ -57,7 +57,7 @@ public class HumanAI : MonoBehaviour
         currentDesire = HumanDesire.NOTHING;
     }
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
         if (isAscended)
             halo.SetActive(true);
@@ -87,7 +87,7 @@ public class HumanAI : MonoBehaviour
         if (!humanAnimator.hasCollapsed)
             AddForce();
 
-        if (readyToAscend)
+        if (readyToAscend) 
             currentDesire = HumanDesire.TO_ASCEND;
 
         #region State Declaration
@@ -119,7 +119,7 @@ public class HumanAI : MonoBehaviour
             isDayTime = false;
             currentState = HumanState.SLEEPING;
         }
-
+            
         // Keep gauging fear over time.
         if (GameManager.Instance.fearObjects.Count > 0)
             GaugeFear();
@@ -176,7 +176,7 @@ public class HumanAI : MonoBehaviour
                             MoveToDestination(1);   // Move to the tree first.
                         else
                             MoveToDestination(4);   // Then, if the player has chopped a tree, move to the house that he's building.
-
+                        
 
                         int layer = 17;
                         int mask = 1 << layer;
@@ -530,13 +530,10 @@ public class HumanAI : MonoBehaviour
     {
         desireStated = true;
 
-        if (currentDesire != HumanDesire.FOOD && houses.Count < people.Count)
-            currentDesire = HumanDesire.HOUSING; Debug.Log("I NEED A HOME!");
-
         switch (currentDesire)
         {
             case HumanDesire.FOOD:  // This unit is hungry or out of food.
-                desireClouds[0].gameObject.SetActive(true);
+                desireClouds[0].enabled = true;
                 break;
 
             case HumanDesire.HOUSING:   // This unit has no housing or doesn't have enough room to build one.

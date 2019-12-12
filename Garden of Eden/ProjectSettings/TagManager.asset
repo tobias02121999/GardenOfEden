@@ -19,7 +19,6 @@ TagManager:
   - Paintjar
   - Book
   - Bird
-  - HumanBodypart
   layers:
   - Default
   - TransparentFX
