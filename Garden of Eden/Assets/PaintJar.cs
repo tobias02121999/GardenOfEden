@@ -6,7 +6,6 @@ public class PaintJar : MonoBehaviour
 {
     // Initialize the public variables
     public MeshRenderer[] paintChunks;
-    public NetworkPlayers players;
     public Material paintMat, paintToSpendMat;
 
     // Start is called before the first frame update
@@ -18,7 +17,11 @@ public class PaintJar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var inventory = players.localPlayer.GetComponent<PlayerInventory>();
+        var inventory = GetComponentInParent<PlayerInventory>();
+        
+        if (inventory == null)
+            inventory = (PlayerInventory)FindObjectOfType(typeof(PlayerInventory));
+
         var maxChunkAmount = paintChunks.Length;
         var chunkAmount = Mathf.RoundToInt((inventory.paint / inventory.maxPaint) * maxChunkAmount);
         var toSpendChunkAmount = Mathf.RoundToInt((inventory.paintToSpend / inventory.maxPaint) * maxChunkAmount);

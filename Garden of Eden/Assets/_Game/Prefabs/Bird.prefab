@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 4429209056247900059}
   m_Layer: 18
   m_Name: Bird
-  m_TagString: Untagged
+  m_TagString: Bird
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -463,8 +463,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  animation: {fileID: 9030784016576531144}
+  anim: {fileID: 9030784016576531144}
   ragdoll: {fileID: 2964503074790966312}
+  waypoint: {fileID: 0}
+  maxEnergy: 500
+  restDistance: 1
+  takeoffAngle: 25
+  restDuration: {x: 500, y: 2500}
+  energy: 0
+  state: 0
+  restAlarm: 0
 --- !u!114 &4429209056247900059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2212,7 +2220,7 @@ GameObject:
   - component: {fileID: 378765741915756779}
   m_Layer: 18
   m_Name: Animation
-  m_TagString: Untagged
+  m_TagString: Bird
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

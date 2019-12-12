@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 4603397830560934053}
   - component: {fileID: 952225105782213756}
   - component: {fileID: 7744468225511061038}
+  - component: {fileID: 114020380905430370}
   - component: {fileID: 75127957448357310}
   m_Layer: 0
   m_Name: Farm
@@ -202,6 +203,18 @@ MonoBehaviour:
   poofEffect: {fileID: 3981191651009211293, guid: c11b1b42afa6b0e43b7bb1b00651b895,
     type: 3}
   poofLocation: {fileID: 4399440991751953790}
+--- !u!114 &114020380905430370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4603397830561035397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543e7676af95fc146b4932ac555efbfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!75 &75127957448357310
 ConstantForce:
   m_ObjectHideFlags: 0

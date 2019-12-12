@@ -11,47 +11,48 @@ public class ToolbeltSlot : MonoBehaviour
     public string handTag;
 
     // Initialize the private variables
-    bool hasInteracted;
+    int interactionAlarm;
+    int interactionAlarmDuration = 60;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         DisplayMesh(); // Display the correct mesh
+        interactionAlarm--;
     }
 
     // Set the tool ID
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        if (!hasInteracted)
+        if (interactionAlarm <= 0)
         {
             var hand = other.GetComponentInParent<FollowPivot>();
             
-            if (hand.CompareTag("HandLeft"))
-                handType = 0;
-            
-            if (hand.CompareTag("HandRight"))
-                handType = 1;
+            if ((hand.CompareTag("HandLeft") && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) != 0f) || 
+            (hand.CompareTag("HandRight") && OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) != 0f))
+            {
+                if (hand.CompareTag("HandLeft"))
+                    handType = 0;
+                
+                if (hand.CompareTag("HandRight"))
+                    handType = 1;
 
-            handTag = hand.tag;
+                handTag = hand.tag;
 
-            var ID = GetToolID(other.tag);
-            var inv = other.GetComponentInParent<PlayerInventory>();
-            SwitchTool(ID, inv, handType);
+                var ID = GetToolID(other.tag);
+                var inv = other.GetComponentInParent<PlayerInventory>();
+                SwitchTool(ID, inv, handType);
 
-            hasInteracted = true;
+                interactionAlarm = interactionAlarmDuration;
+            }
         }
-    }
-
-    // Reset the interaction bool
-    void OnTriggerExit(Collider other)
-    {
-        hasInteracted = false;
     }
 
     // Switch tools
@@ -73,6 +74,8 @@ public class ToolbeltSlot : MonoBehaviour
         }
 
         toolID = newID;
+
+        audioSource.Play();
     }
 
     // Display the correct mesh
@@ -107,6 +110,10 @@ public class ToolbeltSlot : MonoBehaviour
 
             case "Paintjar":
                 ID = 3;
+                break;
+
+            case "Book":
+                ID = 4;
                 break;
         }
 

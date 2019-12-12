@@ -17,6 +17,8 @@ TagManager:
   - HandLeft
   - HandRight
   - Paintjar
+  - Book
+  - Bird
   layers:
   - Default
   - TransparentFX

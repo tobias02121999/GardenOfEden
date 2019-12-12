@@ -17,10 +17,18 @@ public class GameManager : Singleton<GameManager>
     public List<Transform> TeamTwoHomes = new List<Transform>();
     // Neutral Homes?
 
+    [Header("Farms")]
+    public List<Transform> teamOneFarms = new List<Transform>();
+    public List<Transform> teamTwoFarms = new List<Transform>();
+
     public List<GameObject> emptyHomes = new List<GameObject>();
     public List<GameObject> sleepingHumans = new List<GameObject>();
     public List<GameObject> fearObjects = new List<GameObject>();
     public List<GameObject> lingeringFearObjects = new List<GameObject>();
+
+    [Header("Globals")]
+    public float teamOneFoodScore;
+    public float teamTwoFoodScore;
 
     bool hungerDistributed = false;
 
@@ -41,10 +49,18 @@ public class GameManager : Singleton<GameManager>
             fearObjects.RemoveAt(0);
         }
 
-        if (Input.GetKeyDown("s")){
+        if (Input.GetKeyDown("s"))
             ObjectPooler.Instance.SpawnFromPool("Humans", transform.position, Quaternion.identity);
-        }
 
+        var humanCount = TeamOneHumans.Count;
+        var farmCount = teamOneFarms.Count;
+        var farmScore = farmCount * 2f;
+        var requiredScore = humanCount;
+
+        if (humanCount > 2)
+            teamOneFoodScore = farmScore / requiredScore;
+        else
+            teamOneFoodScore = 1;
     }
 
     public void CheckForFood()
