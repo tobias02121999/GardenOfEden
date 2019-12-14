@@ -27,6 +27,9 @@ public class RainCollider : MonoBehaviour
     {
         if (other.CompareTag("Farm"))
             other.GetComponentInParent<Farm>().isWet = true;
+
+        if (other.CompareTag("Tree"))
+            other.GetComponentInParent<Tree>().isWet = true;
     }
 
     // Tell the object it's colliding with that it's not getting rained on
@@ -34,5 +37,8 @@ public class RainCollider : MonoBehaviour
     {
         if (other.CompareTag("Farm"))
             other.GetComponentInParent<Farm>().isWet = false;
+
+        if (other.CompareTag("Tree"))
+            other.GetComponentInParent<Tree>().isWet = false;
     }
 }

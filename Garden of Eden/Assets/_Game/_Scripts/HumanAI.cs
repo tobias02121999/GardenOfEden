@@ -188,7 +188,7 @@ public class HumanAI : MonoBehaviour
 
                             foreach (Collider tree in trees)
                             {
-                                Destroy(tree.transform.parent.gameObject);   // Then destroy all nearby trees.
+                                tree.GetComponentInParent<Tree>().state = Tree.States.CHOPPED;   // Then destroy all nearby trees.
                                 gatheredWood += 10;
                                 hasWood = true;
                             }
