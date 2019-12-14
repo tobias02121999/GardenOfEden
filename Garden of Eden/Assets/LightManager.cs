@@ -36,7 +36,7 @@ public class LightManager : MonoBehaviour
             cam.AddComponent<AuraAPI.Aura>();
             Debug.Log("Component Added");
 
-            sun.aura = localPlayer.GetComponentInChildren<AuraAPI.Aura>();
+            //sun.aura = localPlayer.GetComponentInChildren<AuraAPI.Aura>();
 
             var length = auraLights.Length;
 

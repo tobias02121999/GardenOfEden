@@ -5860,7 +5860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3866543915353886012
 Transform:
   m_ObjectHideFlags: 0
@@ -7986,7 +7986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1534203353149140290
 Transform:
   m_ObjectHideFlags: 0
@@ -10175,7 +10175,7 @@ GameObject:
   - component: {fileID: 1665420113373133060}
   - component: {fileID: 3039070321568463611}
   - component: {fileID: 1607897245710792109}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Book
   m_TagString: Book
   m_Icon: {fileID: 0}
@@ -10344,7 +10344,7 @@ GameObject:
   - component: {fileID: 4025609898772324686}
   - component: {fileID: 7904825196390545127}
   - component: {fileID: 5190783519393851357}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Page
   m_TagString: Book
   m_Icon: {fileID: 0}
@@ -10687,7 +10687,7 @@ GameObject:
   - component: {fileID: 496374621714857609}
   - component: {fileID: 5195894686109332220}
   - component: {fileID: 1314353508661067023}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Ribbon
   m_TagString: Book
   m_Icon: {fileID: 0}
@@ -15046,7 +15046,7 @@ GameObject:
   - component: {fileID: 4133782875811928766}
   - component: {fileID: 8621817375591438027}
   - component: {fileID: 3278860241328806200}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Ribbon
   m_TagString: Book
   m_Icon: {fileID: 0}
@@ -15353,7 +15353,7 @@ GameObject:
   - component: {fileID: 603633355968677241}
   - component: {fileID: 5912886748138148560}
   - component: {fileID: 8625520917107557354}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Page
   m_TagString: Book
   m_Icon: {fileID: 0}
@@ -15431,7 +15431,7 @@ GameObject:
   - component: {fileID: 2927794190746950963}
   - component: {fileID: 1554214464093216460}
   - component: {fileID: 681648854579814961}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Book
   m_TagString: Book
   m_Icon: {fileID: 0}

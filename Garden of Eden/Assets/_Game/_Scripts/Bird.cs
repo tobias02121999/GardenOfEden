@@ -52,6 +52,7 @@ public class Bird : MonoBehaviour
     {
         anim.SetActive(false);
         ragdoll.SetActive(true);
+        GetComponent<Bird>().enabled = false;
     }
 
     // Run the current bird state

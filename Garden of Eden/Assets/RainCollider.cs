@@ -21,4 +21,18 @@ public class RainCollider : MonoBehaviour
     {
         transform.rotation = Quaternion.identity;
     }
+
+    // Tell the object it's colliding with that it's getting rained on
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Farm"))
+            other.GetComponentInParent<Farm>().isWet = true;
+    }
+
+    // Tell the object it's colliding with that it's not getting rained on
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Farm"))
+            other.GetComponentInParent<Farm>().isWet = false;
+    }
 }

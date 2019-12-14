@@ -21,6 +21,7 @@ TagManager:
   - Bird
   - HumanBodypart
   - House Blueprint
+  - Farm
   layers:
   - Default
   - TransparentFX

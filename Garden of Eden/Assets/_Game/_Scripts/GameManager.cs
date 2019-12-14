@@ -47,10 +47,14 @@ public class GameManager : Singleton<GameManager>
             ObjectPooler.Instance.SpawnFromPool("Humans", transform.position, Quaternion.identity);
 
         var humanCount = TeamOneHumans.Count;
-        var farmCount = teamOneFarms.Count;
-        var farmScore = farmCount * 2f;
         var requiredScore = humanCount;
 
+        float farmScore = 0f;
+        var length = teamOneFarms.Count;
+
+        for (var i = 0; i < length; i++)
+            farmScore += teamOneFarms[i].GetComponent<Farm>().foodScore;
+        
         if (humanCount > 2)
             teamOneFoodScore = farmScore / requiredScore;
         else

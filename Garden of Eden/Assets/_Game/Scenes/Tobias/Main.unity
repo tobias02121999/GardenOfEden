@@ -2304,7 +2304,7 @@ Transform:
   - {fileID: 1240008446}
   - {fileID: 295609924}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &459819290
 MonoBehaviour:
@@ -2992,6 +2992,11 @@ PrefabInstance:
     - target: {fileID: 3670739642147809557, guid: b97d8eb0f87e16d4eabe973220ebec3e,
         type: 3}
       propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670739642147809557, guid: b97d8eb0f87e16d4eabe973220ebec3e,
+        type: 3}
+      propertyPath: m_EnableGPUInstancing
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5425,7 +5430,7 @@ MonoBehaviour:
   bird: {fileID: 3107386266670874818, guid: 261c70dec864f6c4ab642e6a81433513, type: 3}
   spawnPoints:
   - {fileID: 205502536}
-  spawnDuration: {x: 1000, y: 1000}
+  spawnDuration: {x: 500, y: 500}
   spawnHeight: {x: 0, y: 0}
   target: {fileID: 1118660132}
   flightDeviation: 5
@@ -5444,7 +5449,7 @@ Transform:
   m_Children:
   - {fileID: 205502536}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1118848525 stripped
 Transform:
@@ -6468,23 +6473,23 @@ MonoBehaviour:
   ambientDay: 1.85
   ambientNight: 0.45
   waterColorDay: {r: 0.3647059, g: 0.827451, b: 1, a: 1}
-  waterColorNight: {r: 0.18770026, g: 0.31210312, b: 0.3584906, a: 1}
+  waterColorNight: {r: 0.13616943, g: 0.1752465, b: 0.18867922, a: 1}
   auraColorDay: {r: 0.2509804, g: 0.21568628, b: 0.15294118, a: 1}
   auraColorNight: {r: 0.09411765, g: 0.050980393, b: 0.2509804, a: 1}
   mistColorDay: {r: 1, g: 1, b: 1, a: 0.09803922}
-  mistColorNight: {r: 0.66829497, g: 0.63919544, b: 0.7924528, a: 0.6862745}
+  mistColorNight: {r: 0.29312834, g: 0.28502136, b: 0.3301887, a: 0.6862745}
   birchColorDay: {r: 0.039215688, g: 0.31764707, b: 0, a: 1}
   birchColorNight: {r: 0, g: 0, b: 0, a: 1}
   oakColorDay: {r: 0.36078432, g: 0.59607846, b: 0, a: 1}
   oakColorNight: {r: 0, g: 0, b: 0, a: 1}
   grassColorDay: {r: 1, g: 1, b: 1, a: 1}
-  grassColorNight: {r: 0.2784314, g: 0.33333334, b: 0.4627451, a: 1}
+  grassColorNight: {r: 0.1974457, g: 0.22012548, b: 0.2735849, a: 1}
   plateauColorDay: {r: 1, g: 1, b: 1, a: 1}
-  plateauColorNight: {r: 0.50482106, g: 0.45136172, b: 0.6509434, a: 1}
+  plateauColorNight: {r: 0.1961971, g: 0.18476327, b: 0.2264151, a: 1}
   rockColorDay: {r: 1, g: 1, b: 1, a: 1}
-  rockColorNight: {r: 0.5058824, g: 0.4509804, b: 0.6509804, a: 1}
+  rockColorNight: {r: 0.281601, g: 0.26321647, b: 0.3301887, a: 1}
   sandColorDay: {r: 0.58431375, g: 0.5764706, b: 0.50980395, a: 1}
-  sandColorNight: {r: 0.31527448, g: 0.30153078, b: 0.5283019, a: 1}
+  sandColorNight: {r: 0.2609523, g: 0.25511748, b: 0.3679245, a: 1}
   waterMaterial: {fileID: 2100000, guid: cf75bbe88de8a7e4db86bccf7258ec20, type: 2}
   skyMaterial: {fileID: 2100000, guid: 01a09f452e1174746ae51389ea1f9477, type: 2}
   birchMaterial: {fileID: 2100000, guid: 864a7df36e8257145bcd87b825ece22c, type: 2}
@@ -6494,7 +6499,9 @@ MonoBehaviour:
   rockMaterial: {fileID: 2100000, guid: b3c5d31e9afe11a4e9d8c8f40ff4b084, type: 2}
   sandMaterial: {fileID: 2100000, guid: dbb5b6d4d8167e042b0ab66911a68f9b, type: 2}
   mist: {fileID: 963516369}
-  aura: {fileID: 0}
+  directionalLight: {fileID: 494117851}
+  lightIntensityDay: 1.75
+  lightIntensityNight: 0
   rotation: 0
 --- !u!4 &1397618911 stripped
 Transform:
@@ -7727,7 +7734,7 @@ Transform:
   - {fileID: 1715271020}
   - {fileID: 656744968}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1630672561
 MonoBehaviour:
@@ -11276,7 +11283,7 @@ PrefabInstance:
     - target: {fileID: 1593408432996334692, guid: 78b4ac5b2f13b3e4e94d6726ddac84ef,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.12
       objectReference: {fileID: 0}
     - target: {fileID: 1593408432996334692, guid: 78b4ac5b2f13b3e4e94d6726ddac84ef,
         type: 3}
@@ -11286,7 +11293,7 @@ PrefabInstance:
     - target: {fileID: 1593408432996334692, guid: 78b4ac5b2f13b3e4e94d6726ddac84ef,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.54
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 1593408432996334692, guid: 78b4ac5b2f13b3e4e94d6726ddac84ef,
         type: 3}
@@ -11311,7 +11318,7 @@ PrefabInstance:
     - target: {fileID: 1593408432996334692, guid: 78b4ac5b2f13b3e4e94d6726ddac84ef,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1593408432996334692, guid: 78b4ac5b2f13b3e4e94d6726ddac84ef,
         type: 3}

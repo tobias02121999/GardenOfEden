@@ -17,7 +17,9 @@ public class Sun : Singleton<Sun>
     public Color sandColorDay, sandColorNight;
     public Material waterMaterial, skyMaterial, birchMaterial, oakMaterial, grassMaterial, plateauMaterial, rockMaterial, sandMaterial;
     public ParticleSystem mist;
-    public AuraAPI.Aura aura;
+    //public AuraAPI.Aura aura;
+    public Light directionalLight;
+    public float lightIntensityDay, lightIntensityNight;
 
     // Initialize the private variables
     public float rotation;
@@ -45,7 +47,7 @@ public class Sun : Singleton<Sun>
             rotation = 0f;
 
         Color waterColor, auraColor, mistColor, birchColor, oakColor, grassColor, plateauColor, rockColor, sandColor;
-        float density, ambient;
+        float density, ambient, lightIntensity;
 
         if (rotation <= 180f)
         {
@@ -61,6 +63,7 @@ public class Sun : Singleton<Sun>
             plateauColor = Color.Lerp(plateauColorDay, plateauColorNight, index);
             rockColor = Color.Lerp(rockColorDay, rockColorNight, index);
             sandColor = Color.Lerp(sandColorDay, sandColorNight, index);
+            lightIntensity = Mathf.Lerp(lightIntensityDay, lightIntensityNight, index);
         }
         else
         {
@@ -76,6 +79,7 @@ public class Sun : Singleton<Sun>
             plateauColor = Color.Lerp(plateauColorNight, plateauColorDay, index);
             rockColor = Color.Lerp(rockColorNight, rockColorDay, index);
             sandColor = Color.Lerp(sandColorNight, sandColorDay, index);
+            lightIntensity = Mathf.Lerp(lightIntensityNight, lightIntensityDay, index);
         }
 
         waterMaterial.SetColor("_DepthGradientDeep", waterColor);
@@ -87,9 +91,13 @@ public class Sun : Singleton<Sun>
         birchMaterial.SetColor("_EmissionColor", birchColor);
         oakMaterial.SetColor("_EmissionColor", oakColor);
 
+        /*
         aura.frustum.settings.color = auraColor;
         aura.frustum.settings.density = density;
         aura.frustum.settings.colorStrength = ambient;
+        */
+
+        directionalLight.intensity = lightIntensity;
 
         var _mist = mist.main;
         _mist.startColor = mistColor;
