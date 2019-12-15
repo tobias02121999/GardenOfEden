@@ -28,7 +28,7 @@ public class RainCollider : MonoBehaviour
         if (other.CompareTag("Farm"))
             other.GetComponentInParent<Farm>().isWet = true;
 
-        if (other.CompareTag("Tree"))
+        if (other.CompareTag("Sapling"))
             other.GetComponentInParent<Tree>().isWet = true;
     }
 
@@ -38,7 +38,7 @@ public class RainCollider : MonoBehaviour
         if (other.CompareTag("Farm"))
             other.GetComponentInParent<Farm>().isWet = false;
 
-        if (other.CompareTag("Tree"))
+        if (other.CompareTag("Sapling"))
             other.GetComponentInParent<Tree>().isWet = false;
     }
 }

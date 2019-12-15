@@ -4,12 +4,34 @@ using UnityEngine;
 
 public class House : MonoBehaviour
 {
-    bool hasRun;
+    // Initialize the public variables
+    public bool humanBuilt;
+    public Animator animator;
 
+    // Initialize the private variables
+    bool hasRun;
     RagdollAnimator human;
     HumanAI AI;
 
-    private void OnCollisionEnter(Collision collision)
+    void Start()
+    {
+        if (humanBuilt)
+            animator.Play("HouseBuild");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360)) && !hasRun)
+        {
+            Debug.Log("Daytime");
+            human.gameObject.SetActive(true);
+
+            hasRun = true;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.transform.name);
         if (Sun.Instance.rotation >= 180 && Sun.Instance.rotation <= 270 && collision.transform.CompareTag("HunanBodypart")) // Check human layer during nighttime.
@@ -20,17 +42,6 @@ public class House : MonoBehaviour
             AI = collision.gameObject.GetComponentInParent<HumanAI>();
 
             collision.gameObject.GetComponentInParent<RagdollAnimator>().gameObject.SetActive(false);
-        }
-    }
-
-    private void Update()
-    {
-        if (((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360)) && !hasRun)
-        {
-            Debug.Log("Daytime");
-            human.gameObject.SetActive(true);
-
-            hasRun = true;
         }
     }
 }

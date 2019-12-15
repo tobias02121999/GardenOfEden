@@ -35,7 +35,8 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         if (Input.GetMouseButtonDown(3))
         {
@@ -56,7 +57,7 @@ public class GameManager : Singleton<GameManager>
             farmScore += teamOneFarms[i].GetComponent<Farm>().foodScore;
         
         if (humanCount > 2)
-            teamOneFoodScore = farmScore / requiredScore;
+            teamOneFoodScore = Mathf.Clamp(farmScore / requiredScore, 0f, 1f);
         else
             teamOneFoodScore = 1;
     }

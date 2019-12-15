@@ -16,7 +16,7 @@ public class Tree : MonoBehaviour
     public ParticleSystem buffEffect;
 
     // Initialize the private variables
-    float growth, growSpeed, respawnAlarm;
+    public float growth, growSpeed, respawnAlarm;
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +78,7 @@ public class Tree : MonoBehaviour
     void Grow()
     {
         if (isWet)
-            growth += (growSpeed * 2f);
+            growth += (growSpeed * 4f);
         else
             growth += growSpeed;
 

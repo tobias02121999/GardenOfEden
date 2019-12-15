@@ -217,6 +217,8 @@ public class HumanAI : MonoBehaviour
                         {
                             GameObject home = Instantiate(house, _house.transform.position, Quaternion.identity);
                             home.transform.parent = transform;
+                            home.GetComponent<House>().humanBuilt = true;
+
                             Destroy(_house);
 
                             home.layer = 16;
