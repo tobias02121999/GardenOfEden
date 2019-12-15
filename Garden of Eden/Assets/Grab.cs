@@ -30,6 +30,9 @@ public class Grab : MonoBehaviour
             if (floatable != null)
                 floatable.isFloating = false;
         }
+
+        if (touchingHandL && touchingHandR)
+            isGrounded = false;
     }
 
     void OnCollisionStay(Collision collision)
