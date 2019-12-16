@@ -26,6 +26,7 @@ public class HumanAI : MonoBehaviour
     public GameObject house;
     public GameObject hologram;
     public bool isDayTime = false;
+    public bool isGrounded = false;
 
     [Space]
 
@@ -69,10 +70,7 @@ public class HumanAI : MonoBehaviour
             halo.SetActive(false);
 
         if (!wasInvoked)
-        {
-            StartCoroutine("BuildTimer");   // Continually runs the build timer.
             ReduceFearOverTime();
-        }
 
         if (!_wasInvoked)
             StartCoroutine("IncreaseFaithOverTime");    // Continually gain levels of faith.

@@ -1186,13 +1186,13 @@ MonoBehaviour:
   - {fileID: 1893150557}
   TeamTwoHumans: []
   NeutralHumans: []
-  TeamOneHomes: []
-  TeamTwoHomes: []
-  emptyHomes:
-  - {fileID: 0}
+  teamOneFarms: []
+  teamTwoFarms: []
   sleepingHumans: []
   fearObjects: []
   lingeringFearObjects: []
+  teamOneFoodScore: 0
+  teamTwoFoodScore: 0
 --- !u!114 &257007524 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 993670590, guid: 9adbb5d610f2a624bacd151c6acef5e2,
@@ -7627,6 +7627,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AssetId.i15
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298342516, guid: 75489347f09d0164385b4b6a180c2319, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298342518, guid: 75489347f09d0164385b4b6a180c2319, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4197487
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298342518, guid: 75489347f09d0164385b4b6a180c2319, type: 3}
+      propertyPath: m_Center.y
+      value: 0.2901265
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298342518, guid: 75489347f09d0164385b4b6a180c2319, type: 3}
+      propertyPath: m_Center.z
+      value: -0.030175924
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298342518, guid: 75489347f09d0164385b4b6a180c2319, type: 3}
+      propertyPath: m_Center.x
+      value: -0.03658207
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75489347f09d0164385b4b6a180c2319, type: 3}
