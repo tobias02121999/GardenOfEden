@@ -6,6 +6,7 @@ public class CheckGrounded : MonoBehaviour
 {
     // Initialize the public variables
     public Grab grab;
+    public HumanAI humanAI;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +23,20 @@ public class CheckGrounded : MonoBehaviour
     // Check if the house is grounded
     void OnTriggerEnter(Collider other)
     {
-        grab.isGrounded = true;
+        if (grab != null)
+            grab.isGrounded = true;
+
+        if (humanAI != null)
+            humanAI.isGrounded = true;
     }
 
     // Check if the house is not grounded
     void OnTriggerExit(Collider other)
     {
-        grab.isGrounded = false;
+        if (grab != null)
+            grab.isGrounded = false;
+
+        if (humanAI != null)
+            humanAI.isGrounded = false;
     }
 }

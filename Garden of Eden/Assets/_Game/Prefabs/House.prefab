@@ -590,6 +590,36 @@ Transform:
   m_Father: {fileID: 8778074915786490054}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3621744251618858082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4856757130618415917}
+  m_Layer: 25
+  m_Name: Door Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4856757130618415917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621744251618858082}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8778074915786490054}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3888775228042913329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1690,6 +1720,7 @@ Transform:
   - {fileID: 6496431653402465927}
   - {fileID: 3597739499256667255}
   - {fileID: 1790420340422854386}
+  - {fileID: 4856757130618415917}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2683,11 +2714,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8778074915786490054}
     m_Modifications:
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Name
-      value: Bird Waypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2743,6 +2769,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Bird Waypoint
+      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_Radius
@@ -2763,11 +2794,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8778074915786490054}
     m_Modifications:
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Name
-      value: Bird Waypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2822,6 +2848,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Bird Waypoint
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
@@ -2908,6 +2939,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 39694001251292829, guid: c11b1b42afa6b0e43b7bb1b00651b895,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 39694001251292829, guid: c11b1b42afa6b0e43b7bb1b00651b895,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 39694001251292829, guid: c11b1b42afa6b0e43b7bb1b00651b895,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7781850835266667963, guid: c11b1b42afa6b0e43b7bb1b00651b895,
         type: 3}
       propertyPath: looping
@@ -2928,11 +2974,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8778074915786490054}
     m_Modifications:
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Name
-      value: Bird Waypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2987,6 +3028,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Bird Waypoint
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}

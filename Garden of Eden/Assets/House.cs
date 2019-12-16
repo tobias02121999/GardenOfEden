@@ -7,6 +7,7 @@ public class House : MonoBehaviour
     // Initialize the public variables
     public bool humanBuilt;
     public Animator animator;
+    
 
     // Initialize the private variables
     bool hasRun;
