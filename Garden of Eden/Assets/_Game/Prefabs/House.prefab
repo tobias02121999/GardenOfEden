@@ -1308,6 +1308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grab: {fileID: 744202305170207072}
+  humanAI: {fileID: 0}
 --- !u!1 &6752235044526245650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,6 +1838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanBuilt: 0
   animator: {fileID: 6708134702952227690}
+  doorPosition: {fileID: 4856757130618415917}
 --- !u!114 &744202305170207072
 MonoBehaviour:
   m_ObjectHideFlags: 0
