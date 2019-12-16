@@ -26,6 +26,7 @@ public class House : MonoBehaviour
         if (((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360)) && !hasRun)
         {
             Debug.Log("Daytime");
+            human.GetComponent<HumanAI>().humanMesh.position = doorPosition.position;
             human.gameObject.SetActive(true);
 
             hasRun = true;

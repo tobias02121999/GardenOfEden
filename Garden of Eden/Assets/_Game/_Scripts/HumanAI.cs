@@ -24,6 +24,7 @@ public class HumanAI : MonoBehaviour
     public bool isAscended = false;
     public bool isDepressed = false;
     public GameObject house;
+    public GameObject checkHouse;
     public GameObject hologram;
     public bool isDayTime = false;
     public bool isGrounded = false;
@@ -36,7 +37,7 @@ public class HumanAI : MonoBehaviour
     public int fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
-    public bool atShrine;
+    public bool atShrine, enoughSpaceToBuild;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
@@ -44,6 +45,7 @@ public class HumanAI : MonoBehaviour
     float closestLingeringObject = Mathf.Infinity;
     Vector3 closestObjectPosition = Vector3.zero;
     Vector3 closestLingeringObjectPosition = Vector3.zero;
+    Vector3 inFront;
     bool wasInvoked = false;
     bool _wasInvoked = false;
     bool buildingHouse = false;
@@ -60,6 +62,9 @@ public class HumanAI : MonoBehaviour
     private void Start()
     {
         currentDesire = HumanDesire.NOTHING;
+
+        inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+        inFront.y = 33f;
     }
     // Update is called once per frame
     void Update()
@@ -90,13 +95,13 @@ public class HumanAI : MonoBehaviour
 
             if (humanAnimator.hasCollapsed)
                 currentState = HumanState.RECOVER;
+
             else if (hungry)
-            {
                 currentDesire = HumanDesire.FOOD;
-                currentState = HumanState.HUNGRY;
-            }
+
             else if (!hasHome)
                 currentState = HumanState.BUILDING_HOUSE;
+
             else
                 currentState = HumanState.IDLE;
         }
@@ -161,21 +166,29 @@ public class HumanAI : MonoBehaviour
 
                     Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
 
-                    if (CheckForSufficientRoom() && !buildingHouse)
+                    if (!buildingHouse)
                     {
-                        buildingHouse = true;
+                        checkHouse.transform.position = inFront;  // Instantiate the collision checker before checking if there is enough space.
+                        checkHouse.SetActive(true);
+                        if (enoughSpaceToBuild && isGrounded)
+                        {
+                            Destroy(checkHouse); // Destroy it afterwards.
+                            buildingHouse = true;
 
-                        Vector3 inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
-                        inFront.y = 33f;
-
-                        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        obj.GetComponent<Collider>().enabled = false;
-                        obj.transform.parent = transform;
-                        obj.transform.position = inFront;
-                        obj.layer = 28;
-                        obj.tag = "House Blueprint";
-                        _house = obj;
+                            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                            obj.GetComponent<Collider>().enabled = false;
+                            obj.transform.parent = transform;
+                            obj.transform.position = inFront;
+                            obj.layer = 28;
+                            obj.tag = "House Blueprint";
+                            _house = obj;
+                        }
+                        else
+                        {
+                            Idling();
+                        }
                     }
+
 
                     if (gatheredWood < 30)
                     {
@@ -213,12 +226,19 @@ public class HumanAI : MonoBehaviour
 
                         if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
                         {
-                            GameObject home = Instantiate(house, _house.transform.position, Quaternion.identity);
+                            GameObject home = Instantiate(house, _house.transform.position, Quaternion.Euler(0, Random.Range(0, 359), 0));  // Spawn house with random rotation.
                             home.transform.parent = transform;
                             home.GetComponent<House>().humanBuilt = true;
+                            humanMesh.position = home.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position.
 
-                            Destroy(_house);
+                            // Reset the human's speed.
+                            for (int i = 0; i < humanAnimator.bones.Length; i++)    
+                                humanAnimator.bones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+                            
 
+                            Destroy(_house);    // Destroy the placeholder.
+
+                            // Assign standard data & reset bools.
                             home.layer = 16;
                             gatheredWood -= 30;
                             buildingHouse = false;
@@ -456,7 +476,6 @@ public class HumanAI : MonoBehaviour
         {
             if (col.CompareTag("Tree"))
             {
-                CheckForSufficientRoom();
                 return true;
             }
         }
@@ -484,32 +503,6 @@ public class HumanAI : MonoBehaviour
         else    // It fails if this distance is shorter.
         {
             return false;
-        }
-    }
-
-    bool CheckForSufficientRoom()   // Check's if there is room to build the house.
-    {
-        int buildingLayer = 16;
-        int resourceLayer = 17;
-        int playerLayer = 23;
-        int handsLayer = 14;
-        int buildingMask = 1 << buildingLayer;
-        int resourceMask = 1 << resourceLayer;
-        int playerMask = 1 << playerLayer;
-        int handsMask = 1 << handsLayer;
-
-        Vector3 halfExtends = new Vector3(3.5f, 3f, 3.5f);
-        Collider[] homes = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, buildingMask);
-        Collider[] trees = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, resourceMask);
-        Collider[] player = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, playerMask);
-        Collider[] hands = Physics.OverlapBox(humanMesh.position, halfExtends, Quaternion.identity, handsMask);
-        if (homes.Length > 0 || trees.Length > 0 || player.Length > 0 || hands.Length > 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
         }
     }
 
