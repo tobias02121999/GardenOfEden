@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public GameObject[] shrines;
-    public Transform[] homes;
+    //public Transform[] homes;
+    public List<Transform> homes = new List<Transform>();
 
     [Header("Humans")]
     public List<GameObject> TeamOneHumans = new List<GameObject>();

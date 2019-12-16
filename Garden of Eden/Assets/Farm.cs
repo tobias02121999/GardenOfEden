@@ -8,15 +8,18 @@ public class Farm : MonoBehaviour
     public bool isWet;
     public float foodScore;
     public ParticleSystem buffEffect;
+    public GameObject farmlands;
 
     // Initialize the private variables
     float baseFoodScore = 2f;
+    Grab grab;
 
     // Start is called before the first frame update
     void Start()
     {
         foodScore = baseFoodScore;
         GameManager.Instance.teamOneFarms.Add(transform);
+        grab = GetComponent<Grab>();
     }
 
     // Update is called once per frame
@@ -37,5 +40,7 @@ public class Farm : MonoBehaviour
             if (buffEffect.isPlaying)
                 buffEffect.Stop();
         }
+
+        farmlands.SetActive(grab.isGrounded);
     }
 }

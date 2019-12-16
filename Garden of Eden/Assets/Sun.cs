@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sun : Singleton<Sun>
 {
     // Initialize the public variables
-    public float dayNightSpeed, densityDay, densityNight, ambientDay, ambientNight;
+    public float daySpeed, nightSpeed, densityDay, densityNight, ambientDay, ambientNight;
     public Color waterColorDay, waterColorNight;
     public Color auraColorDay, auraColorNight;
     public Color mistColorDay, mistColorNight;
@@ -40,8 +40,16 @@ public class Sun : Singleton<Sun>
     // Rotate the sun around the world pivot
     void DoDayNightCycle()
     {
-        transform.Rotate(dayNightSpeed, 0f, 0f);
-        rotation += dayNightSpeed;
+        if (rotation >= 270f || rotation <= 90f)
+        {
+            transform.Rotate(daySpeed, 0f, 0f);
+            rotation += daySpeed;
+        }
+        else
+        {
+            transform.Rotate(nightSpeed, 0f, 0f);
+            rotation += nightSpeed;
+        }
 
         if (rotation >= 360f)
             rotation = 0f;

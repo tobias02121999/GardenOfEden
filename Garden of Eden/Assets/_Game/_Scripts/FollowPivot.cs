@@ -11,6 +11,7 @@ public class FollowPivot : MonoBehaviour
 
     // Initialize the private variables
     Rigidbody rb;
+    float distanceThreshold = 50f;
 
     // Start is called before the first frame update
     void Start()
@@ -75,7 +76,13 @@ public class FollowPivot : MonoBehaviour
         var dist = Vector3.Distance(transform.position, target.position);
         var step = dist * speed;
 
-        rb.velocity = reference.forward * step * Time.deltaTime;
+        if (dist <= distanceThreshold)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.velocity = reference.forward * step * Time.deltaTime;
+        }
+        else
+            rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     // Rotate towards the target pivot
