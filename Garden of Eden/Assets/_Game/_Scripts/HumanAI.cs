@@ -39,31 +39,20 @@ public class HumanAI : MonoBehaviour
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
     public bool atShrine;
     public bool enoughSpaceToBuild = true;
-    [HideInInspector] float baseSpeed;
-    [HideInInspector] bool _inRangeOfTree;
 
+    // Private Variables
     float closestObject = Mathf.Infinity;
     float closestLingeringObject = Mathf.Infinity;
     Vector3 closestObjectPosition = Vector3.zero;
-    Vector3 closestLingeringObjectPosition = Vector3.zero;
     Vector3 inFront;
     bool wasInvoked = false;
     bool _wasInvoked = false;
     bool buildingHouse = false;
     bool statsTweaked = false;
     public bool desireStated = false;
-    bool happinessDecreasing = false;
-    bool checkForTree = false;
     bool hasHome = false;
     bool readyToAscend = false;
     GameObject _house;
-    List<GameObject> houses = new List<GameObject>();
-    List<GameObject> people = new List<GameObject>();
-
-    private void Start()
-    {
-        currentDesire = HumanDesire.NOTHING;
-    }
 
     // Update is called once per frame
     void Update()
@@ -88,6 +77,9 @@ public class HumanAI : MonoBehaviour
         if (readyToAscend)
             currentDesire = HumanDesire.TO_ASCEND;
 
+        if (happiness < 15)
+            isDepressed = true;
+
         #region State Declaration
         if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360) && !isDepressed)
         {
@@ -97,9 +89,6 @@ public class HumanAI : MonoBehaviour
 
             if (humanAnimator.hasCollapsed)
                 currentState = HumanState.RECOVER;
-
-            else if (hungry)
-                currentDesire = HumanDesire.FOOD;
 
             else if (!hasHome)
                 currentState = HumanState.BUILDING_HOUSE;
@@ -122,8 +111,10 @@ public class HumanAI : MonoBehaviour
         // Depressed states (Human becomes depressed if the happiness value drops below 15).
         if (humanAnimator.hasCollapsed && isDepressed)
             currentState = HumanState.RECOVER;
+
         else if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && isDepressed)
             currentState = HumanState.PRAYING;
+
         else if (isDepressed)
             currentState = HumanState.IDLE;
             
@@ -138,21 +129,6 @@ public class HumanAI : MonoBehaviour
             {
                 case HumanState.RECOVER:
                     // Do nothing untill recovered.
-                    break;
-
-                case HumanState.HUNGRY:
-                    MoveToDestination(0);
-
-                    int berryLayer = 23;
-                    int berryMask = 1 << berryLayer;
-
-                    Collider[] berries = Physics.OverlapSphere(humanMesh.position, 1.5f, berryMask);
-                    foreach (Collider berry in berries)
-                    {
-                        Destroy(berry.gameObject);
-                        hungry = false;
-                    }
-
                     break;
 
                 case HumanState.IDLE: // Human wanders about when idle.
@@ -185,10 +161,9 @@ public class HumanAI : MonoBehaviour
                             obj.transform.parent = transform;
                             obj.GetComponent<House>().humanBuilt = true;
                             obj.layer = 28;
-                            obj.tag = "House Blueprint";
                             _house = obj;   // Set this object as the house variable.
                             
-                           // checkHouse.SetActive(false);
+                            checkHouse.SetActive(false);
                         }
                         else
                         {
@@ -512,7 +487,7 @@ public class HumanAI : MonoBehaviour
     {
         desireStated = true;
 
-        if (currentDesire != HumanDesire.FOOD && houses.Count < people.Count)
+        if (currentDesire != HumanDesire.FOOD && hasHome)
             currentDesire = HumanDesire.HOUSING;
 
         switch (currentDesire)

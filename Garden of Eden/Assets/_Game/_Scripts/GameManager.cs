@@ -39,15 +39,6 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(3))
-        {
-            Destroy(fearObjects[0]);
-            fearObjects.RemoveAt(0);
-        }
-
-        if (Input.GetKeyDown("s"))
-            ObjectPooler.Instance.SpawnFromPool("Humans", transform.position, Quaternion.identity);
-
         var humanCount = TeamOneHumans.Count;
         var requiredScore = humanCount;
 
@@ -65,23 +56,21 @@ public class GameManager : Singleton<GameManager>
 
     public void CheckForFood()
     {
-        GameObject[] food = GameObject.FindGameObjectsWithTag("BerryBush");
-        GameObject[] humans = GameObject.FindGameObjectsWithTag("Human");
-        if (food.Length < humans.Length)
+        if (teamOneFoodScore < 0.5f)
         {
-            if (hungerDistributed == false)
+            foreach (GameObject human in TeamOneHumans)
             {
-                var hungryHuman = humans[Random.Range(0, humans.Length + 1)];
-                hungryHuman.GetComponent<HumanAI>().hungry = true;
-
-                hungerDistributed = true;
+                human.GetComponent<HumanAI>().happiness -= 25;
+                human.GetComponent<HumanAI>().currentDesire = HumanDesire.FOOD;
             }
         }
-        else if (food.Length >= humans.Length)
+
+        if (teamTwoFoodScore < 0.5f)
         {
-            foreach (GameObject person in humans)
+            foreach (GameObject human in TeamTwoHumans)
             {
-                person.GetComponent<HumanAI>().hungry = false;
+                human.GetComponent<HumanAI>().happiness -= 25;
+                human.GetComponent<HumanAI>().currentDesire = HumanDesire.FOOD;
             }
         }
     }
