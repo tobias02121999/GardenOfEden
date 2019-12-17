@@ -1692,6 +1692,15 @@ MonoBehaviour:
   speed: 4
   anim: {fileID: 1807326308733712985}
   ragdoll: {fileID: 3498153910972168789}
+  waypoint: {fileID: 0}
+  maxEnergy: 0
+  restDistance: 0
+  takeoffAngle: 0
+  restDuration: {x: 0, y: 0}
+  modelAnimation: {fileID: 0}
+  energy: 0
+  state: 0
+  restAlarm: 0
 --- !u!114 &2654944061777172966
 MonoBehaviour:
   m_ObjectHideFlags: 0
