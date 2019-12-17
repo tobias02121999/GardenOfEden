@@ -166,11 +166,11 @@ public class HumanAI : MonoBehaviour
 
                     Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
 
-                    if (!buildingHouse && isGrounded)
+                    if (isGrounded)
                     {
                         checkHouse.transform.position = inFront;  // Instantiate the collision checker before checking if there is enough space.
                         checkHouse.SetActive(true);
-                        if (enoughSpaceToBuild && isGrounded)
+                        if (enoughSpaceToBuild && isGrounded && !buildingHouse)
                         {
                             Destroy(checkHouse); // Destroy it afterwards.
                             buildingHouse = true;
