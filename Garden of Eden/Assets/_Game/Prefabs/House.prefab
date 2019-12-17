@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1261569988534301987}
   - component: {fileID: 9184438971925777271}
   - component: {fileID: 8072000485184748258}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: RoofWindow_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 1275679087314392471}
   - component: {fileID: 3488882420956786214}
   - component: {fileID: 415554994594667602}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: DoorFrame_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -189,6 +189,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300012, guid: 24fc4481efb92ed41a77bf417fb6bd96, type: 3}
+--- !u!64 &4793385373814844106
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214825151949053746}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
 --- !u!1 &1452893808619902876
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +215,7 @@ GameObject:
   - component: {fileID: 385443834704126880}
   - component: {fileID: 1384340706765634649}
   - component: {fileID: 364539208786645784}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: MidBeams_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -294,7 +308,7 @@ GameObject:
   - component: {fileID: 495122760179081063}
   - component: {fileID: 2113980076219727878}
   - component: {fileID: 3407341032077490292}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Curtain_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -386,7 +400,7 @@ GameObject:
   - component: {fileID: 3924281071121499524}
   - component: {fileID: 8121956609746161521}
   - component: {fileID: 3829635730032556770}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: WindowFrame_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -479,7 +493,7 @@ GameObject:
   - component: {fileID: 8577908386319533350}
   - component: {fileID: 4739985414455054295}
   - component: {fileID: 6078311675605187931}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: RoofDeco_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -632,7 +646,7 @@ GameObject:
   - component: {fileID: 1065370942970047868}
   - component: {fileID: 8604819292211488341}
   - component: {fileID: 2096963137299684686}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: House1_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -725,7 +739,7 @@ GameObject:
   - component: {fileID: 8910325549285368844}
   - component: {fileID: 2050786171422670031}
   - component: {fileID: 874728328196464843}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: RoofBeam_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -870,7 +884,7 @@ GameObject:
   - component: {fileID: 3331501114568520988}
   - component: {fileID: 6569428572501029459}
   - component: {fileID: 686338068389633199}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Roof_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -963,7 +977,7 @@ GameObject:
   - component: {fileID: 1279936483348310182}
   - component: {fileID: 6309913185453795932}
   - component: {fileID: 6212291656057942240}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: RoofLeaf_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -1159,7 +1173,7 @@ GameObject:
   - component: {fileID: 4492303203933684615}
   - component: {fileID: 4979519812241561637}
   - component: {fileID: 8652913153541520149}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: WindowFence_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -1321,7 +1335,7 @@ GameObject:
   - component: {fileID: 7266235363284670415}
   - component: {fileID: 6690655877575169862}
   - component: {fileID: 2589290146985931446}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: HouseBeams_LRes
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -2732,7 +2746,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
       propertyPath: m_LocalPosition.x

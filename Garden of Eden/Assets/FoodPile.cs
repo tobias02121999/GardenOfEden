@@ -18,7 +18,6 @@ public class FoodPile : MonoBehaviour
     {
         var maxChunkAmount = foodLevels.Length;
         var chunkAmount = Mathf.RoundToInt((GameManager.Instance.teamOneFoodScore / 1f) * maxChunkAmount);
-        var toSpendChunkAmount = Mathf.RoundToInt((GameManager.Instance.teamOneFoodScore / 1f) * maxChunkAmount);
 
         for (var i = 0; i < maxChunkAmount; i++)
             foodLevels[i].SetActive(i < chunkAmount);

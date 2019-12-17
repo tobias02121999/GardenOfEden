@@ -63,6 +63,7 @@ public class GameManager : Singleton<GameManager>
             teamOneFoodScore = 1;
     }
 
+    /*
     public void CheckForFood()
     {
         GameObject[] food = GameObject.FindGameObjectsWithTag("BerryBush");
@@ -85,4 +86,5 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+    */
 }

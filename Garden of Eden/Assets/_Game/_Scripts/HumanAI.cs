@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum HumanState {RECOVER, HUNGRY, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
@@ -59,6 +60,7 @@ public class HumanAI : MonoBehaviour
     GameObject _house;
     List<GameObject> houses = new List<GameObject>();
     List<GameObject> people = new List<GameObject>();
+    int navMeshUpdateAlarm;
 
     private void Start()
     {
@@ -186,6 +188,7 @@ public class HumanAI : MonoBehaviour
                             obj.GetComponent<House>().humanBuilt = true;
                             obj.layer = 28;
                             obj.tag = "House Blueprint";
+                            obj.name = "House";
                             _house = obj;   // Set this object as the house variable.
                             
                            // checkHouse.SetActive(false);
@@ -270,8 +273,6 @@ public class HumanAI : MonoBehaviour
             {
                 case HumanState.PRAYING:
                     Debug.Log("Praying");
-
-                    GameManager.Instance.CheckForFood();
                     MoveToDestination(2);
 
                     if (!desireStated && atShrine)
@@ -319,7 +320,6 @@ public class HumanAI : MonoBehaviour
                 berryRot.z = 0f;
 
                 movementParent.rotation = berryRot;
-
                 break;
 
             case 1: // ...Nearest tree.
@@ -339,7 +339,6 @@ public class HumanAI : MonoBehaviour
                 treeRot.z = 0f;
 
                 movementParent.rotation = treeRot;
-
                 break;
 
 
@@ -376,7 +375,6 @@ public class HumanAI : MonoBehaviour
                 homeRot.z = 0f;
 
                 movementParent.rotation = homeRot;
-
                 break;
 
             case 4: // ... Nearest home being built.
@@ -387,7 +385,6 @@ public class HumanAI : MonoBehaviour
                 builtHomeRot.z = 0f;
 
                 movementParent.rotation = builtHomeRot;
-
                 break;
         }
     }

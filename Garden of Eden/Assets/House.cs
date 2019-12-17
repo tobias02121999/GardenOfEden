@@ -95,7 +95,7 @@ public class House : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.transform.name);
-        if (Sun.Instance.rotation >= 180 && Sun.Instance.rotation <= 270 && collision.transform.CompareTag("HunanBodypart")) // Check human layer during nighttime.
+        if (Sun.Instance.rotation >= 180 && Sun.Instance.rotation <= 270 && collision.transform.CompareTag("HumanBodypart")) // Check human layer during nighttime.
         {
             hasRun = false;
 

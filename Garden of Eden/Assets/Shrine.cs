@@ -8,15 +8,15 @@ public class Shrine : MonoBehaviour
     bool hasRun;
     GameObject human;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.CompareTag("Human"))
+        if (collision.transform.CompareTag("HumanBodypart"))
         {
             hasRun = false;
             collision.gameObject.GetComponentInParent<HumanAI>().atShrine = true;
             collision.gameObject.GetComponentInParent<HumanAI>().speed = 0;
             collision.gameObject.GetComponentInParent<RagdollAnimator>().enabled = false;
-            
+            collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
         }
     }
 

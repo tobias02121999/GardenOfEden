@@ -53,8 +53,8 @@ TagManager:
   - Home(T2)
   - ToolSlot
   - Building In Progress
-  - 
-  - 
+  - Checkspace
+  - ConstructionSite
   - 
   m_SortingLayers:
   - name: Default
