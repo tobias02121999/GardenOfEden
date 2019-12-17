@@ -35,6 +35,7 @@ public class House : MonoBehaviour
                 finishedScripts[i].enabled = false;
 
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 
@@ -85,6 +86,7 @@ public class House : MonoBehaviour
                 finishedScripts[i].enabled = true;
 
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            GetComponent<Rigidbody>().isKinematic = false;
 
             state = States.FINISHED;
         }
