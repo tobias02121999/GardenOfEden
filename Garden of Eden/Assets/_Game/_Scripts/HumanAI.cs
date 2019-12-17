@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum HumanState {RECOVER, HUNGRY, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
@@ -245,8 +246,6 @@ public class HumanAI : MonoBehaviour
             {
                 case HumanState.PRAYING:
                     Debug.Log("Praying");
-
-                    GameManager.Instance.CheckForFood();
                     MoveToDestination(2);
 
                     if (!desireStated && atShrine)
@@ -294,7 +293,6 @@ public class HumanAI : MonoBehaviour
                 berryRot.z = 0f;
 
                 movementParent.rotation = berryRot;
-
                 break;
 
             case 1: // ...Nearest tree.
@@ -314,7 +312,6 @@ public class HumanAI : MonoBehaviour
                 treeRot.z = 0f;
 
                 movementParent.rotation = treeRot;
-
                 break;
 
 
@@ -351,7 +348,6 @@ public class HumanAI : MonoBehaviour
                 homeRot.z = 0f;
 
                 movementParent.rotation = homeRot;
-
                 break;
 
             case 4: // ... Nearest home being built.
@@ -362,7 +358,6 @@ public class HumanAI : MonoBehaviour
                 builtHomeRot.z = 0f;
 
                 movementParent.rotation = builtHomeRot;
-
                 break;
         }
     }
