@@ -8912,16 +8912,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sun
       objectReference: {fileID: 0}
-    - target: {fileID: 7130372907853096022, guid: 4217bea80a8ed624584d75025fd11da6,
-        type: 3}
-      propertyPath: shadowMapRenderTexture
-      value: 
-      objectReference: {fileID: 1783695855}
-    - target: {fileID: 7130372907853096022, guid: 4217bea80a8ed624584d75025fd11da6,
-        type: 3}
-      propertyPath: shadowDataRenderTexture
-      value: 
-      objectReference: {fileID: 1375271823}
     - target: {fileID: 7130372909174884394, guid: 4217bea80a8ed624584d75025fd11da6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8977,6 +8967,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7130372907853096022, guid: 4217bea80a8ed624584d75025fd11da6,
+        type: 3}
+      propertyPath: shadowMapRenderTexture
+      value: 
+      objectReference: {fileID: 1783695855}
+    - target: {fileID: 7130372907853096022, guid: 4217bea80a8ed624584d75025fd11da6,
+        type: 3}
+      propertyPath: shadowDataRenderTexture
+      value: 
+      objectReference: {fileID: 1375271823}
     - target: {fileID: 7130372909174884393, guid: 4217bea80a8ed624584d75025fd11da6,
         type: 3}
       propertyPath: mist
