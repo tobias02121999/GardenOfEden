@@ -37,7 +37,8 @@ public class HumanAI : MonoBehaviour
     public int fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
-    public bool atShrine, enoughSpaceToBuild;
+    public bool atShrine;
+    public bool enoughSpaceToBuild = true;
     [HideInInspector] float baseSpeed;
     [HideInInspector] bool _inRangeOfTree;
 
@@ -62,13 +63,14 @@ public class HumanAI : MonoBehaviour
     private void Start()
     {
         currentDesire = HumanDesire.NOTHING;
-
-        inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
-        inFront.y = 33f;
     }
+
     // Update is called once per frame
     void Update()
     {
+        inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+        inFront.y = 33f;
+
         if (isAscended)
             halo.SetActive(true);
         else
@@ -168,11 +170,10 @@ public class HumanAI : MonoBehaviour
 
                     if (!buildingHouse && isGrounded)
                     {
-                        checkHouse.transform.position = inFront;  // Instantiate the collision checker before checking if there is enough space.
+                        checkHouse.transform.position = inFront + new Vector3(0, 3.5f, 0);  // Instantiate the collision checker before checking if there is enough space.
                         checkHouse.SetActive(true);
-                        if (enoughSpaceToBuild && isGrounded)
+                        if (enoughSpaceToBuild)
                         {
-                            Destroy(checkHouse); // Destroy it afterwards.
                             buildingHouse = true;
 
                             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -181,9 +182,9 @@ public class HumanAI : MonoBehaviour
                             obj.transform.position = inFront;
                             obj.layer = 28;
                             obj.tag = "House Blueprint";
-                            _house = obj;
+                            _house = obj;   // Set this object as the house variable.
 
-                            checkHouse.SetActive(false);
+                            // checkHouse.SetActive(false);
                         }
                         else
                         {
