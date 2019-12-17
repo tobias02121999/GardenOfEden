@@ -24,9 +24,9 @@ public class Mask : MonoBehaviour
         for (var i = 0; i < maxChunkAmount; i++)
             leaves[i].SetActive(i < chunkAmount);
 
-        var level = Mathf.RoundToInt(humanAI.faith / 33f);
+        var level = Mathf.RoundToInt(Mathf.Clamp((humanAI.faith / 33f), 0f, 2f));
         var length = masks.Length;
         for (var j = 0; j < length; j++)
-            masks[j].SetActive(j == level - 1);
+            masks[j].SetActive(j == level);
     }
 }

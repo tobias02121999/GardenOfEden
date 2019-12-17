@@ -37,6 +37,20 @@ public class House : MonoBehaviour
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             GetComponent<Rigidbody>().isKinematic = true;
         }
+        else
+        {
+            var length = GameManager.Instance.TeamOneHumans.Count;
+            for (var i = 0; i < length; i++)
+            {
+                var human = GameManager.Instance.TeamOneHumans[i].GetComponent<HumanAI>();
+                if (!human.hasHome && !human.buildingHouse)
+                {
+                    human._house = this.gameObject;
+                    human.hasHome = true;
+                    break;
+                }
+            }
+        }
     }
 
     // Update is called once per frame

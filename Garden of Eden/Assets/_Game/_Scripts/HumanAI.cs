@@ -48,12 +48,12 @@ public class HumanAI : MonoBehaviour
     Vector3 inFront;
     bool wasInvoked = false;
     bool _wasInvoked = false;
-    bool buildingHouse = false;
+    public bool buildingHouse = false;
     bool statsTweaked = false;
     public bool desireStated = false;
-    bool hasHome = false;
+    public bool hasHome = false;
     bool readyToAscend = false;
-    GameObject _house;
+    public GameObject _house;
 
     // Update is called once per frame
     void Update()
@@ -159,7 +159,7 @@ public class HumanAI : MonoBehaviour
                             newPos.y = 32.34402f;
 
                             GameObject obj = Instantiate(house, newPos, Quaternion.Euler(0, Random.Range(0, 359), 0));
-                            obj.transform.parent = transform;
+                            //obj.transform.parent = transform;
                             obj.GetComponent<House>().humanBuilt = true;
                             obj.layer = 28;
                             _house = obj;   // Set this object as the house variable.
@@ -261,7 +261,7 @@ public class HumanAI : MonoBehaviour
                     foreach (UnityEngine.UI.Image cloud in desireClouds)
                         cloud.enabled = false;  // Deactivate all the desire clouds.
 
-                    if (transform.Find("House") != null)
+                    if (_house != null)
                         MoveToDestination(3);
                     else
                         Idling();
@@ -341,7 +341,7 @@ public class HumanAI : MonoBehaviour
                 break;
 
             case 3: // ... nearest house
-                rotationReference.LookAt(transform.Find("House").transform.position);
+                rotationReference.LookAt(_house.transform.position);
 
                 var homeRot = rotationReference.rotation;
                 homeRot.x = 0f;
