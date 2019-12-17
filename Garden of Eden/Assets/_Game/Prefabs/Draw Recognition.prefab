@@ -138,12 +138,15 @@ MonoBehaviour:
   drawPointCollider: {fileID: 2435512933186164817, guid: 373cb16dfd2fd9643b6478185dc46def,
     type: 3}
   gridSize: {x: 5, y: 5}
-  symbolCount: 2
+  symbolCount: 3
   symbolVariation: 10
   drawDataText: {fileID: 6515983102064949471}
   symbolObjects:
   - {fileID: 148802231449521297, guid: 90850c07c98cd524ba349becd4f7272e, type: 3}
   - {fileID: 8778074915786923238, guid: 9bb295d988821ce4997bd060c8f1c1b1, type: 3}
+  - {fileID: 3493377890850991581, guid: 78b4ac5b2f13b3e4e94d6726ddac84ef, type: 3}
+  paintRenderer: {fileID: 0}
+  playerInventory: {fileID: 0}
   scale: 0
   debugMode: 0
   drawPointParent: {fileID: 0}
