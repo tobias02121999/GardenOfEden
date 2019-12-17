@@ -170,21 +170,25 @@ public class HumanAI : MonoBehaviour
 
                     if (!buildingHouse && isGrounded)
                     {
-                        checkHouse.transform.position = inFront + new Vector3(0, 3.5f, 0);  // Instantiate the collision checker before checking if there is enough space.
+                        var newPos = humanMesh.position + (humanMesh.transform.forward * 6f);  // Instantiate the collision checker before checking if there is enough space.
+                        newPos.y = 36.5f;
+                        checkHouse.transform.position = newPos;
                         checkHouse.SetActive(true);
+
                         if (enoughSpaceToBuild)
                         {
                             buildingHouse = true;
 
-                            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                            obj.GetComponent<Collider>().enabled = false;
+                            newPos.y = 32.34402f;
+
+                            GameObject obj = Instantiate(house, newPos, Quaternion.Euler(0, Random.Range(0, 359), 0));
                             obj.transform.parent = transform;
-                            obj.transform.position = inFront;
+                            obj.GetComponent<House>().humanBuilt = true;
                             obj.layer = 28;
                             obj.tag = "House Blueprint";
                             _house = obj;   // Set this object as the house variable.
-
-                            // checkHouse.SetActive(false);
+                            
+                           // checkHouse.SetActive(false);
                         }
                         else
                         {
@@ -193,7 +197,7 @@ public class HumanAI : MonoBehaviour
                     }
 
 
-                    if (gatheredWood < 30)
+                    if (gatheredWood < 30 && buildingHouse)
                     {
                         // Chopping
                         if (!hasWood)
@@ -223,26 +227,21 @@ public class HumanAI : MonoBehaviour
                             }
                         }
                     }
-                    else
+                    else if (gatheredWood >= 30 && buildingHouse)
                     {
                         MoveToDestination(4);
 
                         if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
                         {
-                            GameObject home = Instantiate(house, _house.transform.position, Quaternion.Euler(0, Random.Range(0, 359), 0));  // Spawn house with random rotation.
-                            home.transform.parent = transform;
-                            home.GetComponent<House>().humanBuilt = true;
-                            humanMesh.position = home.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position.
+                            _house.GetComponent<House>().constructionFinished = true;  // Spawn house with random rotation.
+                            humanMesh.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position.
 
                             // Reset the human's speed.
                             for (int i = 0; i < humanAnimator.bones.Length; i++)    
                                 humanAnimator.bones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
                             
-
-                            Destroy(_house);    // Destroy the placeholder.
-
                             // Assign standard data & reset bools.
-                            home.layer = 16;
+                            _house.layer = 16;
                             gatheredWood -= 30;
                             buildingHouse = false;
                             hasWood = false;
