@@ -54,7 +54,6 @@ public class GameManager : Singleton<GameManager>
             teamOneFoodScore = 1;
     }
 
-    /*
     public void CheckForFood()
     {
         if (teamOneFoodScore < 0.5f)
@@ -75,5 +74,4 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
-    */
 }

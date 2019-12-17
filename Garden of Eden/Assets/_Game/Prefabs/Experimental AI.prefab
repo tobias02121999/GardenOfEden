@@ -192,6 +192,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 2bcf08ed359380c4f97b1abc8b73f937, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -264,6 +266,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 41f42c8c2efea8449b621f62266eb15d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -3150,7 +3154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  currentDesire: 0
+  currentDesire: 3
   desireClouds:
   - {fileID: 195965486}
   - {fileID: 196358469}
@@ -3168,6 +3172,7 @@ MonoBehaviour:
     type: 3}
   isDayTime: 0
   isGrounded: 0
+  players: {fileID: 0}
   humanAnimator: {fileID: 1438448271049857592}
   hips: {fileID: 6538513111797066473}
   humanMesh: {fileID: 6538513111818616364}
@@ -3181,6 +3186,7 @@ MonoBehaviour:
   minDistanceFromBuildToCalamity: 0
   gatheredWood: 0
   atShrine: 0
+  statsTweaked: 0
   enoughSpaceToBuild: 0
   desireStated: 0
 --- !u!114 &6265086071783923610
@@ -6933,10 +6939,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300012, guid: d1a9225161cbaf64f8c8efe2777606e3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2300010, guid: d1a9225161cbaf64f8c8efe2777606e3, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}

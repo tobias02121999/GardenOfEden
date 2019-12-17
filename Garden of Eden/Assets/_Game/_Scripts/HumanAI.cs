@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum HumanState {RECOVER, HUNGRY, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, FIGHTING, PRAYING, SLEEPING, SPREADING_RELIGION};
+public enum HumanState {RECOVER, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, PRAYING, SLEEPING };
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
 public class HumanAI : MonoBehaviour
@@ -32,13 +32,14 @@ public class HumanAI : MonoBehaviour
 
     [Space]
 
+    public NetworkPlayers players;
     public RagdollAnimator humanAnimator;
     public Rigidbody hips;
     public Transform humanMesh, movementParent, rotationReference;
     public int fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
-    public bool atShrine;
+    public bool atShrine, statsTweaked;
     public bool enoughSpaceToBuild = true;
 
     // Private Variables
@@ -49,11 +50,18 @@ public class HumanAI : MonoBehaviour
     bool wasInvoked = false;
     bool _wasInvoked = false;
     public bool buildingHouse = false;
-    bool statsTweaked = false;
     public bool desireStated = false;
     public bool hasHome = false;
     bool readyToAscend = false;
     public GameObject _house;
+
+    private void Start()
+    {
+        foreach (UnityEngine.UI.Image cloud in desireClouds)
+            cloud.gameObject.SetActive(false);
+
+        players = GameObject.Find("Network Manager").GetComponent<NetworkPlayers>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -138,8 +146,6 @@ public class HumanAI : MonoBehaviour
                     break;
 
                 case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                    Debug.Log("Building");
-
                     int layer = 17;
                     int mask = 1 << layer;
 
@@ -222,18 +228,15 @@ public class HumanAI : MonoBehaviour
                             buildingHouse = false;
                             hasWood = false;
                             hasHome = true;
+
+                            if (currentDesire == HumanDesire.HOUSING)
+                                currentDesire = HumanDesire.NOTHING;
                         }
                     }
 
                     break;
 
                 case HumanState.BUILDING_CHURCH:
-                    break;
-
-                case HumanState.FIGHTING:
-                    break;
-
-                case HumanState.SPREADING_RELIGION:
                     break;
             }
         }
@@ -259,7 +262,7 @@ public class HumanAI : MonoBehaviour
                     desireStated = false;
                     statsTweaked = false;
                     foreach (UnityEngine.UI.Image cloud in desireClouds)
-                        cloud.enabled = false;  // Deactivate all the desire clouds.
+                        cloud.gameObject.SetActive(false);  // Deactivate all the desire clouds.
 
                     if (_house != null)
                         MoveToDestination(3);
@@ -482,7 +485,9 @@ public class HumanAI : MonoBehaviour
     {
         desireStated = true;
 
-        if (currentDesire != HumanDesire.FOOD && hasHome)
+        GameManager.Instance.CheckForFood();
+
+        if (!hasHome)
             currentDesire = HumanDesire.HOUSING;
 
         switch (currentDesire)
@@ -519,7 +524,7 @@ public class HumanAI : MonoBehaviour
         else if (currentDesire == HumanDesire.TO_ASCEND)
             happiness -= 10;
         else if (currentDesire == HumanDesire.NOTHING)
-            faith += 30;
+            players.localPlayer.GetComponent<PlayerInventory>().paint = Mathf.Clamp(players.localPlayer.GetComponent<PlayerInventory>().paint + faith, 0, 100);
 
         statsTweaked = true;
     }
