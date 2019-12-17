@@ -33,6 +33,8 @@ public class DrawRecognition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //drawDataText = GameObject.Find("Symbol Text").GetComponent<TextMesh>();
+
         gridWidth = Mathf.RoundToInt(gridSize.x);
         gridHeight = Mathf.RoundToInt(gridSize.y);
 
@@ -123,6 +125,13 @@ public class DrawRecognition : MonoBehaviour
         drawLibrary[1][7][0, 0] = 0; drawLibrary[1][7][0, 1] = 1; drawLibrary[1][7][0, 2] = 1; drawLibrary[1][7][0, 3] = 1; drawLibrary[1][7][0, 4] = 0; drawLibrary[1][7][1, 0] = 1; drawLibrary[1][7][1, 1] = 0; drawLibrary[1][7][1, 2] = 0; drawLibrary[1][7][1, 3] = 1; drawLibrary[1][7][1, 4] = 1; drawLibrary[1][7][2, 0] = 1; drawLibrary[1][7][2, 1] = 0; drawLibrary[1][7][2, 2] = 0; drawLibrary[1][7][2, 3] = 0; drawLibrary[1][7][2, 4] = 1; drawLibrary[1][7][3, 0] = 1; drawLibrary[1][7][3, 1] = 0; drawLibrary[1][7][3, 2] = 0; drawLibrary[1][7][3, 3] = 1; drawLibrary[1][7][3, 4] = 1; drawLibrary[1][7][4, 0] = 1; drawLibrary[1][7][4, 1] = 1; drawLibrary[1][7][4, 2] = 1; drawLibrary[1][7][4, 3] = 1; drawLibrary[1][7][4, 4] = 0;
         drawLibrary[1][8][0, 0] = 0; drawLibrary[1][8][0, 1] = 1; drawLibrary[1][8][0, 2] = 1; drawLibrary[1][8][0, 3] = 1; drawLibrary[1][8][0, 4] = 0; drawLibrary[1][8][1, 0] = 1; drawLibrary[1][8][1, 1] = 1; drawLibrary[1][8][1, 2] = 0; drawLibrary[1][8][1, 3] = 1; drawLibrary[1][8][1, 4] = 1; drawLibrary[1][8][2, 0] = 1; drawLibrary[1][8][2, 1] = 0; drawLibrary[1][8][2, 2] = 0; drawLibrary[1][8][2, 3] = 0; drawLibrary[1][8][2, 4] = 1; drawLibrary[1][8][3, 0] = 1; drawLibrary[1][8][3, 1] = 1; drawLibrary[1][8][3, 2] = 0; drawLibrary[1][8][3, 3] = 0; drawLibrary[1][8][3, 4] = 1; drawLibrary[1][8][4, 0] = 0; drawLibrary[1][8][4, 1] = 1; drawLibrary[1][8][4, 2] = 1; drawLibrary[1][8][4, 3] = 1; drawLibrary[1][8][4, 4] = 0;
         drawLibrary[1][9][0, 0] = 0; drawLibrary[1][9][0, 1] = 1; drawLibrary[1][9][0, 2] = 1; drawLibrary[1][9][0, 3] = 1; drawLibrary[1][9][0, 4] = 0; drawLibrary[1][9][1, 0] = 1; drawLibrary[1][9][1, 1] = 1; drawLibrary[1][9][1, 2] = 0; drawLibrary[1][9][1, 3] = 1; drawLibrary[1][9][1, 4] = 1; drawLibrary[1][9][2, 0] = 1; drawLibrary[1][9][2, 1] = 0; drawLibrary[1][9][2, 2] = 0; drawLibrary[1][9][2, 3] = 0; drawLibrary[1][9][2, 4] = 1; drawLibrary[1][9][3, 0] = 1; drawLibrary[1][9][3, 1] = 1; drawLibrary[1][9][3, 2] = 0; drawLibrary[1][9][3, 3] = 1; drawLibrary[1][9][3, 4] = 1; drawLibrary[1][9][4, 0] = 0; drawLibrary[1][9][4, 1] = 1; drawLibrary[1][9][4, 2] = 1; drawLibrary[1][9][4, 3] = 1; drawLibrary[1][9][4, 4] = 0;
+
+        // Line
+        var length = symbolVariation;
+        for (var i = 0; i < length; i++)
+        {
+            drawLibrary[2][i][0, 0] = 0; drawLibrary[2][i][0, 1] = 0; drawLibrary[2][i][0, 2] = 1; drawLibrary[2][i][0, 3] = 0; drawLibrary[2][i][0, 4] = 0; drawLibrary[2][i][1, 0] = 0; drawLibrary[2][i][1, 1] = 0; drawLibrary[2][i][1, 2] = 1; drawLibrary[2][i][1, 3] = 0; drawLibrary[2][i][1, 4] = 0; drawLibrary[2][i][2, 0] = 0; drawLibrary[2][i][2, 1] = 0; drawLibrary[2][i][2, 2] = 1; drawLibrary[2][i][2, 3] = 0; drawLibrary[2][i][2, 4] = 0; drawLibrary[2][i][3, 0] = 0; drawLibrary[2][i][3, 1] = 0; drawLibrary[2][i][3, 2] = 1; drawLibrary[2][i][3, 3] = 0; drawLibrary[2][i][3, 4] = 0; drawLibrary[2][i][4, 0] = 0; drawLibrary[2][i][4, 1] = 0; drawLibrary[2][i][4, 2] = 1; drawLibrary[2][i][4, 3] = 0; drawLibrary[2][i][4, 4] = 0;
+        }
     }
 
     // Scroll through the library to find matches
@@ -182,7 +191,7 @@ public class DrawRecognition : MonoBehaviour
         {
             for (var yy = 0; yy < gridHeight; yy++)
             {
-                str = str + "drawLibrary[1][9][" + xx + ", " + yy + "] = " + drawData[xx, yy] + "; ";
+                str = str + "drawLibrary[2][0][" + xx + ", " + yy + "] = " + drawData[xx, yy] + "; ";
             }
         }
 
