@@ -21,7 +21,7 @@ public class CheckGrounded : MonoBehaviour
     }
 
     // Check if the house is grounded
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (grab != null)
             grab.isGrounded = true;

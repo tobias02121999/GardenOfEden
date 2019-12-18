@@ -482,7 +482,7 @@ MonoBehaviour:
   - {fileID: 3404498435829298385}
   - {fileID: 5217317689183355413}
   - {fileID: 308884758325368095}
-  baseGrowSpeed: {x: 0.005, y: 0.05}
+  baseGrowSpeed: {x: 0.0005, y: 0.005}
   respawnDuration: {x: 100, y: 500}
   state: 1
   isWet: 0

@@ -12,11 +12,16 @@ public class Shrine : MonoBehaviour
     {
         if (collision.transform.CompareTag("HumanBodypart"))
         {
-            hasRun = false;
-            collision.gameObject.GetComponentInParent<HumanAI>().atShrine = true;
-            collision.gameObject.GetComponentInParent<HumanAI>().speed = 0;
-            collision.gameObject.GetComponentInParent<RagdollAnimator>().enabled = false;
-            collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
+            var humanAI = collision.gameObject.GetComponentInParent<HumanAI>();
+
+            if (humanAI.currentState == HumanState.PRAYING)
+            {
+                hasRun = false;
+                collision.gameObject.GetComponentInParent<HumanAI>().atShrine = true;
+                collision.gameObject.GetComponentInParent<HumanAI>().speed = 0;
+                collision.gameObject.GetComponentInParent<RagdollAnimator>().enabled = false;
+                collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
+            }
         }
     }
 

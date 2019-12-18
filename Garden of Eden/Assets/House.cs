@@ -111,12 +111,16 @@ public class House : MonoBehaviour
         Debug.Log(collision.transform.name);
         if (Sun.Instance.rotation >= 180 && Sun.Instance.rotation <= 270 && collision.transform.CompareTag("HumanBodypart")) // Check human layer during nighttime.
         {
-            hasRun = false;
+            var _human = collision.gameObject.GetComponentInParent<HumanAI>();
+            if (_human._house == this.gameObject)
+            {
+                hasRun = false;
 
-            human = collision.gameObject.GetComponentInParent<RagdollAnimator>();
-            AI = collision.gameObject.GetComponentInParent<HumanAI>();
+                human = collision.gameObject.GetComponentInParent<RagdollAnimator>();
+                AI = collision.gameObject.GetComponentInParent<HumanAI>();
 
-            collision.gameObject.GetComponentInParent<RagdollAnimator>().gameObject.SetActive(false);
+                collision.gameObject.GetComponentInParent<RagdollAnimator>().gameObject.SetActive(false);
+            }
         }
     }
 }
