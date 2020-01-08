@@ -3092,7 +3092,7 @@ MonoBehaviour:
   movementParent: {fileID: 4982348979533985199}
   rotationReference: {fileID: 1834327089}
   fearReductionSpeed: 1
-  speed: 50
+  speed: 20
   wanderDuration: 150
   turnSpeed: 5
   wanderAlarm: 0
