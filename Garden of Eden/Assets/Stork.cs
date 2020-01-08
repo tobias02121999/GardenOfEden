@@ -54,7 +54,7 @@ public class Stork : NetworkBehaviour
         else
         {
             gameManager.TeamTwoHumans.Add(human);
-            NetworkServer.SpawnWithClientAuthority(human, players.otherPlayer);
+            NetworkServer.SpawnWithClientAuthority(human, players.localPlayer);
         }
 
         human.transform.Find("Human_BaseMesh").GetComponent<SkinnedMeshRenderer>().material = teamMaterial[teamID];
