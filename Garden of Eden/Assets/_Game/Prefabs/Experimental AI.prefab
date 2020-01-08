@@ -192,8 +192,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 2bcf08ed359380c4f97b1abc8b73f937, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -266,8 +264,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 41f42c8c2efea8449b621f62266eb15d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -3096,7 +3092,7 @@ MonoBehaviour:
   movementParent: {fileID: 4982348979533985199}
   rotationReference: {fileID: 1834327089}
   fearReductionSpeed: 1
-  speed: 30
+  speed: 50
   wanderDuration: 150
   turnSpeed: 5
   wanderAlarm: 0
