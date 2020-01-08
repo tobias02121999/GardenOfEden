@@ -16,6 +16,9 @@ public class Stork : NetworkBehaviour
     [HideInInspector]
     public GameManager gameManager;
 
+    // Initialize the private variables
+    NetworkPlayers players;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,8 @@ public class Stork : NetworkBehaviour
         humanHips = human.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
         humanHips.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         human.GetComponent<RagdollAnimator>().impactRecovery = 0f;
+
+        players = GameObject.Find("Network Manager").GetComponent<NetworkPlayers>();
     }
 
     // Update is called once per frame
@@ -43,12 +48,16 @@ public class Stork : NetworkBehaviour
         human.transform.parent = humanParent;
 
         if (teamID == 0)
+        {
             gameManager.TeamOneHumans.Add(human);
+            NetworkServer.SpawnWithClientAuthority(human, players.localPlayer);
+        }
         else
+        {
             gameManager.TeamTwoHumans.Add(human);
+            NetworkServer.Spawn(human);
+        }
 
         human.transform.Find("Human_BaseMesh").GetComponent<SkinnedMeshRenderer>().material = teamMaterial[teamID];
-
-        NetworkServer.Spawn(human);
     }
 }
