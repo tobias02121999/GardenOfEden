@@ -98,16 +98,12 @@ public class GameManager : Singleton<GameManager>
     {
         var localPlayer = FindLocalPlayer();
 
-        if (!localPlayer.isServer)
-        {
-            var TeamOneHumansCount = TeamOneHumans.Count;
-            for (var i = 0; i < TeamOneHumansCount; i++)
-                localPlayer.CmdClearAuthority(TeamOneHumans[i]);
+        var TeamOneHumansCount = TeamOneHumans.Count;
+        for (var i = 0; i < TeamOneHumansCount; i++)
+            localPlayer.CmdClearAuthority(TeamOneHumans[i]);
 
-            var TeamTwoHumansCount = TeamTwoHumans.Count;
-            for (var i = 0; i < TeamTwoHumansCount; i++)
-                localPlayer.CmdSetClientAuthority(TeamTwoHumans[i]);
-        }
-
+        var TeamTwoHumansCount = TeamTwoHumans.Count;
+        for (var i = 0; i < TeamTwoHumansCount; i++)
+            localPlayer.CmdSetClientAuthority(TeamTwoHumans[i]);
     }
 }

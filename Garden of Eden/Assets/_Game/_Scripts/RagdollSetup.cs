@@ -5,6 +5,9 @@ using UnityEngine.Networking;
 
 public class RagdollSetup : NetworkBehaviour
 {
+    // Initialize the public variables
+    public bool _hasAuthority;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +17,8 @@ public class RagdollSetup : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        ControlRigidBodies(hasAuthority);
+        _hasAuthority = hasAuthority;
+        ControlRigidBodies(_hasAuthority);
     }
 
     // Enable or disable all rigidbodies
