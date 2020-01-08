@@ -22,8 +22,7 @@ public class Stork : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //teamID = Mathf.RoundToInt(Random.Range(0f, 1f));
-        teamID = 0;
+        teamID = Mathf.RoundToInt(Random.Range(0f, 1f));
 
         CmdSpawnHuman();
 
@@ -50,12 +49,12 @@ public class Stork : NetworkBehaviour
         if (teamID == 0)
         {
             gameManager.TeamOneHumans.Add(human);
-            NetworkServer.SpawnWithClientAuthority(human, players.localPlayer);
+            NetworkServer.Spawn(human);
         }
         else
         {
             gameManager.TeamTwoHumans.Add(human);
-            NetworkServer.Spawn(human);
+            NetworkServer.SpawnWithClientAuthority(human, players.otherPlayer);
         }
 
         human.transform.Find("Human_BaseMesh").GetComponent<SkinnedMeshRenderer>().material = teamMaterial[teamID];

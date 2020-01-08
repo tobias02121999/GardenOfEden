@@ -17,6 +17,7 @@ public class RagdollSetup : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        _hasAuthority = hasAuthority;
         ControlRigidBodies(_hasAuthority);
     }
 
