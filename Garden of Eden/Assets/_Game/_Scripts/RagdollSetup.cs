@@ -5,28 +5,16 @@ using UnityEngine.Networking;
 
 public class RagdollSetup : NetworkBehaviour
 {
-    // Initialize the private variables
-    InteractionDetection detection;
-
     // Start is called before the first frame update
     void Start()
     {
-        detection = GetComponentInChildren<InteractionDetection>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        bool check;
-
-        /*
-        if (isServer)
-            check = detection.clientAuthority;
-        else
-            check = !detection.clientAuthority;
-
-        ControlRigidBodies(check);
-        */
+        ControlRigidBodies(hasAuthority);
     }
 
     // Enable or disable all rigidbodies

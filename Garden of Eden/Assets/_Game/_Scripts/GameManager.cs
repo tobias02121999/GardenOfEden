@@ -52,8 +52,11 @@ public class GameManager : Singleton<GameManager>
             teamOneFoodScore = Mathf.Clamp(farmScore / requiredScore, 0f, 1f);
         else
             teamOneFoodScore = 1;
+
+        SetAuthority(); // Transfer the object authority to either the server or the client based on the teams they are assigned to
     }
 
+    // Check if food is sufficient
     public void CheckForFood()
     {
         if (teamOneFoodScore < 0.5f)
@@ -73,5 +76,38 @@ public class GameManager : Singleton<GameManager>
                 human.GetComponent<HumanAI>().currentDesire = HumanDesire.FOOD;
             }
         }
+    }
+
+    // Find the local player and return it
+    PlayerControls FindLocalPlayer()
+    {
+        var players = FindObjectsOfType<PlayerControls>();
+        PlayerControls localPlayer = null;
+
+        for (var i = 0; i < players.Length; i++)
+        {
+            if (players[i].isLocalPlayer)
+                localPlayer = players[i];
+        }
+
+        return localPlayer;
+    }
+
+    // Transfer the object authority to either the server or the client based on the teams they are assigned to
+    void SetAuthority()
+    {
+        var localPlayer = FindLocalPlayer();
+
+        if (!localPlayer.isServer)
+        {
+            var TeamOneHumansCount = TeamOneHumans.Count;
+            for (var i = 0; i < TeamOneHumansCount; i++)
+                localPlayer.CmdClearAuthority(TeamOneHumans[i]);
+
+            var TeamTwoHumansCount = TeamTwoHumans.Count;
+            for (var i = 0; i < TeamTwoHumansCount; i++)
+                localPlayer.CmdSetClientAuthority(TeamTwoHumans[i]);
+        }
+
     }
 }
