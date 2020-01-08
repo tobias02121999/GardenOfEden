@@ -39,7 +39,7 @@ public class HumanAI : MonoBehaviour
     public int fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
-    public bool atShrine, statsTweaked;
+    public bool atShrine, statsTweaked, hasFaith;
     public bool enoughSpaceToBuild = true;
 
     // Private Variables
@@ -53,6 +53,7 @@ public class HumanAI : MonoBehaviour
     public bool desireStated = false;
     public bool hasHome = false;
     bool readyToAscend = false;
+    bool switchShrine, shrineSwitched;
     public GameObject _house;
 
     private void Start()
@@ -66,6 +67,25 @@ public class HumanAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!hasFaith)
+        {
+            if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360))
+            {
+                Idling();
+                if (!shrineSwitched)
+                {
+                    switchShrine = !switchShrine;
+                    shrineSwitched = true;
+                }
+            }
+
+            if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && !isDepressed)
+            {
+                currentState = HumanState.PRAYING;
+                shrineSwitched = false;
+            }
+        } 
+
         inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
         inFront.y = 33f;
 
@@ -126,7 +146,7 @@ public class HumanAI : MonoBehaviour
 
         else if (isDepressed)
             currentState = HumanState.IDLE;
-            
+
         #endregion
 
         #region State Machine Day
@@ -169,7 +189,7 @@ public class HumanAI : MonoBehaviour
                             obj.GetComponent<House>().humanBuilt = true;
                             obj.layer = 28;
                             _house = obj;   // Set this object as the house variable.
-                            
+
                             checkHouse.SetActive(false);
                         }
                         else
@@ -219,9 +239,9 @@ public class HumanAI : MonoBehaviour
                             humanMesh.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position.
 
                             // Reset the human's speed.
-                            for (int i = 0; i < humanAnimator.bones.Length; i++)    
+                            for (int i = 0; i < humanAnimator.bones.Length; i++)
                                 humanAnimator.bones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
-                            
+
                             // Assign standard data & reset bools.
                             _house.layer = 16;
                             gatheredWood -= 30;
@@ -319,26 +339,54 @@ public class HumanAI : MonoBehaviour
 
 
             case 2: // ... the Shrine
-                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                if (hasFaith)
                 {
-                    rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
+                    if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                    {
+                        rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
 
-                    var shrineRot = rotationReference.rotation;
-                    shrineRot.x = 0f;
-                    shrineRot.z = 0f;
+                        var shrineRot = rotationReference.rotation;
+                        shrineRot.x = 0f;
+                        shrineRot.z = 0f;
 
-                    movementParent.rotation = shrineRot;
+                        movementParent.rotation = shrineRot;
+                    }
+
+                    if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                    {
+                        rotationReference.LookAt(GameManager.Instance.shrines[1].transform.position);
+
+                        var shrineRot = rotationReference.rotation;
+                        shrineRot.x = 0f;
+                        shrineRot.z = 0f;
+
+                        movementParent.rotation = shrineRot;
+                    }
                 }
 
-                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                else
                 {
-                    rotationReference.LookAt(GameManager.Instance.shrines[1].transform.position);
+                    if (switchShrine == false)
+                    {
+                        rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
 
-                    var shrineRot = rotationReference.rotation;
-                    shrineRot.x = 0f;
-                    shrineRot.z = 0f;
+                        var shrineRot = rotationReference.rotation;
+                        shrineRot.x = 0f;
+                        shrineRot.z = 0f;
 
-                    movementParent.rotation = shrineRot;
+                        movementParent.rotation = shrineRot;
+                    }
+
+                    else
+                    {
+                        rotationReference.LookAt(GameManager.Instance.shrines[1].transform.position);
+
+                        var shrineRot = rotationReference.rotation;
+                        shrineRot.x = 0f;
+                        shrineRot.z = 0f;
+
+                        movementParent.rotation = shrineRot;
+                    }
                 }
 
                 break;
@@ -406,32 +454,6 @@ public class HumanAI : MonoBehaviour
             }
         }
         return closestUnit;
-    }
-
-    void GaugeFear()    // Add or remove fear based on the specified circumstances.     OBSOLETE. SIMPLIFY BY ADDING OR SUBTRACTING STANDARD AMOUNT TO FEAR VAR.
-    {
-        var fear = 0f; // Reset the fear gauge to adjust it (otherwise it will just add onto the former amount.
-        GameManager.Instance.fearObjects.Clear(); // Reset the list
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
-        {
-            GameManager.Instance.fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);   // Add all the fear objects back into the scene.
-        }
-
-        for (int i = 0; i < GameManager.Instance.fearObjects.Count; i++)    // Scan through all objects that can instill fear.
-        {
-            // Determine the current objects distance.
-            float currentObjectDistance = Vector3.Distance(humanMesh.position, GameManager.Instance.fearObjects[i].transform.position);
-
-            if (currentObjectDistance < closestObject) // If an objects distance is smaller than the former distance, the current objects distance will be the new closest distance.
-            {
-                closestObject = currentObjectDistance;
-                closestObjectPosition = GameManager.Instance.fearObjects[i].transform.position;
-            }
-        }
-
-        // Big Math
-        var distanceToFear = fear + 100 - Vector3.Distance(humanMesh.position, closestObjectPosition);
-        fear = Mathf.Clamp(distanceToFear, 0, 100); // Set fear
     }
 
     void AddForce()
@@ -546,4 +568,7 @@ public class HumanAI : MonoBehaviour
 
         _wasInvoked = false;
     }
+
+    public void IncreaseFear(float amount, float modifier) { fear += amount * modifier; }
+
 }
