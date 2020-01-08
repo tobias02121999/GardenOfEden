@@ -80,7 +80,7 @@ public class HumanAI : MonoBehaviour
         if (!_wasInvoked)
             StartCoroutine("IncreaseFaithOverTime");    // Continually gain levels of faith.
 
-        if (!humanAnimator.hasCollapsed)
+        if (!humanAnimator.hasCollapsed && isGrounded)
             AddForce();
 
         if (readyToAscend)

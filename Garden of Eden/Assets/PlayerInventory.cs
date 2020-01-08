@@ -5,115 +5,161 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     // Initialize the public variables
+    public GameObject[] hands, brushes, magicLines;
+    public float maxPaint;
+    public float summonInitiateDistance, summonDistance;
+    public GameObject deskPrefab;
+    public Transform headTransform;
+
+    [HideInInspector]
+    public float paint, paintToSpend;
+
+    /* >> OLD INVENTORY SYSTEM PUBLIC VARIABLES <<
     public GameObject[] toolsL, toolsR;
     public int currentToolL, currentToolR;
     public float maxPaint;
     public bool debugMode;
     public ToolbeltSlot[] slots;
+    */
 
     // Initialize the private variables
+    bool inputL, inputR;
+    bool isSummoningL, isSummoningR;
+    GameObject currentDesk;
+
+    /* >> OLD INVENTORY SYSTEM PRIVATE VARIABLES <<
     bool switchButtonLPressed, switchButtonRPressed;
     public float paint, paintToSpend;
+    */
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        paint = maxPaint;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var size = toolsL.Length;
-        for (var i = 0; i < size; i++)
+        GetInput(); // Get the touch controller input
+        Switch(); // Switch between hands and paintbrushes
+        SummonDesk(); // Summon the god desk
+    }
+
+    // Get the touch controller input
+    void GetInput()
+    {
+        // Get the left and right controller input
+        inputL = (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) != 0f);
+        inputR = (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) != 0f);
+    }
+
+    // Switch between hands and paintbrushes
+    void Switch()
+    {
+        // Toggle the hand and brush objects on and off
+        if (!inputL)
         {
-            if (i == currentToolL && !toolsL[i].activeSelf)
-                toolsL[i].SetActive(true);
+            var brush = brushes[0].GetComponentInChildren<Brush>();
+            brush.RecognitionInit();
 
-            if (i == currentToolR && !toolsR[i].activeSelf)
-                toolsR[i].SetActive(true);
-
-            if (i != currentToolL && toolsL[i].activeSelf)
-                toolsL[i].SetActive(false);
-
-            if (i != currentToolR && toolsR[i].activeSelf)
-                toolsR[i].SetActive(false);
+            hands[0].SetActive(true);
+            brushes[0].SetActive(false);
+        }
+        else
+        {
+            hands[0].SetActive(false);
+            brushes[0].SetActive(true);
         }
 
-        if (debugMode)
+        if (!inputR)
         {
-            var inputL = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-            if (inputL.x > 0f && !switchButtonLPressed)
-            {
-                if (currentToolL <= size - 2)
-                    currentToolL++;
-                else
-                    currentToolL = 0;
+            var brush = brushes[1].GetComponentInChildren<Brush>();
+            brush.RecognitionInit();
 
-                switchButtonLPressed = true;
-            }
-
-            if (inputL.x < 0f && !switchButtonLPressed)
-            {
-                if (currentToolL >= 1)
-                    currentToolL--;
-                else
-                    currentToolL = size - 1;
-
-                switchButtonLPressed = true;
-            }
-
-            if (inputL.x == 0f)
-                switchButtonLPressed = false;
-
-            var inputR = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
-            if (inputR.x > 0f && !switchButtonRPressed)
-            {
-                if (currentToolR <= size - 2)
-                    currentToolR++;
-                else
-                    currentToolR = 0;
-
-                switchButtonRPressed = true;
-            }
-
-            if (inputR.x < 0f && !switchButtonRPressed)
-            {
-                if (currentToolR >= 1)
-                    currentToolR--;
-                else
-                    currentToolR = size - 1;
-
-                switchButtonRPressed = true;
-            }
-
-            if (inputR.x == 0f)
-                switchButtonRPressed = false;
+            hands[1].SetActive(true);
+            brushes[1].SetActive(false);
+        }
+        else
+        {
+            hands[1].SetActive(false);
+            brushes[1].SetActive(true);
         }
     }
 
-    // Return the currently equipped tools to the toolbelt
-    public void returnTools()
+    // Summon the god desk
+    void SummonDesk()
     {
-        var length = slots.Length;
-        for (var i = 0; i < length; i++)
+        var dist = Vector3.Distance(hands[0].transform.position, hands[1].transform.position);
+        var controls = GetComponent<PlayerControls>();
+
+        if (dist <= summonInitiateDistance && !(controls.isFistL && controls.isFistR))
         {
-            if (slots[i].toolID == 0)
+            if (controls.isFistL)
             {
-                if (currentToolL != 0)
-                {
-                    slots[i].toolID = currentToolL;
-                    currentToolL = 0;
-                }
-                else
-                {
-                    if (currentToolR != 0)
-                    {
-                        slots[i].toolID = currentToolR;
-                        currentToolR = 0;
-                    }
-                }
+                magicLines[1].SetActive(true);
+                isSummoningL = true;
             }
+                
+            if (controls.isFistR)
+            {
+                magicLines[0].SetActive(true);
+                isSummoningR = true;
+            }
+        }
+
+        if (!controls.isFistL)
+        {
+            var line = magicLines[1].GetComponent<ParticleLine>();
+            line.ResetLine();
+
+            magicLines[1].SetActive(false);
+            isSummoningL = false;
+        }
+
+        if (!controls.isFistR)
+        {
+            var line = magicLines[0].GetComponent<ParticleLine>();
+            line.ResetLine();
+
+            magicLines[0].SetActive(false);
+            isSummoningR = false;
+        }
+
+        if (dist >= summonDistance && (isSummoningL || isSummoningR))
+        {
+            var a = hands[0].transform.position;
+            var b = hands[1].transform.position;
+
+            var ab = b - a;
+            ab = Vector3.Normalize(ab);
+
+            var pos = a + (ab * (dist / 2f));
+            var rot = Quaternion.Euler(0f, headTransform.eulerAngles.y, 0f);
+
+            if (currentDesk != null)
+                Destroy(currentDesk);
+
+            currentDesk = Instantiate(deskPrefab, pos, rot);
+
+            if (controls.isFistL)
+            {
+                var line = magicLines[1].GetComponent<ParticleLine>();
+                line.ResetLine();
+
+                magicLines[1].SetActive(false);
+            }
+
+            if (controls.isFistR)
+            {
+                var line = magicLines[0].GetComponent<ParticleLine>();
+                line.ResetLine();
+
+                magicLines[0].SetActive(false);
+            }
+
+            isSummoningL = false;
+            isSummoningR = false;
         }
     }
 }

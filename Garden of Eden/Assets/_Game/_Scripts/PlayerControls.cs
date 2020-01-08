@@ -17,6 +17,7 @@ public class PlayerControls : NetworkBehaviour
     public Camera rightEye;
     public Animation handAnimationL, handAnimationR;
     public NetworkPlayers networkPlayers;
+    public bool isFistL, isFistR;
 
     void Start()
     {
@@ -63,6 +64,9 @@ public class PlayerControls : NetworkBehaviour
             var duration = handAnimationL["Hand Close"].length;
             handAnimationL["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
             handAnimationR["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
+
+            isFistL = (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) >= .75f);
+            isFistR = (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) >= .75f);
 
             networkPlayers.localPlayer = this.gameObject;
         }

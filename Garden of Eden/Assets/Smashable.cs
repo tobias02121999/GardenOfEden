@@ -24,9 +24,18 @@ public class Smashable : MonoBehaviour
     // Check if being smashed
     void OnCollisionEnter(Collision collision)
     {
-        var obj = collision.gameObject;
-        if (obj.CompareTag("Hammer") && collision.relativeVelocity.magnitude >= sturdiness)
-            Smashed();
+        var hand = collision.gameObject.GetComponentInParent<FollowPivot>();
+
+        if (hand != null && collision.relativeVelocity.magnitude >= sturdiness)
+        {
+            var controls = hand.GetComponentInParent<PlayerControls>();
+
+            if (hand.CompareTag("HandLeft") && controls.isFistL)
+                Smashed();
+
+            if (hand.CompareTag("HandRight") && controls.isFistR)
+                Smashed();
+        }
     }
 
     // Get destroyed

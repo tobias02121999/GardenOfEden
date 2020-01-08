@@ -23,6 +23,7 @@ public class PaintJar : MonoBehaviour
             inventory = (PlayerInventory)FindObjectOfType(typeof(PlayerInventory));
 
         var maxChunkAmount = paintChunks.Length;
+
         var chunkAmount = Mathf.RoundToInt((inventory.paint / inventory.maxPaint) * maxChunkAmount);
         var toSpendChunkAmount = Mathf.RoundToInt((inventory.paintToSpend / inventory.maxPaint) * maxChunkAmount);
 

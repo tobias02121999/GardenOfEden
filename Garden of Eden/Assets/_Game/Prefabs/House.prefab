@@ -1843,7 +1843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adfb4948cbe8003499af3b66c2953e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sturdiness: 15
+  sturdiness: 50
   poofEffect: {fileID: 3981191651009211293, guid: c11b1b42afa6b0e43b7bb1b00651b895,
     type: 3}
   poofLocation: {fileID: 8224827650965107298}

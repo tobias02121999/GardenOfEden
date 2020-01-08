@@ -58,6 +58,7 @@ public class ToolbeltSlot : MonoBehaviour
     // Switch tools
     void SwitchTool(int targetID, PlayerInventory targetInv, int handType)
     {
+        /*
         int newID;
 
         if (handType == 0)
@@ -74,6 +75,7 @@ public class ToolbeltSlot : MonoBehaviour
         toolID = newID;
 
         audioSource.Play();
+        */
     }
 
     // Display the correct mesh

@@ -175,8 +175,9 @@ public class DrawRecognition : MonoBehaviour
                                 var obj = ObjectPooler.Instance.SpawnFromPool(symbolObjects[c].name, transform.position, Quaternion.identity);
                                 obj.GetComponentInChildren<Hologram>().paintRenderer = paintRenderer;
                                 paintRenderer.targetObject = obj;
+                                paintRenderer.isDrawing = false;
 
-                                playerInventory.returnTools();
+                                //playerInventory.returnTools();
                                 goto End;
                             }
                         }

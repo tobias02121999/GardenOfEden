@@ -45,7 +45,6 @@ public class Brush : MonoBehaviour
     {
         Move(); // Move the cursor around
         SetDrawPoints(); // Instantiate the draw points
-        RecognitionInit(); // Initialize the draw recognition
         GetDrawData(); // Get data from the drawing
         GetPos();
 
@@ -116,10 +115,9 @@ public class Brush : MonoBehaviour
     }
 
     // Initialize the draw recognition
-    void RecognitionInit()
+    public void RecognitionInit()
     {
-        if ((input == 0f && !debugMode && isDrawing) || 
-            (!Input.GetButton(drawButton) && debugMode && isDrawing))
+        if ((!debugMode && isDrawing) || (!Input.GetButton(drawButton) && debugMode && isDrawing))
         {
             var scale = Mathf.Max(drawSize.x, drawSize.y);
 
