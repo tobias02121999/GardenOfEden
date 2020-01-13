@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class House : MonoBehaviour
+public class House : NetworkBehaviour
 {
     // Initialize the public enums
     public enum States { CONSTRUCTION, FINISHED }
 
     // Initialize the public variables
+    [SyncVar]
     public bool humanBuilt;
+
+    [SyncVar]
     public bool constructionFinished;
+
+    [SyncVar]
+    public States state = States.FINISHED;
+
     public Animator animator;
     public Transform doorPosition;
-    public States state = States.FINISHED;
     public GameObject[] modelStates;
     public MonoBehaviour[] finishedScripts;
 
@@ -23,7 +30,13 @@ public class House : MonoBehaviour
 
     void Start()
     {
-        if (humanBuilt)
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (humanBuilt && !constructionFinished)
         {
             state = States.CONSTRUCTION;
 
@@ -51,11 +64,7 @@ public class House : MonoBehaviour
                 }
             }
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         if (((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360)) && !hasRun)
         {
             if (human != null)

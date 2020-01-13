@@ -1,12 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : NetworkBehaviour
 {
+    // Initialize the singleton
+    public static GameManager Instance { get; private set; }
+
     public GameObject[] shrines;
     //public Transform[] homes;
-    public List<Transform> homes = new List<Transform>();
+    public List<GameObject> teamOneHomes = new List<GameObject>();
+    public List<GameObject> teamTwoHomes = new List<GameObject>();
+
+    public List<GameObject> ballsTeam1 = new List<GameObject>();
+    public List<GameObject> ballsTeam2 = new List<GameObject>();
 
     [Header("Humans")]
     public List<GameObject> TeamOneHumans = new List<GameObject>();
@@ -26,6 +34,18 @@ public class GameManager : Singleton<GameManager>
     public float teamTwoFoodScore;
 
     bool hungerDistributed = false;
+
+    // Manage the singleton instance
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +73,7 @@ public class GameManager : Singleton<GameManager>
         else
             teamOneFoodScore = 1;
 
-        SetAuthority(); // Transfer the object authority to either the server or the client based on the teams they are assigned to
+        SetAuthority(); // Set the authorities of the balls
     }
 
     // Check if food is sufficient
@@ -78,32 +98,53 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    // Find the local player and return it
-    PlayerControls FindLocalPlayer()
-    {
-        var players = FindObjectsOfType<PlayerControls>();
-        PlayerControls localPlayer = null;
-
-        for (var i = 0; i < players.Length; i++)
-        {
-            if (players[i].isLocalPlayer)
-                localPlayer = players[i];
-        }
-
-        return localPlayer;
-    }
-
-    // Transfer the object authority to either the server or the client based on the teams they are assigned to
+    // Set the authorities of the balls
     void SetAuthority()
     {
-        var localPlayer = FindLocalPlayer();
+        // Humans
+        var length = TeamOneHumans.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = TeamOneHumans[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
 
-        var TeamOneHumansCount = TeamOneHumans.Count;
-        for (var i = 0; i < TeamOneHumansCount; i++)
-            localPlayer.CmdClearAuthority(TeamOneHumans[i]);
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
 
-        var TeamTwoHumansCount = TeamTwoHumans.Count;
-        for (var i = 0; i < TeamTwoHumansCount; i++)
-            localPlayer.CmdSetClientAuthority(TeamTwoHumans[i]);
+            TeamOneHumans[i].GetComponent<RagdollSetup>().teamID = 0;
+        }
+
+        length = TeamTwoHumans.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = TeamTwoHumans[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            identity.AssignClientAuthority(connection);
+
+            TeamTwoHumans[i].GetComponent<RagdollSetup>().teamID = 1;
+        }
+
+        // Homes
+        length = teamOneHomes.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamOneHomes[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
+
+            teamOneHomes[i].GetComponent<HouseSetup>().teamID = 0;
+        }
+
+        length = teamTwoHomes.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamTwoHomes[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            identity.AssignClientAuthority(connection);
+
+            teamTwoHomes[i].GetComponent<HouseSetup>().teamID = 1;
+        }
     }
 }

@@ -2,11 +2,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Networking;
 
 public enum HumanState {RECOVER, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, PRAYING, SLEEPING };
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
-public class HumanAI : MonoBehaviour
+public class HumanAI : NetworkBehaviour
 {
     [Header("Current AI State:")]
     public HumanState currentState;
@@ -84,7 +85,7 @@ public class HumanAI : MonoBehaviour
                 currentState = HumanState.PRAYING;
                 shrineSwitched = false;
             }
-        } 
+        }
 
         inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
         inFront.y = 33f;
@@ -181,14 +182,9 @@ public class HumanAI : MonoBehaviour
                         if (enoughSpaceToBuild)
                         {
                             buildingHouse = true;
-
                             newPos.y = 32.34402f;
 
-                            GameObject obj = Instantiate(house, newPos, Quaternion.Euler(0, Random.Range(0, 359), 0));
-                            //obj.transform.parent = transform;
-                            obj.GetComponent<House>().humanBuilt = true;
-                            obj.layer = 28;
-                            _house = obj;   // Set this object as the house variable.
+                            CmdSpawnHouse(newPos); // Spawn a house through the server
 
                             checkHouse.SetActive(false);
                         }
@@ -571,4 +567,22 @@ public class HumanAI : MonoBehaviour
 
     public void IncreaseFear(float amount, float modifier) { fear += amount * modifier; }
 
+    [Command] // Spawn a house through the server
+    void CmdSpawnHouse(Vector3 pos)
+    {
+        GameObject obj = Instantiate(house, pos, Quaternion.Euler(0, Random.Range(0, 359), 0));
+        obj.GetComponent<House>().humanBuilt = true;
+        obj.layer = 28;
+
+        _house = obj;   // Set this object as the house variable.
+
+        var teamID = GetComponent<RagdollSetup>().teamID;
+        if (teamID == 0)
+            GameManager.Instance.teamOneHomes.Add(obj);
+
+        if (teamID == 1)
+            GameManager.Instance.teamTwoHomes.Add(obj);
+
+        NetworkServer.Spawn(obj);
+    }
 }

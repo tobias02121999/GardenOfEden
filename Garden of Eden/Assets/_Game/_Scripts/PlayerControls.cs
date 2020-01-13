@@ -7,84 +7,70 @@ using Node = UnityEngine.XR.XRNode;
 
 public class PlayerControls : NetworkBehaviour
 {
-    public GameObject cameraRig, headModel;
-    public FollowPivot headFollowScript;
-    public Rigidbody headRigidBody;
-    public GameObject cursor;
+    // Initialize the public variables
+    public GameObject headModel;
     public Transform leftPivot;
     public Transform rightPivot;
     public Camera leftEye;
     public Camera rightEye;
     public Animation handAnimationL, handAnimationR;
-    public NetworkPlayers networkPlayers;
+
+    [HideInInspector]
     public bool isFistL, isFistR;
 
+    // Initialize the private variables
+    PlayerSetup setup;
+
+    // Start is called before the first frame update
     void Start()
     {
-        networkPlayers = GameObject.FindObjectOfType<NetworkPlayers>();
+        Initialize(); // Initialize the player object
+        CamInit(); // Makes sure the local cameras are the main cameras
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer)
-        {
-            cameraRig.SetActive(false);
-            cursor.SetActive(false);
-            GetComponent<NetworkSpawner>().enabled = false;
-            headFollowScript.enabled = false;
-            headRigidBody.isKinematic = true;
+        if (!setup.isOther)
+            HandTracking(); // Takes care of the local hand tracking
+    }
 
-            networkPlayers.otherPlayer = this.gameObject;
+    // Initialize the player object
+    void Initialize()
+    {
+        setup = GetComponent<PlayerSetup>();
+    }
+
+    // Makes sure the local cameras are the main cameras
+    void CamInit()
+    {
+        if (leftEye.tag != "MainCamera")
+        {
+            leftEye.tag = "MainCamera";
+            leftEye.enabled = true;
         }
-        else
+
+        if (rightEye.tag != "MainCamera")
         {
-            headModel.SetActive(false);
-
-            // Makes sure the local camera's are the main camera's.
-            if (leftEye.tag != "MainCamera")
-            {
-                leftEye.tag = "MainCamera";
-                leftEye.enabled = true;
-            }
-
-            if (rightEye.tag != "MainCamera")
-            {
-                rightEye.tag = "MainCamera";
-                rightEye.enabled = true;
-            }
-
-            // Takes care of the local hand tracking.
-            leftPivot.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
-            leftPivot.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
-
-            rightPivot.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
-            rightPivot.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
-
-            var duration = handAnimationL["Hand Close"].length;
-            handAnimationL["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
-            handAnimationR["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
-
-            isFistL = (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) >= .75f);
-            isFistR = (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) >= .75f);
-
-            networkPlayers.localPlayer = this.gameObject;
+            rightEye.tag = "MainCamera";
+            rightEye.enabled = true;
         }
     }
 
-    // Shift the authority over to the client
-    [Command]
-    public void CmdSetClientAuthority(GameObject instance)
+    // Takes care of the local hand tracking
+    void HandTracking()
     {
-        var identity = instance.GetComponent<NetworkIdentity>();
-        identity.AssignClientAuthority(connectionToClient);
-    }
+        leftPivot.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
+        leftPivot.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
 
-    // Clear the authority
-    [Command]
-    public void CmdClearAuthority(GameObject instance)
-    {
-        var identity = instance.GetComponent<NetworkIdentity>();
-        identity.RemoveClientAuthority(connectionToClient);
+        rightPivot.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
+        rightPivot.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
+
+        var duration = handAnimationL["Hand Close"].length;
+        handAnimationL["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+        handAnimationR["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
+
+        isFistL = (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) >= .75f);
+        isFistR = (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) >= .75f);
     }
 }

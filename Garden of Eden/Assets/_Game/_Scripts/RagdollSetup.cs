@@ -6,7 +6,12 @@ using UnityEngine.Networking;
 public class RagdollSetup : NetworkBehaviour
 {
     // Initialize the public variables
-    public bool _hasAuthority;
+    [SyncVar]
+    public int teamID;
+
+    public Behaviour[] nonLocalComponents;
+    public Material[] teamMaterials;
+    public Renderer modelRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +22,25 @@ public class RagdollSetup : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        _hasAuthority = hasAuthority;
-        ControlRigidBodies(_hasAuthority);
+        ToggleComponents(); // Disable the local components if this object is not controlled by the local player
+        ApplyMaterial(); // Apply the correct team material to the unit based on its networked teamID
+    }
+
+    // Disable the local components if this object is not controlled by the local player
+    void ToggleComponents()
+    {
+        var localPlayerID = NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID;
+        var isLocal = (teamID == localPlayerID);
+
+        ControlRigidBodies(!isLocal);
+
+        var length = nonLocalComponents.Length;
+        for (var i = 0; i < length; i++)
+            nonLocalComponents[i].enabled = isLocal;
     }
 
     // Enable or disable all rigidbodies
-    public void ControlRigidBodies(bool state)
+    void ControlRigidBodies(bool state)
     {
         var animator = GetComponent<RagdollAnimator>();
         var size = animator.bones.Length;
@@ -43,5 +61,11 @@ public class RagdollSetup : NetworkBehaviour
 
         animator.feetCollider.enabled = !state;
         animator.enabled = !state;
+    }
+
+    // Apply the correct team material to the unit based on its networked teamID
+    void ApplyMaterial()
+    {
+        modelRenderer.material = teamMaterials[teamID];
     }
 }

@@ -5,33 +5,54 @@ using UnityEngine.Networking;
 
 public class PlayerSetup : NetworkBehaviour
 {
-    [SerializeField]
-    Behaviour[] nonLocalComponents;
+    // Initialize the public variables
+    public bool isOther;
+    public Behaviour[] nonLocalComponents;
+    public GameObject[] nonLocalObjects;
 
-    Camera lobbyCamera;
+    //[HideInInspector]
+    public int teamID;
 
     // Start is called before the first frame update
     void Start()
     {
+        DisableComponents(); // Disable the local components if this object is not controlled by the local player
+        AssignTeamID(); // Assign the correct team ID to each player
+    }
+
+    // Disable the local components if this object is not controlled by the local player
+    void DisableComponents()
+    {
         if (!isLocalPlayer)
         {
-            for (int i = 0; i < nonLocalComponents.Length; i++)
-            {
+            var length = nonLocalComponents.Length;
+            for (var i = 0; i < length; i++)
                 nonLocalComponents[i].enabled = false;
-            }
+
+            length = nonLocalObjects.Length;
+            for (var i = 0; i < length; i++)
+                nonLocalObjects[i].SetActive(false);
+
+            NetworkPlayers.Instance.otherPlayer = gameObject;
+
+            isOther = true;
+        }
+        else
+            NetworkPlayers.Instance.localPlayer = gameObject;
+    }
+
+    // Assign the correct team ID to each player
+    void AssignTeamID()
+    {
+        if (isLocalPlayer)
+        {
+            if (!isServer)
+                teamID = 1;
         }
         else
         {
-            lobbyCamera = Camera.main;
-            lobbyCamera.gameObject.SetActive(false);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (lobbyCamera != null)
-        {
-            lobbyCamera.gameObject.SetActive(true);
+            if (isServer)
+                teamID = 1;
         }
     }
 }

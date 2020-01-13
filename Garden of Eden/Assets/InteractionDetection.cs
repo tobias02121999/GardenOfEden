@@ -29,29 +29,4 @@ public class InteractionDetection : MonoBehaviour
     }
 
     // 
-    void OnTriggerEnter(Collider other)
-    {
-        var player = other.gameObject.GetComponentInParent<PlayerControls>();
-
-        if (!localPlayer.isServer)
-        {
-            if (player.isLocalPlayer)
-            {
-                localPlayer.CmdSetClientAuthority(this.transform.parent.parent.gameObject);
-                clientAuthority = true;
-            }
-            else
-            {
-                localPlayer.CmdClearAuthority(this.transform.parent.parent.gameObject);
-                clientAuthority = false;
-            }
-        }
-        else
-        {
-            if (player.isLocalPlayer)
-                clientAuthority = false;
-            else
-                clientAuthority = true;
-        }
-    }
 }

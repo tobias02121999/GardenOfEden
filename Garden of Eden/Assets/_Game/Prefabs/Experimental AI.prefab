@@ -192,6 +192,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 2bcf08ed359380c4f97b1abc8b73f937, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -264,6 +266,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 41f42c8c2efea8449b621f62266eb15d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -2954,9 +2958,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6538513111818616356}
+  - component: {fileID: 6265086071783923610}
   - component: {fileID: 1438448271049857592}
   - component: {fileID: 1746902633728497879}
-  - component: {fileID: 6265086071783923610}
   - component: {fileID: 3021181330258474364}
   - component: {fileID: 3883674222854765551}
   - component: {fileID: 5871778178067905495}
@@ -2996,6 +3000,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6265086071783923610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538513111818248708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35cd5ed5c1b36f42a51664083480fe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamID: 0
+  nonLocalComponents:
+  - {fileID: 1438448271049857592}
+  - {fileID: 1746902633728497879}
+  teamMaterials:
+  - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
+  - {fileID: 2100000, guid: 5ed9631728e831e42ac14040f977cb1d, type: 2}
+  modelRenderer: {fileID: 6538513111831916292}
 --- !u!114 &1438448271049857592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3100,23 +3124,12 @@ MonoBehaviour:
   gatheredWood: 0
   atShrine: 0
   statsTweaked: 0
+  hasFaith: 1
   enoughSpaceToBuild: 0
   buildingHouse: 0
   desireStated: 0
   hasHome: 0
   _house: {fileID: 0}
---- !u!114 &6265086071783923610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6538513111818248708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e35cd5ed5c1b36f42a51664083480fe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3021181330258474364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3440,7 +3453,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a2a95b3e3d0e0384fb650a6ae9aa6c8a, type: 2}
+  - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

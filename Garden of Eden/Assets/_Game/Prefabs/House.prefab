@@ -868,7 +868,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4823008020749571595}
-  - {fileID: 8476721202914709372}
+  - {fileID: 8443783651225558798}
   - {fileID: 3831582202726177479}
   m_Father: {fileID: 8778074915786490054}
   m_RootOrder: 1
@@ -1725,8 +1725,9 @@ GameObject:
   - component: {fileID: 2485271720174571888}
   - component: {fileID: 7936422508596217545}
   - component: {fileID: 7566551031683340900}
-  - component: {fileID: 5523192886313992604}
   - component: {fileID: 7509931956704696799}
+  - component: {fileID: 6821667053236969262}
+  - component: {fileID: 5523192886313992604}
   - component: {fileID: 7580759923723802524}
   - component: {fileID: 744202305170207072}
   - component: {fileID: 6805050401216192720}
@@ -1808,7 +1809,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &7566551031683340900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1831,6 +1832,35 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!75 &7509931956704696799
+ConstantForce:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778074915786923238}
+  m_Enabled: 1
+  m_Force: {x: 0, y: -1000, z: 0}
+  m_RelativeForce: {x: 0, y: 0, z: 0}
+  m_Torque: {x: 0, y: 0, z: 0}
+  m_RelativeTorque: {x: 0, y: 0, z: 0}
+--- !u!114 &6821667053236969262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778074915786923238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62fe5a6e7a0696c41b1e38c0abb44f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamID: 0
+  nonLocalComponents:
+  - {fileID: 5523192886313992604}
+  - {fileID: 744202305170207072}
+  - {fileID: 6805050401216192720}
 --- !u!114 &5523192886313992604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1847,18 +1877,6 @@ MonoBehaviour:
   poofEffect: {fileID: 3981191651009211293, guid: c11b1b42afa6b0e43b7bb1b00651b895,
     type: 3}
   poofLocation: {fileID: 8224827650965107298}
---- !u!75 &7509931956704696799
-ConstantForce:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8778074915786923238}
-  m_Enabled: 1
-  m_Force: {x: 0, y: -1000, z: 0}
-  m_RelativeForce: {x: 0, y: 0, z: 0}
-  m_Torque: {x: 0, y: 0, z: 0}
-  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!114 &7580759923723802524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1873,9 +1891,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanBuilt: 0
   constructionFinished: 0
+  state: 1
   animator: {fileID: 6708134702952227690}
   doorPosition: {fileID: 4856757130618415917}
-  state: 1
   modelStates:
   - {fileID: 1214825151949053746}
   - {fileID: 4316975439938188033}
@@ -3163,7 +3181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c11b1b42afa6b0e43b7bb1b00651b895, type: 3}
---- !u!4 &8476721202914709372 stripped
+--- !u!4 &8443783651225558798 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 39694001251292829, guid: c11b1b42afa6b0e43b7bb1b00651b895,
     type: 3}
