@@ -40,13 +40,10 @@ public class HumanAI : NetworkBehaviour
     public int fearReductionSpeed;
     public float speed, wanderDuration, turnSpeed;
     public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
-    public bool atShrine, statsTweaked, hasFaith;
+    public bool atShrine, statsTweaked, hasFaith, shrineSwitched, switchShrine;
     public bool enoughSpaceToBuild = true;
 
     // Private Variables
-    float closestObject = Mathf.Infinity;
-    float closestLingeringObject = Mathf.Infinity;
-    Vector3 closestObjectPosition = Vector3.zero;
     Vector3 inFront;
     bool wasInvoked = false;
     bool _wasInvoked = false;
@@ -54,10 +51,9 @@ public class HumanAI : NetworkBehaviour
     public bool desireStated = false;
     public bool hasHome = false;
     bool readyToAscend = false;
-    bool switchShrine, shrineSwitched;
     public GameObject _house;
 
-    private void Start()
+    public virtual void Start()
     {
         foreach (UnityEngine.UI.Image cloud in desireClouds)
             cloud.gameObject.SetActive(false);
@@ -66,26 +62,9 @@ public class HumanAI : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
-        if (!hasFaith)
-        {
-            if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360))
-            {
-                Idling();
-                if (!shrineSwitched)
-                {
-                    switchShrine = !switchShrine;
-                    shrineSwitched = true;
-                }
-            }
 
-            if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && !isDepressed)
-            {
-                currentState = HumanState.PRAYING;
-                shrineSwitched = false;
-            }
-        }
 
         inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
         inFront.y = 33f;
@@ -409,7 +388,7 @@ public class HumanAI : NetworkBehaviour
         }
     }
 
-    void Idling()
+    public void Idling()
     {
         Debug.Log("Idling");
         if (!humanAnimator.hasCollapsed)
@@ -459,43 +438,6 @@ public class HumanAI : NetworkBehaviour
         {
             var bone = humanAnimator.bones[i].GetComponent<Rigidbody>();
             bone.AddForce(humanAnimator.movementParent.forward * speed);
-        }
-    }
-
-    bool CheckResources()   // Check if there are enough resources (Phony mechanic).
-    {
-        Collider[] cols = Physics.OverlapSphere(humanMesh.position, 100f);  // Check in a radius of 100f (DONT FORGET TO ADD A LAYERMASK TO IGNORE HUMANS AND BUILDINGS).
-        foreach (Collider col in cols)
-        {
-            if (col.CompareTag("Tree"))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    bool CheckForCalamitySites()    // Check if any calamities recently took place nearby.
-    {
-        for (int i = 0; i < GameManager.Instance.lingeringFearObjects.Count; i++)   // Compare all the lingering fear object's distance from the human.
-        {
-            float newDistanceFromCalamity = Vector3.Distance(humanMesh.position, GameManager.Instance.lingeringFearObjects[i].transform.position);
-
-            if (newDistanceFromCalamity < closestLingeringObject)
-            {
-                closestLingeringObject = newDistanceFromCalamity;
-            }
-        }
-
-        if (closestLingeringObject >= minDistanceFromBuildToCalamity)   // The task succeeds if the minimal distance to a calamity is greater than or equal to the build distance.
-        {
-            CheckResources();
-            return true;
-        }
-        else    // It fails if this distance is shorter.
-        {
-            return false;
         }
     }
 

@@ -19,7 +19,8 @@ public class GameManager : NetworkBehaviour
     [Header("Humans")]
     public List<GameObject> TeamOneHumans = new List<GameObject>();
     public List<GameObject> TeamTwoHumans = new List<GameObject>();
-    public List<GameObject> NeutralHumans = new List<GameObject>();
+    public List<GameObject> TeamOneNeutralHumans = new List<GameObject>();
+    public List<GameObject> TeamTwoNeutralHumans = new List<GameObject>();
 
     [Header("Farms")]
     public List<Transform> teamOneFarms = new List<Transform>();
