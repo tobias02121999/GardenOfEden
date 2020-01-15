@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Networking;
 
 public enum HumanState {RECOVER, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, PRAYING, SLEEPING };
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
@@ -15,6 +14,11 @@ public class HumanAI : NetworkBehaviour
     [Header("This human currently desires:")]
     public HumanDesire currentDesire = HumanDesire.NOTHING;
     public UnityEngine.UI.Image[] desireClouds;
+
+    public Transform humanMesh;
+    public float speed;
+    public bool switchShrine, atShrine;
+    public bool enoughSpaceToBuild = true;
 
     [Header("Focus Vars")]
     public float fear;
@@ -33,15 +37,13 @@ public class HumanAI : NetworkBehaviour
 
     [Space]
 
-    public NetworkPlayers players;
-    public RagdollAnimator humanAnimator;
-    public Rigidbody hips;
-    public Transform humanMesh, movementParent, rotationReference;
-    public int fearReductionSpeed;
-    public float speed, wanderDuration, turnSpeed;
-    public float wanderAlarm, minDistanceFromBuildToCalamity, gatheredWood;
-    public bool atShrine, statsTweaked, hasFaith, shrineSwitched, switchShrine;
-    public bool enoughSpaceToBuild = true;
+    NetworkPlayers players;
+    RagdollAnimator humanAnimator;
+    Transform movementParent, rotationReference;
+    int fearReductionSpeed;
+    float wanderDuration, turnSpeed;
+    float wanderAlarm, gatheredWood;
+    bool statsTweaked, hasFaith;
 
     // Private Variables
     Vector3 inFront;

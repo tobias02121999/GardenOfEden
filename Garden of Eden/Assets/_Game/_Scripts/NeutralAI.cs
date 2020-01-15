@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class NeutralAI : HumanAI
+﻿public class NeutralAI : HumanAI
 {
+    private int timesSwitched;
+    private bool shrineSwitched;
+
     public override void Start()
     {
         base.Start();
@@ -39,6 +38,7 @@ public class NeutralAI : HumanAI
                     switchShrine = false;
                 }
 
+                timesSwitched++;
                 shrineSwitched = true;
 
             }
@@ -50,5 +50,8 @@ public class NeutralAI : HumanAI
             currentState = HumanState.PRAYING;
             shrineSwitched = false;
         }
+
+        if (timesSwitched >= 4)
+            gameObject.SetActive(false);
     }
 }
