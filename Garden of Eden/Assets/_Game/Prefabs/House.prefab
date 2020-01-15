@@ -868,7 +868,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4823008020749571595}
-  - {fileID: 8443783651225558798}
+  - {fileID: 8443783651225558639}
   - {fileID: 3831582202726177479}
   m_Father: {fileID: 8778074915786490054}
   m_RootOrder: 1
@@ -1861,6 +1861,19 @@ MonoBehaviour:
   - {fileID: 5523192886313992604}
   - {fileID: 744202305170207072}
   - {fileID: 6805050401216192720}
+  nonLocalColliders:
+  - {fileID: 3407341032077490292}
+  - {fileID: 415554994594667602}
+  - {fileID: 2096963137299684686}
+  - {fileID: 2589290146985931446}
+  - {fileID: 364539208786645784}
+  - {fileID: 686338068389633199}
+  - {fileID: 874728328196464843}
+  - {fileID: 6078311675605187931}
+  - {fileID: 6212291656057942240}
+  - {fileID: 8072000485184748258}
+  - {fileID: 8652913153541520149}
+  - {fileID: 3829635730032556770}
 --- !u!114 &5523192886313992604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3181,7 +3194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c11b1b42afa6b0e43b7bb1b00651b895, type: 3}
---- !u!4 &8443783651225558798 stripped
+--- !u!4 &8443783651225558639 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 39694001251292829, guid: c11b1b42afa6b0e43b7bb1b00651b895,
     type: 3}

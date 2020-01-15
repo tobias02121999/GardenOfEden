@@ -13,11 +13,10 @@ public class HumanAI : NetworkBehaviour
 
     [Header("This human currently desires:")]
     public HumanDesire currentDesire = HumanDesire.NOTHING;
-    public UnityEngine.UI.Image[] desireClouds;
+    public GameObject[] desireClouds;
 
     [Space]
 
-    [HideInInspector]
     public Transform humanMesh;
     public Transform movementParent, rotationReference;
 
@@ -46,7 +45,6 @@ public class HumanAI : NetworkBehaviour
 
     [Space]
 
-    NetworkPlayers players;
     int fearReductionSpeed;
     float wanderDuration, turnSpeed;
     float wanderAlarm, gatheredWood;
@@ -64,10 +62,8 @@ public class HumanAI : NetworkBehaviour
 
     public virtual void Start()
     {
-        foreach (UnityEngine.UI.Image cloud in desireClouds)
-            cloud.gameObject.SetActive(false);
-
-        players = GameObject.Find("Network Manager").GetComponent<NetworkPlayers>();
+        foreach (GameObject cloud in desireClouds)
+            cloud.SetActive(false);
     }
 
     // Update is called once per frame
@@ -181,7 +177,6 @@ public class HumanAI : NetworkBehaviour
                         }
                     }
 
-
                     if (gatheredWood < 30 && buildingHouse)
                     {
                         // Chopping
@@ -267,8 +262,9 @@ public class HumanAI : NetworkBehaviour
 
                     desireStated = false;
                     statsTweaked = false;
-                    foreach (UnityEngine.UI.Image cloud in desireClouds)
-                        cloud.gameObject.SetActive(false);  // Deactivate all the desire clouds.
+
+                    foreach (GameObject cloud in desireClouds)
+                        cloud.SetActive(false);  // Deactivate all the desire clouds.
 
                     if (_house != null)
                         MoveToDestination(3);
@@ -488,11 +484,11 @@ public class HumanAI : NetworkBehaviour
         switch (currentDesire)
         {
             case HumanDesire.FOOD:  // This unit is hungry or out of food.
-                desireClouds[0].gameObject.SetActive(true);
+                desireClouds[0].SetActive(true);
                 break;
 
             case HumanDesire.HOUSING:   // This unit has no housing or doesn't have enough room to build one.
-                desireClouds[1].gameObject.SetActive(true);
+                desireClouds[1].SetActive(true);
                 break;
 
             case HumanDesire.TO_ASCEND:
@@ -511,7 +507,7 @@ public class HumanAI : NetworkBehaviour
         else if (currentDesire == HumanDesire.TO_ASCEND)
             happiness -= 10;
         else if (currentDesire == HumanDesire.NOTHING)
-            players.localPlayer.GetComponent<PlayerInventory>().paint = Mathf.Clamp(players.localPlayer.GetComponent<PlayerInventory>().paint + faith, 0, 100);
+            NetworkPlayers.Instance.localPlayer.GetComponent<PlayerInventory>().paint = Mathf.Clamp(NetworkPlayers.Instance.localPlayer.GetComponent<PlayerInventory>().paint + faith, 0, 100);
 
         statsTweaked = true;
     }
@@ -543,11 +539,13 @@ public class HumanAI : NetworkBehaviour
         obj.GetComponent<House>().humanBuilt = true;
         obj.layer = 28;
 
+        NetworkServer.Spawn(obj);
+
         // Assign the house to the host player
         if (isHost)
         {
             var human = NetworkServer.FindLocalObject(humanID);
-            human.GetComponent<HumanAI>()._house = house;
+            human.GetComponent<HumanAI>()._house = obj;
         }
         else
         {
@@ -561,16 +559,15 @@ public class HumanAI : NetworkBehaviour
 
         if (teamID == 1)
             GameManager.Instance.teamTwoHomes.Add(obj);
-
-        NetworkServer.Spawn(obj);
     }
 
     [ClientRpc] // Assign the spawned house to the client player
     void RpcAssignHouse(NetworkInstanceId humanID, NetworkInstanceId houseID)
     {
         var human = ClientScene.FindLocalObject(humanID);
-        var house = ClientScene.FindLocalObject(houseID);
+        var newHouse = ClientScene.FindLocalObject(houseID);
+        newHouse.GetComponent<House>().humanBuilt = true;
 
-        human.GetComponent<HumanAI>()._house = house;
+        human.GetComponent<HumanAI>()._house = newHouse;
     }
 }

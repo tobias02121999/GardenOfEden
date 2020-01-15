@@ -80,7 +80,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 0
+    - _OutlineSize: -0.27
     - _Parallax: 0.02
     - _RimIntensity: 0.251
     - _RimSize: 0.55
@@ -94,10 +94,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.9710243, g: 0.9702828, b: 0.972984, a: 1}
+    - _Color: {r: 0.84079754, g: 0.8367234, b: 0.85156494, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0.50980395, g: 0.3803922, b: 0.3254902, a: 1}
     - _RimColor: {r: 0.8867924, g: 0.7714861, b: 0.6483624, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
