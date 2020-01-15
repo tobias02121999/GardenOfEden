@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &157527974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3015,6 +3015,7 @@ MonoBehaviour:
   teamID: 0
   nonLocalComponents:
   - {fileID: 1438448271049857592}
+  - {fileID: 1746902633728497879}
   teamMaterials:
   - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
   - {fileID: 2100000, guid: 5ed9631728e831e42ac14040f977cb1d, type: 2}

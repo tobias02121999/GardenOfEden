@@ -8,6 +8,7 @@ public class Meteor : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude > 5)
         {
+            /*
             // Trigger some kind of explosion first.
 
             var lingeringObject = new GameObject();             // Spawn a new GameObject for the lingering effect.
@@ -16,6 +17,7 @@ public class Meteor : MonoBehaviour
             GameManager.Instance.lingeringFearObjects.Add(lingeringObject); // Add the new lingering object to the corresponding list in GameManager.
 
             Destroy(gameObject);   // Destroy this GameObject.
+            */
         }
     }
 }

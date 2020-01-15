@@ -51,8 +51,6 @@ public class HumanAI : NetworkBehaviour
     public bool desireStated = false;
     public bool hasHome = false;
     bool readyToAscend = false;
-
-    [SyncVar]
     public GameObject _house;
 
     public virtual void Start()
@@ -75,9 +73,6 @@ public class HumanAI : NetworkBehaviour
             halo.SetActive(true);
         else
             halo.SetActive(false);
-
-        if (!wasInvoked)
-            ReduceFearOverTime();
 
         if (!_wasInvoked)
             StartCoroutine("IncreaseFaithOverTime");    // Continually gain levels of faith.
@@ -165,7 +160,8 @@ public class HumanAI : NetworkBehaviour
                             buildingHouse = true;
                             newPos.y = 32.34402f;
 
-                            CmdSpawnHouse(newPos); // Spawn a house through the server
+                            var humanID = GetComponent<NetworkIdentity>().netId;
+                            CmdSpawnHouse(newPos, isServer, humanID); // Spawn a house through the server
 
                             checkHouse.SetActive(false);
                         }
@@ -469,14 +465,6 @@ public class HumanAI : NetworkBehaviour
         }
     }
 
-    void ReduceFearOverTime()
-    {
-        if (GameManager.Instance.fearObjects.Count <= 0)
-        {
-            fear = Mathf.Lerp(fear, 0, Time.deltaTime * fearReductionSpeed);
-        }
-    }
-
     void TweakStats()
     {
         if (currentDesire == HumanDesire.HOUSING)
@@ -512,13 +500,22 @@ public class HumanAI : NetworkBehaviour
     public void IncreaseFear(float amount, float modifier) { fear += amount * modifier; }
 
     [Command] // Spawn a house through the server
-    void CmdSpawnHouse(Vector3 pos)
+    void CmdSpawnHouse(Vector3 pos, bool isHost, NetworkInstanceId humanID)
     {
         GameObject obj = Instantiate(house, pos, Quaternion.Euler(0, Random.Range(0, 359), 0));
         obj.GetComponent<House>().humanBuilt = true;
         obj.layer = 28;
 
-        _house = obj;   // Set this object as the house variable.
+        // Assign the house to the host player
+        var human = NetworkServer.FindLocalObject(humanID);
+
+        if (isHost)
+            human.GetComponent<HumanAI>()._house = house;
+        else
+        {
+            var houseID = obj.GetComponent<NetworkIdentity>().netId;
+            RpcAssignHouse(humanID, houseID);
+        }
 
         var teamID = GetComponent<RagdollSetup>().teamID;
         if (teamID == 0)
@@ -528,5 +525,14 @@ public class HumanAI : NetworkBehaviour
             GameManager.Instance.teamTwoHomes.Add(obj);
 
         NetworkServer.Spawn(obj);
+    }
+
+    [ClientRpc] // Assign the spawned house to the client player
+    void RpcAssignHouse(NetworkInstanceId humanID, NetworkInstanceId houseID)
+    {
+        var human = ClientScene.FindLocalObject(humanID);
+        var house = ClientScene.FindLocalObject(houseID);
+
+        human.GetComponent<HumanAI>()._house = house;
     }
 }

@@ -44,10 +44,11 @@ public class PaintRenderer : MonoBehaviour
         {
             if (confirmAlarm <= 0)
             {
-                lineRenderer.positionCount--;
-
                 if (lineRenderer.positionCount >= 1)
+                {
+                    lineRenderer.positionCount--;
                     confirmAlarm = confirmDuration;
+                }
             }
 
             confirmAlarm--;
