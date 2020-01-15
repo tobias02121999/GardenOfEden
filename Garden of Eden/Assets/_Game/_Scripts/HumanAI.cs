@@ -51,6 +51,8 @@ public class HumanAI : NetworkBehaviour
     public bool desireStated = false;
     public bool hasHome = false;
     bool readyToAscend = false;
+
+    [SyncVar]
     public GameObject _house;
 
     public virtual void Start()
