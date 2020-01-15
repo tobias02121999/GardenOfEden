@@ -9,8 +9,11 @@ public class AssignCamera : MonoBehaviour
     private void Awake() 
     {
         localCentreEyeCamera = players.localPlayer.transform.Find("CenterEyeAnchor").GetComponent<Camera>();
-        Debug.Log(localCentreEyeCamera.name);
 
-        canvas.worldCamera = localCentreEyeCamera; 
+        if (localCentreEyeCamera != null)
+        {
+            Debug.Log(localCentreEyeCamera.name);
+            canvas.worldCamera = localCentreEyeCamera;
+        }
     }
 }

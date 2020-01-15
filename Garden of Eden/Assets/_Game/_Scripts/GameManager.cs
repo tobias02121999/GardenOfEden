@@ -28,8 +28,6 @@ public class GameManager : NetworkBehaviour
     public List<Transform> teamTwoFarms = new List<Transform>();
 
     public List<GameObject> sleepingHumans = new List<GameObject>();
-    public List<GameObject> fearObjects = new List<GameObject>();
-    public List<GameObject> lingeringFearObjects = new List<GameObject>();
 
     [Header("Globals")]
     public float teamOneFoodScore;
@@ -52,10 +50,7 @@ public class GameManager : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("FearObject").Length; i++)
-        {
-            fearObjects.Add(GameObject.FindGameObjectsWithTag("FearObject")[i]);
-        }
+        
     }
 
     // Update is called once per frame
@@ -69,13 +64,14 @@ public class GameManager : NetworkBehaviour
 
         for (var i = 0; i < length; i++)
             farmScore += teamOneFarms[i].GetComponent<Farm>().foodScore;
-        
+
         if (humanCount > 2)
             teamOneFoodScore = Mathf.Clamp(farmScore / requiredScore, 0f, 1f);
         else
             teamOneFoodScore = 1;
 
-        SetAuthority(); // Set the authorities of the balls
+        if (isServer)
+            SetAuthority(); // Set the authorities of the balls
     }
 
     // Check if food is sufficient
