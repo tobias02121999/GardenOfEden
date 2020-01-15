@@ -47,8 +47,6 @@ public class HumanAI : NetworkBehaviour
     [Space]
 
     NetworkPlayers players;
-    public RagdollAnimator humanAnimator;
-    public Transform movementParent, rotationReference;
     int fearReductionSpeed;
     float wanderDuration, turnSpeed;
     float wanderAlarm, gatheredWood;
