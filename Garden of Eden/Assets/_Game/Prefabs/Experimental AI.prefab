@@ -3096,6 +3096,9 @@ MonoBehaviour:
   - {fileID: 195965486}
   - {fileID: 196358469}
   humanMesh: {fileID: 6538513111818616364}
+  speed: 20
+  switchShrine: 0
+  atShrine: 0
   movementParent: {fileID: 4982348979533985199}
   rotationReference: {fileID: 4982348979533985197}
   humanAnimator: {fileID: 1438448271049857592}
@@ -3117,6 +3120,9 @@ MonoBehaviour:
     type: 3}
   isDayTime: 0
   isGrounded: 0
+  humanAnimator: {fileID: 1438448271049857592}
+  movementParent: {fileID: 4982348979533985199}
+  rotationReference: {fileID: 1834327089}
   buildingHouse: 0
   desireStated: 0
   hasHome: 0

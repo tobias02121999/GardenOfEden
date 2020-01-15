@@ -47,7 +47,6 @@ public class HumanAI : NetworkBehaviour
     [Space]
 
     NetworkPlayers players;
-
     int fearReductionSpeed;
     float wanderDuration, turnSpeed;
     float wanderAlarm, gatheredWood;
@@ -74,8 +73,6 @@ public class HumanAI : NetworkBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-
-
         inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
         inFront.y = 33f;
 
@@ -547,10 +544,11 @@ public class HumanAI : NetworkBehaviour
         obj.layer = 28;
 
         // Assign the house to the host player
-        var human = NetworkServer.FindLocalObject(humanID);
-
         if (isHost)
+        {
+            var human = NetworkServer.FindLocalObject(humanID);
             human.GetComponent<HumanAI>()._house = house;
+        }
         else
         {
             var houseID = obj.GetComponent<NetworkIdentity>().netId;
