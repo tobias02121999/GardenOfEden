@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine;
 
-public enum HumanState {RECOVER, IDLE, BUILDING_HOUSE, BUILDING_CHURCH, GATHERING_RESOURCES, PRAYING, SLEEPING };
+public enum HumanState {RECOVER, IDLE, BUILDING_HOUSE, BUILDING_MONUMENT, GATHERING_RESOURCES, PRAYING, SLEEPING };
 public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
 public class HumanAI : NetworkBehaviour
@@ -15,9 +15,18 @@ public class HumanAI : NetworkBehaviour
     public HumanDesire currentDesire = HumanDesire.NOTHING;
     public UnityEngine.UI.Image[] desireClouds;
 
+    [Space]
+
+    [HideInInspector]
     public Transform humanMesh;
-    public float speed;
+    public Transform movementParent, rotationReference;
+
+    public RagdollAnimator humanAnimator;
+
+    [HideInInspector]
     public bool switchShrine, atShrine;
+
+    public float speed;
     public bool enoughSpaceToBuild = true;
 
     [Header("Focus Vars")]
@@ -38,8 +47,7 @@ public class HumanAI : NetworkBehaviour
     [Space]
 
     NetworkPlayers players;
-    RagdollAnimator humanAnimator;
-    Transform movementParent, rotationReference;
+
     int fearReductionSpeed;
     float wanderDuration, turnSpeed;
     float wanderAlarm, gatheredWood;
@@ -105,6 +113,9 @@ public class HumanAI : NetworkBehaviour
 
             else if (!hasHome)
                 currentState = HumanState.BUILDING_HOUSE;
+
+            else if (!isDepressed && hasHome)
+                currentState = HumanState.BUILDING_MONUMENT;
 
             else
                 currentState = HumanState.IDLE;
@@ -235,7 +246,10 @@ public class HumanAI : NetworkBehaviour
 
                     break;
 
-                case HumanState.BUILDING_CHURCH:
+                case HumanState.BUILDING_MONUMENT:
+                    if (!isDepressed)
+                        MoveToDestination(5);
+
                     break;
             }
         }
@@ -388,6 +402,30 @@ public class HumanAI : NetworkBehaviour
                 builtHomeRot.z = 0f;
 
                 movementParent.rotation = builtHomeRot;
+                break;
+
+            case 5:
+                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GameManager.Instance.monuments[0].transform.position);
+
+                    var monumentRot = rotationReference.rotation;
+                    monumentRot.x = 0f;
+                    monumentRot.z = 0f;
+
+                    movementParent.rotation = monumentRot;
+                }
+
+                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                {
+                    rotationReference.LookAt(GameManager.Instance.monuments[1].transform.position);
+
+                    var monumentRot = rotationReference.rotation;
+                    monumentRot.x = 0f;
+                    monumentRot.z = 0f;
+
+                    movementParent.rotation = monumentRot;
+                }
                 break;
         }
     }

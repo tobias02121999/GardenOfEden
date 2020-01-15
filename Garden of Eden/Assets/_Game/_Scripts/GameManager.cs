@@ -8,6 +8,8 @@ public class GameManager : NetworkBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameObject[] shrines;
+    public GameObject[] monuments;
+
     //public Transform[] homes;
     public List<GameObject> teamOneHomes = new List<GameObject>();
     public List<GameObject> teamTwoHomes = new List<GameObject>();
