@@ -3095,6 +3095,11 @@ MonoBehaviour:
   desireClouds:
   - {fileID: 195965486}
   - {fileID: 196358469}
+  humanMesh: {fileID: 6538513111818616364}
+  speed: 20
+  switchShrine: 0
+  atShrine: 0
+  enoughSpaceToBuild: 0
   fear: 0
   faith: 0
   halo: {fileID: 6645204588820101831}
@@ -3109,25 +3114,9 @@ MonoBehaviour:
     type: 3}
   isDayTime: 0
   isGrounded: 0
-  players: {fileID: 0}
   humanAnimator: {fileID: 1438448271049857592}
-  hips: {fileID: 6538513111797066473}
-  humanMesh: {fileID: 6538513111818616364}
   movementParent: {fileID: 4982348979533985199}
   rotationReference: {fileID: 1834327089}
-  fearReductionSpeed: 1
-  speed: 20
-  wanderDuration: 150
-  turnSpeed: 5
-  wanderAlarm: 0
-  minDistanceFromBuildToCalamity: 0
-  gatheredWood: 0
-  atShrine: 0
-  statsTweaked: 0
-  hasFaith: 1
-  shrineSwitched: 0
-  switchShrine: 0
-  enoughSpaceToBuild: 0
   buildingHouse: 0
   desireStated: 0
   hasHome: 0
