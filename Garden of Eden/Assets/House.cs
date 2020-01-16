@@ -9,7 +9,10 @@ public class House : NetworkBehaviour
     public enum States { CONSTRUCTION, FINISHED }
 
     // Initialize the public variables
+    [SyncVar]
     public bool humanBuilt;
+
+    [SyncVar]
     public bool constructionFinished;
 
     public States state = States.FINISHED;
@@ -35,17 +38,6 @@ public class House : NetworkBehaviour
     {
         // Sync up the variables
         var localPlayerID = NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID;
-
-        if (setup.teamID == localPlayerID)
-        {
-            var ID = GetComponent<NetworkIdentity>().netId;
-
-            if (isServer && setup.teamID == 0)
-                RpcSendVarClient(ID, humanBuilt, constructionFinished); // Send the servers variable values to the client
-
-            if (!isServer && setup.teamID == 1)
-                CmdSendVarServer(ID, humanBuilt, constructionFinished); // Send the clients variable values to the server
-        }
 
         // Check if the house is under construction
         if (humanBuilt && !constructionFinished)
@@ -146,22 +138,11 @@ public class House : NetworkBehaviour
     }
 
     [Command] // Send the clients variable values to the server
-    void CmdSendVarServer(NetworkInstanceId ID, bool _humanBuilt, bool _constructionFinished)
+    public void CmdSendVarServer(NetworkInstanceId ID, bool _constructionFinished)
     {
         var obj = NetworkServer.FindLocalObject(ID);
         var house = obj.GetComponent<House>();
 
-        house.humanBuilt = _humanBuilt;
-        house.constructionFinished = _constructionFinished;
-    }
-
-    [ClientRpc] // Send the servers values to the client
-    void RpcSendVarClient(NetworkInstanceId ID, bool _humanBuilt, bool _constructionFinished)
-    {
-        var obj = ClientScene.FindLocalObject(ID);
-        var house = obj.GetComponent<House>();
-
-        house.humanBuilt = _humanBuilt;
         house.constructionFinished = _constructionFinished;
     }
 }

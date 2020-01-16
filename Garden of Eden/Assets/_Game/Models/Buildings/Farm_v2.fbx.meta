@@ -1,0 +1,289 @@
+fileFormatVersion: 2
+guid: d1c5d88883fd01e43885101d9b7feee0
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: BeamEast_low
+    100002: BeamNorth_low
+    100004: BeamSouth_low
+    100006: BeamWest_low
+    100008: CurtainEast_low
+    100010: CurtainNorth_low
+    100012: CurtainSouth_low
+    100014: CurtainWest_low
+    100016: //RootNode
+    100018: Farmland_1
+    100020: Farmland_1 1
+    100022: Farmland_2
+    100024: Farmland_2 1
+    100026: Farmland_3
+    100028: Farmland_3 1
+    100030: FarmWing_East
+    100032: FarmWing_North
+    100034: FarmWing_South
+    100036: FarmWing_West
+    100038: HouseEast_low
+    100040: HouseNorth_low
+    100042: HouseSouth_low
+    100044: HouseWest_low
+    100046: LeafEast_low
+    100048: LeafNorth_low
+    100050: LeafSouth_low
+    100052: LeafWest_low
+    100054: MainBuilding
+    100056: pCube1001
+    100058: Roof_low
+    100060: RoofBeam_low
+    100062: RoofEast_low
+    100064: RoofNorth_low
+    100066: RoofSouth_low
+    100068: RoofWest_low
+    100070: soil_1
+    100072: soil_2
+    100074: soil_3
+    100076: TayoStorage
+    100078: Tower_low
+    100080: TowerDeco_low
+    100082: TowerPole_low
+    100084: TowerRoofLeaf
+    400000: BeamEast_low
+    400002: BeamNorth_low
+    400004: BeamSouth_low
+    400006: BeamWest_low
+    400008: CurtainEast_low
+    400010: CurtainNorth_low
+    400012: CurtainSouth_low
+    400014: CurtainWest_low
+    400016: //RootNode
+    400018: Farmland_1
+    400020: Farmland_1 1
+    400022: Farmland_2
+    400024: Farmland_2 1
+    400026: Farmland_3
+    400028: Farmland_3 1
+    400030: FarmWing_East
+    400032: FarmWing_North
+    400034: FarmWing_South
+    400036: FarmWing_West
+    400038: HouseEast_low
+    400040: HouseNorth_low
+    400042: HouseSouth_low
+    400044: HouseWest_low
+    400046: LeafEast_low
+    400048: LeafNorth_low
+    400050: LeafSouth_low
+    400052: LeafWest_low
+    400054: MainBuilding
+    400056: pCube1001
+    400058: Roof_low
+    400060: RoofBeam_low
+    400062: RoofEast_low
+    400064: RoofNorth_low
+    400066: RoofSouth_low
+    400068: RoofWest_low
+    400070: soil_1
+    400072: soil_2
+    400074: soil_3
+    400076: TayoStorage
+    400078: Tower_low
+    400080: TowerDeco_low
+    400082: TowerPole_low
+    400084: TowerRoofLeaf
+    2100000: RoofLeafs_M
+    2100002: FarmRoof_M
+    2100004: FarmRoofBeam_M
+    2100006: FarmTower_M
+    2100008: lambert3
+    2100010: HouseBeams_M
+    2100012: MidBeams_M
+    2100014: FarmPole_M
+    2100016: DoorCurtain_M
+    2100018: Farm_M
+    2100020: FencePole_M
+    2100022: Fence_M
+    2100024: FarmSoil_M
+    2300000: BeamEast_low
+    2300002: BeamNorth_low
+    2300004: BeamSouth_low
+    2300006: BeamWest_low
+    2300008: CurtainEast_low
+    2300010: CurtainNorth_low
+    2300012: CurtainSouth_low
+    2300014: CurtainWest_low
+    2300016: Farmland_1 1
+    2300018: Farmland_2 1
+    2300020: Farmland_3 1
+    2300022: HouseEast_low
+    2300024: HouseNorth_low
+    2300026: HouseSouth_low
+    2300028: HouseWest_low
+    2300030: LeafEast_low
+    2300032: LeafNorth_low
+    2300034: LeafSouth_low
+    2300036: LeafWest_low
+    2300038: pCube1001
+    2300040: Roof_low
+    2300042: RoofBeam_low
+    2300044: RoofEast_low
+    2300046: RoofNorth_low
+    2300048: RoofSouth_low
+    2300050: RoofWest_low
+    2300052: soil_1
+    2300054: soil_2
+    2300056: soil_3
+    2300058: Tower_low
+    2300060: TowerDeco_low
+    2300062: TowerPole_low
+    2300064: TowerRoofLeaf
+    3300000: BeamEast_low
+    3300002: BeamNorth_low
+    3300004: BeamSouth_low
+    3300006: BeamWest_low
+    3300008: CurtainEast_low
+    3300010: CurtainNorth_low
+    3300012: CurtainSouth_low
+    3300014: CurtainWest_low
+    3300016: Farmland_1 1
+    3300018: Farmland_2 1
+    3300020: Farmland_3 1
+    3300022: HouseEast_low
+    3300024: HouseNorth_low
+    3300026: HouseSouth_low
+    3300028: HouseWest_low
+    3300030: LeafEast_low
+    3300032: LeafNorth_low
+    3300034: LeafSouth_low
+    3300036: LeafWest_low
+    3300038: pCube1001
+    3300040: Roof_low
+    3300042: RoofBeam_low
+    3300044: RoofEast_low
+    3300046: RoofNorth_low
+    3300048: RoofSouth_low
+    3300050: RoofWest_low
+    3300052: soil_1
+    3300054: soil_2
+    3300056: soil_3
+    3300058: Tower_low
+    3300060: TowerDeco_low
+    3300062: TowerPole_low
+    3300064: TowerRoofLeaf
+    4300000: TowerRoofLeaf
+    4300002: Roof_low
+    4300004: RoofBeam_low
+    4300006: Tower_low
+    4300008: TowerDeco_low
+    4300010: TowerPole_low
+    4300012: RoofSouth_low
+    4300014: BeamSouth_low
+    4300016: CurtainSouth_low
+    4300018: HouseSouth_low
+    4300020: LeafSouth_low
+    4300022: RoofEast_low
+    4300024: BeamEast_low
+    4300026: CurtainEast_low
+    4300028: HouseEast_low
+    4300030: LeafEast_low
+    4300032: RoofNorth_low
+    4300034: BeamNorth_low
+    4300036: CurtainNorth_low
+    4300038: HouseNorth_low
+    4300040: LeafNorth_low
+    4300042: RoofWest_low
+    4300044: BeamWest_low
+    4300046: CurtainWest_low
+    4300048: HouseWest_low
+    4300050: LeafWest_low
+    4300052: Farmland_1
+    4300054: soil_1
+    4300056: Farmland_2
+    4300058: soil_2
+    4300060: Farmland_3
+    4300062: soil_3
+    4300064: pCube1001
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

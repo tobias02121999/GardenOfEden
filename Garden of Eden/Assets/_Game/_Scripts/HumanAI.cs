@@ -186,7 +186,8 @@ public class HumanAI : NetworkBehaviour
 
                             foreach (Collider tree in trees)
                             {
-                                tree.GetComponentInParent<Tree>().state = Tree.States.CHOPPED;   // Then destroy all nearby trees.
+                                tree.GetComponentInParent<Tree>().state = Tree.States.CHOPPED;   // Then destroy all nearby trees
+
                                 gatheredWood += 10;
                                 hasWood = true;
                             }
@@ -198,12 +199,12 @@ public class HumanAI : NetworkBehaviour
                             _houseRot.x = 0f;
                             _houseRot.z = 0f;
 
-                            movementParent.rotation = _houseRot;  // Then, if the player has chopped a tree, move (look at) to the house that he's building.
+                            movementParent.rotation = _houseRot;  // Then, if the player has chopped a tree, move (look at) to the house that he's building
 
                             if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
                             {
                                 hasWood = false;
-                                // Advance the building to the next stage.
+                                // Advance the building to the next stage
                             }
                         }
                     }
@@ -213,14 +214,17 @@ public class HumanAI : NetworkBehaviour
 
                         if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
                         {
-                            _house.GetComponent<House>().constructionFinished = true;  // Spawn house with random rotation.
-                            humanMesh.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position.
+                            var obj = _house.GetComponentInParent<House>();
+                            var id = obj.GetComponent<NetworkIdentity>().netId;
+                            obj.CmdSendVarServer(id, true);
 
-                            // Reset the human's speed.
+                            humanMesh.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position
+
+                            // Reset the human's speed
                             for (int i = 0; i < humanAnimator.bones.Length; i++)
                                 humanAnimator.bones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-                            // Assign standard data & reset bools.
+                            // Assign standard data & reset bools
                             _house.layer = 16;
                             gatheredWood -= 30;
                             buildingHouse = false;
@@ -231,13 +235,11 @@ public class HumanAI : NetworkBehaviour
                                 currentDesire = HumanDesire.NOTHING;
                         }
                     }
-
                     break;
 
                 case HumanState.BUILDING_MONUMENT:
                     if (!isDepressed)
                         MoveToDestination(5);
-
                     break;
             }
         }
@@ -536,8 +538,8 @@ public class HumanAI : NetworkBehaviour
     void CmdSpawnHouse(Vector3 pos, bool isHost, NetworkInstanceId humanID)
     {
         GameObject obj = Instantiate(house, pos, Quaternion.Euler(0, Random.Range(0, 359), 0));
-        obj.GetComponent<House>().humanBuilt = true;
         obj.layer = 28;
+        obj.GetComponent<House>().humanBuilt = true;
 
         NetworkServer.Spawn(obj);
 
@@ -566,7 +568,6 @@ public class HumanAI : NetworkBehaviour
     {
         var human = ClientScene.FindLocalObject(humanID);
         var newHouse = ClientScene.FindLocalObject(houseID);
-        newHouse.GetComponent<House>().humanBuilt = true;
 
         human.GetComponent<HumanAI>()._house = newHouse;
     }

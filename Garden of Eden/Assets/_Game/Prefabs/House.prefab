@@ -855,7 +855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8720136058200155837
 Transform:
   m_ObjectHideFlags: 0
@@ -2797,7 +2797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
       propertyPath: m_Layer
@@ -2859,6 +2859,22 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.477058
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de3152d872d71804e97b1203773b7b9a, type: 2}
+    - target: {fileID: 2300000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6924097934f826a4ea7490d31c69e2ab, type: 2}
+    - target: {fileID: 2300000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: de3152d872d71804e97b1203773b7b9a, type: 2}
+    - target: {fileID: 2300000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 891ec5287e601de48be103fd0680de04, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f3da05c17d576e45b62a266536b4e1b, type: 3}
 --- !u!4 &1214825151949275922 stripped
@@ -3012,6 +3028,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 80d951d071b4e92409b614ea4c97430e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8f222915f34aead4b8407ead47233386, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80d951d071b4e92409b614ea4c97430e, type: 3}
 --- !u!4 &3831582202726177479 stripped
