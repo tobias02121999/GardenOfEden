@@ -6872,6 +6872,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mask
       objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: d1a9225161cbaf64f8c8efe2777606e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: d1a9225161cbaf64f8c8efe2777606e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: d1a9225161cbaf64f8c8efe2777606e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: d1a9225161cbaf64f8c8efe2777606e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

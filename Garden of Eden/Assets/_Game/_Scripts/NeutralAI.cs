@@ -1,11 +1,14 @@
-﻿public class NeutralAI : HumanAI
+﻿using UnityEngine;
+
+public class NeutralAI : HumanAI
 {
     private int timesSwitched;
     private bool shrineSwitched;
 
     public override void Start()
     {
-        base.Start();
+        foreach (GameObject cloud in desireClouds)
+            cloud.SetActive(false);
 
         if (GameManager.Instance.TeamOneNeutralHumans.Contains(gameObject))
             switchShrine = false;
@@ -20,8 +23,13 @@
         // The neutral human prays at a different shrine every night. The first human to please it will convert it to their side.
         if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360))
         {
+            if (timesSwitched >= 4)
+                gameObject.SetActive(false);
+
             // During the day the only thing it does is switch the shrine it will pray at during the upcoming night, and idle about.
             currentState = HumanState.IDLE;
+            Idling();
+
             if (!shrineSwitched)
             {
 
@@ -50,8 +58,5 @@
             currentState = HumanState.PRAYING;
             shrineSwitched = false;
         }
-
-        if (timesSwitched >= 4)
-            gameObject.SetActive(false);
     }
 }

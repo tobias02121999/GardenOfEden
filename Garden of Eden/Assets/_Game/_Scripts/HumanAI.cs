@@ -8,6 +8,9 @@ public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
 public class HumanAI : NetworkBehaviour
 {
+    [SerializeField]
+    bool hasFaith;
+
     [Header("Current AI State:")]
     public HumanState currentState;
 
@@ -45,10 +48,10 @@ public class HumanAI : NetworkBehaviour
 
     [Space]
 
-    int fearReductionSpeed;
+    int fearReductionSpeed, timesSwitched;
     float wanderDuration, turnSpeed;
     float wanderAlarm, gatheredWood;
-    bool statsTweaked, hasFaith;
+    bool statsTweaked, shrineSwitched, convertedToNeutral;
 
     // Private Variables
     Vector3 inFront;
@@ -89,196 +92,244 @@ public class HumanAI : NetworkBehaviour
         if (happiness < 15)
             isDepressed = true;
 
-        #region State Declaration
-        if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360) && !isDepressed)
+        if (currentState == HumanState.IDLE) // Human wanders about when idle.
+            Idling();
+
+        #region Neutral AI
+        if (!hasFaith)
         {
-            isDayTime = true;
-            if (!statsTweaked)
-                TweakStats();
-
-            if (humanAnimator.hasCollapsed)
-                currentState = HumanState.RECOVER;
-
-            else if (!hasHome)
-                currentState = HumanState.BUILDING_HOUSE;
-
-            else if (!isDepressed && hasHome)
-                currentState = HumanState.BUILDING_MONUMENT;
-
-            else
-                currentState = HumanState.IDLE;
-        }
-
-        if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && !isDepressed)
-        {
-            isDayTime = false;
-            currentState = HumanState.PRAYING;
-        }
-        else if (Sun.Instance.rotation > 180 && Sun.Instance.rotation <= 270 && !isDepressed)
-        {
-            isDayTime = false;
-            currentState = HumanState.SLEEPING;
-        }
-
-        // Depressed states (Human becomes depressed if the happiness value drops below 15).
-        if (humanAnimator.hasCollapsed && isDepressed)
-            currentState = HumanState.RECOVER;
-
-        else if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && isDepressed)
-            currentState = HumanState.PRAYING;
-
-        else if (isDepressed)
-            currentState = HumanState.IDLE;
-
-        #endregion
-
-        #region State Machine Day
-        if (isDayTime)
-        {
-            Debug.Log("dayTime");
-
-            switch (currentState)
+            ConvertToNeutral();
+            // The neutral human prays at a different shrine every night. The first human to please it will convert it to their side.
+            if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360))
             {
-                case HumanState.RECOVER:
-                    // Do nothing untill recovered.
-                    break;
+                if (timesSwitched >= 4)
+                    gameObject.SetActive(false);
 
-                case HumanState.IDLE: // Human wanders about when idle.
-                    Idling();
+                // During the day the only thing it does is switch the shrine it will pray at during the upcoming night, and idle about.
+                currentState = HumanState.IDLE;
 
-                    break;
+                if (!shrineSwitched)
+                {
 
-                case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
-                    int layer = 17;
-                    int mask = 1 << layer;
-
-                    Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
-
-                    if (!buildingHouse && isGrounded)
+                    if (switchShrine == false)
                     {
-                        var newPos = humanMesh.position + (humanMesh.transform.forward * 6f);  // Instantiate the collision checker before checking if there is enough space.
-                        newPos.y = 36.5f;
-                        checkHouse.transform.position = newPos;
-                        checkHouse.SetActive(true);
-
-                        if (enoughSpaceToBuild)
-                        {
-                            buildingHouse = true;
-                            newPos.y = 32.34402f;
-
-                            var humanID = GetComponent<NetworkIdentity>().netId;
-                            CmdSpawnHouse(newPos, isServer, humanID); // Spawn a house through the server
-
-                            checkHouse.SetActive(false);
-                        }
-                        else
-                        {
-                            Idling();
-                        }
+                        GameManager.Instance.TeamOneNeutralHumans.Remove(gameObject);
+                        GameManager.Instance.TeamTwoNeutralHumans.Add(gameObject);
+                        switchShrine = true;
+                    }
+                    else
+                    {
+                        GameManager.Instance.TeamTwoNeutralHumans.Remove(gameObject);
+                        GameManager.Instance.TeamOneNeutralHumans.Add(gameObject);
+                        switchShrine = false;
                     }
 
-                    if (gatheredWood < 30 && buildingHouse)
-                    {
-                        // Chopping
-                        if (!hasWood)
+                    timesSwitched++;
+                    shrineSwitched = true;
+
+                }
+            }
+
+            if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180)
+            {
+                // Then, at nighttime, the human will pray as normal together with the non-neutral humans, in an attempt to get what it desires.
+                currentState = HumanState.PRAYING;
+                shrineSwitched = false;
+            }
+        }
+        #endregion
+
+        #region Human AI
+        else
+        {
+            #region State Declaration
+            if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360) && !isDepressed)
+            {
+                isDayTime = true;
+                if (!statsTweaked)
+                    TweakStats();
+
+                if (humanAnimator.hasCollapsed)
+                    currentState = HumanState.RECOVER;
+
+                else if (!hasHome)
+                    currentState = HumanState.BUILDING_HOUSE;
+
+                else if (!isDepressed && hasHome)
+                    currentState = HumanState.BUILDING_MONUMENT;
+
+                else
+                    currentState = HumanState.IDLE;
+            }
+
+            if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && !isDepressed)
+            {
+                isDayTime = false;
+                currentState = HumanState.PRAYING;
+            }
+            else if (Sun.Instance.rotation > 180 && Sun.Instance.rotation <= 270 && !isDepressed)
+            {
+                isDayTime = false;
+                currentState = HumanState.SLEEPING;
+            }
+
+            // Depressed states (Human becomes depressed if the happiness value drops below 15).
+            if (humanAnimator.hasCollapsed && isDepressed)
+                currentState = HumanState.RECOVER;
+
+            else if (Sun.Instance.rotation >= 90 && Sun.Instance.rotation <= 180 && isDepressed)
+                currentState = HumanState.PRAYING;
+
+            else if (isDepressed)
+                currentState = HumanState.IDLE;
+
+            #endregion
+
+            #region State Machine Day
+            if (isDayTime)
+            {
+                Debug.Log("dayTime");
+
+                switch (currentState)
+                {
+                    case HumanState.RECOVER:
+                        // Do nothing untill recovered.
+                        break;
+
+
+                    case HumanState.BUILDING_HOUSE:   // The human builds a house. secondsSinceLastBuild value is a debug value, change when ready.
+                        int layer = 17;
+                        int mask = 1 << layer;
+
+                        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
+
+                        if (!buildingHouse && isGrounded)
                         {
-                            MoveToDestination(1);   // Move to the tree first.
+                            var newPos = humanMesh.position + (humanMesh.transform.forward * 6f);  // Instantiate the collision checker before checking if there is enough space.
+                            newPos.y = 36.5f;
+                            checkHouse.transform.position = newPos;
+                            checkHouse.SetActive(true);
 
-                            foreach (Collider tree in trees)
+                            if (enoughSpaceToBuild)
                             {
-                                //tree.GetComponentInParent<Tree>().state = Tree.States.CHOPPED;   // Then destroy all nearby trees
+                                buildingHouse = true;
+                                newPos.y = 32.34402f;
 
-                                var obj = tree.GetComponentInParent<Tree>();
-                                var ID = obj.GetComponent<NetworkIdentity>().netId;
-                                CmdChopTreeServer(ID); // Send the networked variables to the server
+                                var humanID = GetComponent<NetworkIdentity>().netId;
+                                CmdSpawnHouse(newPos, isServer, humanID); // Spawn a house through the server
 
-                                gatheredWood += 10;
-                                hasWood = true;
+                                checkHouse.SetActive(false);
+                            }
+                            else
+                            {
+                                Idling();
                             }
                         }
-                        else
-                        {
-                            rotationReference.LookAt(_house.transform.position);
-                            var _houseRot = rotationReference.rotation;
-                            _houseRot.x = 0f;
-                            _houseRot.z = 0f;
 
-                            movementParent.rotation = _houseRot;  // Then, if the player has chopped a tree, move (look at) to the house that he's building
+                        if (gatheredWood < 30 && buildingHouse)
+                        {
+                            // Chopping
+                            if (!hasWood)
+                            {
+                                MoveToDestination(1);   // Move to the tree first.
+
+                                foreach (Collider tree in trees)
+                                {
+                                    //tree.GetComponentInParent<Tree>().state = Tree.States.CHOPPED;   // Then destroy all nearby trees
+
+                                    var obj = tree.GetComponentInParent<Tree>();
+                                    var ID = obj.GetComponent<NetworkIdentity>().netId;
+                                    CmdChopTreeServer(ID); // Send the networked variables to the server
+
+                                    gatheredWood += 10;
+                                    hasWood = true;
+                                }
+                            }
+                            else
+                            {
+                                rotationReference.LookAt(_house.transform.position);
+                                var _houseRot = rotationReference.rotation;
+                                _houseRot.x = 0f;
+                                _houseRot.z = 0f;
+
+                                movementParent.rotation = _houseRot;  // Then, if the player has chopped a tree, move (look at) to the house that he's building
+
+                                if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
+                                {
+                                    hasWood = false;
+                                    // Advance the building to the next stage
+                                }
+                            }
+                        }
+                        else if (gatheredWood >= 30 && buildingHouse)
+                        {
+                            MoveToDestination(4);
 
                             if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
                             {
+                                var obj = _house.GetComponentInParent<House>();
+                                var id = obj.GetComponent<NetworkIdentity>().netId;
+                                obj.CmdSendVarServer(id, true);
+
+                                humanMesh.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position
+
+                                // Reset the human's speed
+                                for (int i = 0; i < humanAnimator.bones.Length; i++)
+                                    humanAnimator.bones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+                                // Assign standard data & reset bools
+                                _house.layer = 16;
+                                gatheredWood -= 30;
+                                buildingHouse = false;
                                 hasWood = false;
-                                // Advance the building to the next stage
+                                hasHome = true;
+
+                                if (currentDesire == HumanDesire.HOUSING)
+                                    currentDesire = HumanDesire.NOTHING;
                             }
                         }
-                    }
-                    else if (gatheredWood >= 30 && buildingHouse)
-                    {
-                        MoveToDestination(4);
+                        break;
 
-                        if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
-                        {
-                            var obj = _house.GetComponentInParent<House>();
-                            var id = obj.GetComponent<NetworkIdentity>().netId;
-                            obj.CmdSendVarServer(id, true);
-
-                            humanMesh.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position
-
-                            // Reset the human's speed
-                            for (int i = 0; i < humanAnimator.bones.Length; i++)
-                                humanAnimator.bones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-                            // Assign standard data & reset bools
-                            _house.layer = 16;
-                            gatheredWood -= 30;
-                            buildingHouse = false;
-                            hasWood = false;
-                            hasHome = true;
-
-                            if (currentDesire == HumanDesire.HOUSING)
-                                currentDesire = HumanDesire.NOTHING;
-                        }
-                    }
-                    break;
-
-                case HumanState.BUILDING_MONUMENT:
-                    if (!isDepressed)
-                        MoveToDestination(5);
-                    break;
+                    case HumanState.BUILDING_MONUMENT:
+                        if (!isDepressed)
+                            MoveToDestination(5);
+                        break;
+                }
             }
-        }
-        #endregion
+            #endregion
 
-        #region State Machine Night
-        if (!isDayTime)
-        {
-            switch (currentState)
+            #region State Machine Night
+            if (!isDayTime)
             {
-                case HumanState.PRAYING:
-                    Debug.Log("Praying");
-                    MoveToDestination(2);
+                switch (currentState)
+                {
+                    case HumanState.PRAYING:
+                        Debug.Log("Praying");
+                        MoveToDestination(2);
 
-                    if (!desireStated && atShrine)
-                        StateDesire();
+                        if (!desireStated && atShrine)
+                            StateDesire();
 
-                    break;
+                        break;
 
-                case HumanState.SLEEPING:
-                    Debug.Log("Sleeping");
+                    case HumanState.SLEEPING:
+                        Debug.Log("Sleeping");
 
-                    desireStated = false;
-                    statsTweaked = false;
+                        desireStated = false;
+                        statsTweaked = false;
 
-                    foreach (GameObject cloud in desireClouds)
-                        cloud.SetActive(false);  // Deactivate all the desire clouds.
+                        foreach (GameObject cloud in desireClouds)
+                            cloud.SetActive(false);  // Deactivate all the desire clouds.
 
-                    if (_house != null)
-                        MoveToDestination(3);
-                    else
-                        Idling();
+                        if (_house != null)
+                            MoveToDestination(3);
+                        else
+                            Idling();
 
-                    break;
+                        break;
+                }
             }
+            #endregion
         }
         #endregion
     }
@@ -534,6 +585,20 @@ public class HumanAI : NetworkBehaviour
         }
 
         _wasInvoked = false;
+    }
+
+    void ConvertToNeutral() //Adust so this works for both teams AND neutral conversion.
+    {
+        if (!convertedToNeutral)
+        {
+            if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+                shrineSwitched = false;
+
+            if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+                shrineSwitched = true;
+        }
+
+        convertedToNeutral = true;
     }
 
     public void IncreaseFear(float amount, float modifier) { fear += amount * modifier; }

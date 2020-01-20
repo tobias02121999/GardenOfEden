@@ -5,11 +5,14 @@ using UnityEngine;
 public class Monument : MonoBehaviour
 {
     bool hasRun;
+    int buildProgress;
 
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.transform.CompareTag("HumanBodypart"))
         {
+            StartCoroutine("BuildTimer");
+
             var humanAI = collision.gameObject.GetComponentInParent<HumanAI>();
 
             if (humanAI.currentState == HumanState.BUILDING_MONUMENT)
@@ -20,6 +23,12 @@ public class Monument : MonoBehaviour
                 collision.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.CompareTag("HumanBodyPart"))
+            StopCoroutine("BuildTimer");
     }
 
     // Update is called once per frame
@@ -39,6 +48,17 @@ public class Monument : MonoBehaviour
                 human.gameObject.GetComponentInParent<HumanAI>().speed = 20;
                 human.gameObject.GetComponentInParent<RagdollAnimator>().enabled = true;
             }
+        }
+    }
+
+    IEnumerator BuildTimer()
+    {
+        yield return new WaitForSeconds(1);
+        buildProgress++;
+
+        if (buildProgress >= 480)
+        {
+            // Game Finished
         }
     }
 }
