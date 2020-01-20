@@ -10,6 +10,7 @@ public class HouseSetup : NetworkBehaviour
     public int teamID;
 
     public Behaviour[] nonLocalComponents;
+    public Collider[] nonLocalColliders;
 
     // Initialize the private variables
     Rigidbody rb;
@@ -17,7 +18,7 @@ public class HouseSetup : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -35,5 +36,11 @@ public class HouseSetup : NetworkBehaviour
         var length = nonLocalComponents.Length;
         for (var i = 0; i < length; i++)
             nonLocalComponents[i].enabled = isLocal;
+
+        length = nonLocalColliders.Length;
+        for (var i = 0; i < length; i++)
+            nonLocalColliders[i].enabled = isLocal;
+
+        rb.isKinematic = !isLocal;
     }
 }

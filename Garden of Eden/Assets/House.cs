@@ -15,7 +15,6 @@ public class House : NetworkBehaviour
     [SyncVar]
     public bool constructionFinished;
 
-    [SyncVar]
     public States state = States.FINISHED;
 
     public Animator animator;
@@ -27,15 +26,20 @@ public class House : NetworkBehaviour
     bool hasRun, humanConstructed;
     RagdollAnimator human;
     HumanAI AI;
+    HouseSetup setup;
 
     void Start()
     {
-
+        setup = GetComponent<HouseSetup>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Sync up the variables
+        var localPlayerID = NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID;
+
+        // Check if the house is under construction
         if (humanBuilt && !constructionFinished)
         {
             state = States.CONSTRUCTION;
@@ -131,5 +135,14 @@ public class House : NetworkBehaviour
                 collision.gameObject.GetComponentInParent<RagdollAnimator>().gameObject.SetActive(false);
             }
         }
+    }
+
+    [Command] // Send the clients variable values to the server
+    public void CmdSendVarServer(NetworkInstanceId ID, bool _constructionFinished)
+    {
+        var obj = NetworkServer.FindLocalObject(ID);
+        var house = obj.GetComponent<House>();
+
+        house.constructionFinished = _constructionFinished;
     }
 }
