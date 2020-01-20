@@ -1727,16 +1727,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bec24fa5bb7665b49bfca18f28ad9f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humanPrefab: {fileID: 6538513111818248708, guid: 75489347f09d0164385b4b6a180c2319,
+  humanPrefab: {fileID: 6538513111818248708, guid: d7e0de83abd823543941735570e360b9,
     type: 3}
   humanParent: {fileID: 7899605655202580752}
   human: {fileID: 0}
   humanHips: {fileID: 0}
   teamID: 0
-  teamMaterial:
-  - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
-  - {fileID: 2100000, guid: 5ed9631728e831e42ac14040f977cb1d, type: 2}
-  gameManager: {fileID: 0}
 --- !u!1 &3498153910972168789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2974,7 +2970,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8145645094167104639}
   m_LocalRotation: {x: -0.7071068, y: 0.000000053385083, z: 0.000000008432146, w: 0.7071068}
-  m_LocalPosition: {x: -0.0001, y: -0.00836, z: 0.01191}
+  m_LocalPosition: {x: -0.0001, y: -0.00836, z: 0.00152}
   m_LocalScale: {x: 0.01, y: 0.009999996, z: 0.009999996}
   m_Children: []
   m_Father: {fileID: 1807326308733937163}

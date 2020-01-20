@@ -10,53 +10,63 @@ public class Stork : NetworkBehaviour
     public Transform humanParent;
     public GameObject human;
     public Rigidbody humanHips;
-    public int teamID;
-    public Material[] teamMaterial;
 
-    [HideInInspector]
-    public GameManager gameManager;
+    [SyncVar]
+    public int teamID;
 
     // Initialize the private variables
-    NetworkPlayers players;
+    int timer = 500;
+    bool humanSpawned;
 
     // Start is called before the first frame update
     void Start()
     {
-        teamID = Mathf.RoundToInt(Random.Range(0f, 1f));
+        if ((isServer && teamID == 0) || (!isServer && teamID == 1))
+        {
+            if (teamID == 0)
+                CmdSpawnTeam1();
 
-        CmdSpawnHuman();
-
-        humanHips = human.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
-        humanHips.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-        human.GetComponent<RagdollAnimator>().impactRecovery = 0f;
-
-        players = GameObject.Find("Network Manager").GetComponent<NetworkPlayers>();
+            if (teamID == 1)
+            {
+                var id = GetComponent<NetworkIdentity>().netId;
+                CmdSpawnTeam2(id);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if ((isServer && teamID == 0) || (!isServer && teamID == 1))
+        {
+            humanHips = human.transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
+            humanHips.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            human.GetComponent<RagdollAnimator>().impactRecovery = 0f;
+        }
     }
 
-    // Spawn the human
+    // Spawn the human prefab
     [Command]
-    void CmdSpawnHuman()
+    void CmdSpawnTeam1()
     {
-        human = Instantiate(humanPrefab, humanParent.transform.position, Quaternion.identity);
-        human.transform.parent = humanParent;
+        var obj = Instantiate(humanPrefab, transform);
+        human = obj;
 
-        if (teamID == 0)
-        {
-            gameManager.TeamOneHumans.Add(human);
-            NetworkServer.Spawn(human);
-        }
-        else
-        {
-            gameManager.TeamTwoHumans.Add(human);
-            NetworkServer.SpawnWithClientAuthority(human, players.localPlayer);
-        }
+        GameManager.Instance.TeamOneHumans.Add(obj);
 
-        human.transform.Find("Human_BaseMesh").GetComponent<SkinnedMeshRenderer>().material = teamMaterial[teamID];
+        NetworkServer.Spawn(obj);
+    }
+
+    [Command]
+    void CmdSpawnTeam2(NetworkInstanceId storkID)
+    {
+        var obj = Instantiate(humanPrefab, transform);
+
+        GameManager.Instance.TeamTwoHumans.Add(obj);
+
+        NetworkServer.Spawn(obj);
+
+        var id = obj.GetComponent<NetworkIdentity>().netId;
+        GameManager.Instance.RpcBounceHuman(storkID, id);
     }
 }

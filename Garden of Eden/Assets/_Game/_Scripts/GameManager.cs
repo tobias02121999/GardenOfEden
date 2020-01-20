@@ -14,6 +14,9 @@ public class GameManager : NetworkBehaviour
     public List<GameObject> teamOneHomes = new List<GameObject>();
     public List<GameObject> teamTwoHomes = new List<GameObject>();
 
+    public List<GameObject> teamOneStorks = new List<GameObject>();
+    public List<GameObject> teamTwoStorks = new List<GameObject>();
+
     public List<GameObject> ballsTeam1 = new List<GameObject>();
     public List<GameObject> ballsTeam2 = new List<GameObject>();
 
@@ -190,5 +193,40 @@ public class GameManager : NetworkBehaviour
 
             teamTwoFarms[i].GetComponent<HouseSetup>().teamID = 1;
         }
+
+        // Storks
+        length = teamOneStorks.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamOneStorks[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
+
+            teamOneStorks[i].GetComponent<Stork>().teamID = 0;
+        }
+
+        length = teamTwoStorks.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamTwoStorks[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            identity.AssignClientAuthority(connection);
+
+            teamTwoStorks[i].GetComponent<Stork>().teamID = 1;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBounceHuman(NetworkInstanceId storkID, NetworkInstanceId humanID)
+    {
+        var obj = ClientScene.FindLocalObject(storkID);
+        obj.GetComponent<Stork>().human = ClientScene.FindLocalObject(humanID);
+
+        Debug.Log("Client received human bounce");
+
+        if (ClientScene.FindLocalObject(humanID) == null)
+            Debug.Log("Couldnt find bounced human");
     }
 }
