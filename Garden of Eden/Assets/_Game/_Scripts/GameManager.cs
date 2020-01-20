@@ -24,14 +24,14 @@ public class GameManager : NetworkBehaviour
     public List<GameObject> TeamTwoNeutralHumans = new List<GameObject>();
 
     [Header("Farms")]
-    public List<Transform> teamOneFarms = new List<Transform>();
-    public List<Transform> teamTwoFarms = new List<Transform>();
+    public List<GameObject> teamOneFarms = new List<GameObject>();
+    public List<GameObject> teamTwoFarms = new List<GameObject>();
 
     public List<GameObject> sleepingHumans = new List<GameObject>();
 
     [Header("Globals")]
-    public float teamOneFoodScore;
-    public float teamTwoFoodScore;
+    [SyncVar] public float teamOneFoodScore;
+    [SyncVar] public float teamTwoFoodScore;
 
     bool hungerDistributed = false;
 
@@ -56,20 +56,43 @@ public class GameManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        var humanCount = TeamOneHumans.Count;
-        var requiredScore = humanCount;
+        if (isServer)
+        {
+            // Calculate food score team one
+            var humanCount = TeamOneHumans.Count;
+            var requiredScore = humanCount;
 
-        float farmScore = 0f;
-        var length = teamOneFarms.Count;
+            var farmScore = 0f;
+            var length = teamOneFarms.Count;
 
-        for (var i = 0; i < length; i++)
-            farmScore += teamOneFarms[i].GetComponent<Farm>().foodScore;
+            for (var i = 0; i < length; i++)
+                farmScore += teamOneFarms[i].GetComponent<Farm>().foodScore;
 
-        if (humanCount > 2)
-            teamOneFoodScore = Mathf.Clamp(farmScore / requiredScore, 0f, 1f);
-        else
-            teamOneFoodScore = 1;
+            if (humanCount > 2)
+                teamOneFoodScore = Mathf.Clamp(farmScore / requiredScore, 0f, 1f);
+            else
+                teamOneFoodScore = 1;
 
+            // Calculate food score team two
+            humanCount = TeamTwoHumans.Count;
+            requiredScore = humanCount;
+            var score = 0f;
+
+            farmScore = 0f;
+            length = teamTwoFarms.Count;
+
+            for (var i = 0; i < length; i++)
+                farmScore += teamTwoFarms[i].GetComponent<Farm>().foodScore;
+
+            if (humanCount > 2)
+                score = Mathf.Clamp(farmScore / requiredScore, 0f, 1f);
+            else
+                score = 1;
+
+            teamTwoFoodScore = score;
+        }
+
+        // Control the object authorities
         if (isServer)
             SetAuthority(); // Set the authorities of the balls
     }
@@ -143,6 +166,29 @@ public class GameManager : NetworkBehaviour
             identity.AssignClientAuthority(connection);
 
             teamTwoHomes[i].GetComponent<HouseSetup>().teamID = 1;
+        }
+
+        // Farms
+        length = teamOneFarms.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamOneFarms[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
+
+            teamOneFarms[i].GetComponent<HouseSetup>().teamID = 0;
+        }
+
+        length = teamTwoFarms.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamTwoFarms[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            identity.AssignClientAuthority(connection);
+
+            teamTwoFarms[i].GetComponent<HouseSetup>().teamID = 1;
         }
     }
 }

@@ -186,7 +186,11 @@ public class HumanAI : NetworkBehaviour
 
                             foreach (Collider tree in trees)
                             {
-                                tree.GetComponentInParent<Tree>().state = Tree.States.CHOPPED;   // Then destroy all nearby trees
+                                //tree.GetComponentInParent<Tree>().state = Tree.States.CHOPPED;   // Then destroy all nearby trees
+
+                                var obj = tree.GetComponentInParent<Tree>();
+                                var ID = obj.GetComponent<NetworkIdentity>().netId;
+                                CmdChopTreeServer(ID); // Send the networked variables to the server
 
                                 gatheredWood += 10;
                                 hasWood = true;
@@ -570,5 +574,21 @@ public class HumanAI : NetworkBehaviour
         var newHouse = ClientScene.FindLocalObject(houseID);
 
         human.GetComponent<HumanAI>()._house = newHouse;
+    }
+
+    [Command] // Send the networked variables to the server
+    public void CmdChopTreeServer(NetworkInstanceId ID)
+    {
+        var obj = NetworkServer.FindLocalObject(ID);
+        obj.GetComponent<Tree>().state = Tree.States.CHOPPED;
+
+        RpcChopTreeClient(ID);
+    }
+
+    [ClientRpc] // Send the networked variables to the client
+    void RpcChopTreeClient(NetworkInstanceId ID)
+    {
+        var obj = ClientScene.FindLocalObject(ID);
+        obj.GetComponent<Tree>().state = Tree.States.CHOPPED;
     }
 }

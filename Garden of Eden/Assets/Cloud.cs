@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Cloud : MonoBehaviour
+public class Cloud : NetworkBehaviour
 {
     // Initialize the public variables
     public float cloudDuration;
@@ -20,5 +21,20 @@ public class Cloud : MonoBehaviour
 
         if (cloudDuration <= 0f)
             Destroy(this.gameObject);
+    }
+
+    // Tell the target object if its wet or not
+    [Command]
+    public void CmdFarmWet(NetworkInstanceId ID, bool toggle)
+    {
+        var obj = NetworkServer.FindLocalObject(ID);
+        obj.GetComponent<Farm>().isWet = toggle;
+    }
+
+    [Command]
+    public void CmdSaplingWet(NetworkInstanceId ID, bool toggle)
+    {
+        var obj = NetworkServer.FindLocalObject(ID);
+        obj.GetComponent<Tree>().isWet = toggle;
     }
 }

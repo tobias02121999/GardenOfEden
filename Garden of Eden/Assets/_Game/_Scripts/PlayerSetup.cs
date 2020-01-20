@@ -55,4 +55,10 @@ public class PlayerSetup : NetworkBehaviour
                 teamID = 1;
         }
     }
+
+    [Command] // Send the client variables over to the server
+    public void CmdManagerToServer(float score)
+    {
+        GameManager.Instance.teamTwoFoodScore = score;
+    }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class RainCollider : MonoBehaviour
+public class RainCollider : NetworkBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -25,20 +26,26 @@ public class RainCollider : MonoBehaviour
     // Tell the object it's colliding with that it's getting rained on
     void OnTriggerStay(Collider other)
     {
+        var cloud = GetComponentInParent<Cloud>();
+        var ID = other.GetComponentInParent<NetworkIdentity>().netId;
+
         if (other.CompareTag("Farm"))
-            other.GetComponentInParent<Farm>().isWet = true;
+            cloud.CmdFarmWet(ID, true);
 
         if (other.CompareTag("Sapling"))
-            other.GetComponentInParent<Tree>().isWet = true;
+            cloud.CmdSaplingWet(ID, true);
     }
 
     // Tell the object it's colliding with that it's not getting rained on
     void OnTriggerExit(Collider other)
     {
+        var cloud = GetComponentInParent<Cloud>();
+        var ID = other.GetComponentInParent<NetworkIdentity>().netId;
+
         if (other.CompareTag("Farm"))
-            other.GetComponentInParent<Farm>().isWet = false;
+            cloud.CmdFarmWet(ID, false);
 
         if (other.CompareTag("Sapling"))
-            other.GetComponentInParent<Tree>().isWet = false;
+            cloud.CmdSaplingWet(ID, false);
     }
 }

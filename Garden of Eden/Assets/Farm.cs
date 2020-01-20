@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Farm : MonoBehaviour
+public class Farm : NetworkBehaviour
 {
     // Initialize the public variables
+    [SyncVar]
     public bool isWet;
+
     public float foodScore;
     public ParticleSystem buffEffect;
     public GameObject farmlands;
@@ -18,7 +21,6 @@ public class Farm : MonoBehaviour
     void Start()
     {
         foodScore = baseFoodScore;
-        GameManager.Instance.teamOneFarms.Add(transform);
         grab = GetComponent<Grab>();
     }
 

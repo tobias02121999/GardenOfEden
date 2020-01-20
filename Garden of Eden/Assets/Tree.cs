@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Tree : MonoBehaviour
+public class Tree : NetworkBehaviour
 {
     // Initialize the public enums
     public enum States { SAPLING, GROWN, CHOPPED }

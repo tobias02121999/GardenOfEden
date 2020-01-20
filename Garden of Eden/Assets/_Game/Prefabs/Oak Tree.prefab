@@ -229,7 +229,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f4d0c3cbd440ec4fa950d764419310c, type: 2}
+  - {fileID: 2100000, guid: 00eb16634c6541c419181df334ab34a5, type: 2}
   - {fileID: 2100000, guid: 00eb16634c6541c419181df334ab34a5, type: 2}
   - {fileID: 2100000, guid: 624ec2200b2197a4a99941dccad01e8b, type: 2}
   m_StaticBatchInfo:
@@ -580,7 +580,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &5713049383811142661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,7 +716,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f4d0c3cbd440ec4fa950d764419310c, type: 2}
+  - {fileID: 2100000, guid: 624ec2200b2197a4a99941dccad01e8b, type: 2}
   - {fileID: 2100000, guid: 00eb16634c6541c419181df334ab34a5, type: 2}
   - {fileID: 2100000, guid: 624ec2200b2197a4a99941dccad01e8b, type: 2}
   m_StaticBatchInfo:
