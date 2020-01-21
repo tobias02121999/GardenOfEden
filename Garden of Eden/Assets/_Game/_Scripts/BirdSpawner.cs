@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class BirdSpawner : NetworkBehaviour
 {
     // Initialize the public variables
-    public GameObject bird;
+    public GameObject bird, human;
     public Transform[] spawnPoints;
     public Vector2 spawnDuration, spawnHeight;
     public Transform target;
@@ -14,7 +14,7 @@ public class BirdSpawner : NetworkBehaviour
     public bool isStork;
 
     // Initialize the private variables
-    int spawnAlarm;
+    int spawnAlarm = 500;
     
     // Start is called before the first frame update
     void Start()
@@ -61,6 +61,7 @@ public class BirdSpawner : NetworkBehaviour
     [Command] // Spawn a bird over the network
     void CmdSpawnBird(Vector3 pos, int teamID, bool isStork)
     {
+        // Spawn a bird (or stork)
         var obj = Instantiate(bird, pos, Quaternion.identity);
         var targetPos = target.position + new Vector3(Random.Range(-flightDeviation, flightDeviation), 0f, Random.Range(-flightDeviation, flightDeviation));
         var lookPos = targetPos - obj.transform.position;
@@ -70,15 +71,44 @@ public class BirdSpawner : NetworkBehaviour
 
         if (isStork)
         {
+            obj.GetComponent<Stork>().teamID = teamID;
+
+            // Spawn a human
+            var _parent = obj.GetComponent<Stork>().humanParent;
+            var _obj = Instantiate(human, _parent.position, Quaternion.identity);
+            _obj.GetComponent<HumanAI>().storkID = GetComponent<NetworkIdentity>().netId;
+            _obj.GetComponent<HumanAI>().isStork = true;
+
+            NetworkServer.Spawn(obj);
+            NetworkServer.Spawn(_obj);
+
             if (teamID == 0)
+            {
                 GameManager.Instance.teamOneStorks.Add(obj);
+                GameManager.Instance.TeamOneHumans.Add(_obj);
+
+                _obj.transform.parent = obj.GetComponent<Stork>().humanParent;
+            }
 
             if (teamID == 1)
+            {
                 GameManager.Instance.teamTwoStorks.Add(obj);
+                GameManager.Instance.TeamTwoHumans.Add(_obj);
 
-            obj.GetComponent<Stork>().teamID = teamID;
+                var storkID = obj.GetComponent<NetworkIdentity>().netId;
+                var humanID = _obj.GetComponent<NetworkIdentity>().netId;
+                RpcParentStorkClient(storkID, humanID); // Parent the spawned client human to the corresponding client stork
+            }
         }
+    }
 
-        NetworkServer.Spawn(obj);
+    [ClientRpc] // Parent the spawned client human to the corresponding client stork
+    void RpcParentStorkClient(NetworkInstanceId storkID, NetworkInstanceId humanID)
+    {
+        var stork = ClientScene.FindLocalObject(storkID);
+        var human = ClientScene.FindLocalObject(humanID);
+        human.transform.parent = stork.GetComponent<Stork>().humanParent;
+
+        Debug.Log("Parent Human To Stork");
     }
 }
