@@ -26,10 +26,10 @@ public class HumanAI : NetworkBehaviour
     public RagdollAnimator humanAnimator;
 
     [HideInInspector]
-    public bool switchShrine, atShrine;
+    public bool shrineSwitched, atShrine;
 
-    public float speed;
-    public bool enoughSpaceToBuild = true;
+    public float speed, wanderDuration, turnSpeed;
+    public bool enoughSpaceToBuild = true, switchShrine;
 
     [Header("Focus Vars")]
     public float fear;
@@ -49,9 +49,8 @@ public class HumanAI : NetworkBehaviour
     [Space]
 
     int fearReductionSpeed, timesSwitched;
-    float wanderDuration, turnSpeed;
     float wanderAlarm, gatheredWood;
-    bool statsTweaked, shrineSwitched, convertedToNeutral;
+    bool statsTweaked, convertedToNeutral;
 
     // Private Variables
     Vector3 inFront;
@@ -92,8 +91,20 @@ public class HumanAI : NetworkBehaviour
         if (happiness < 15)
             isDepressed = true;
 
+        if (humanAnimator.hasCollapsed)
+            currentState = HumanState.RECOVER;
+
         if (currentState == HumanState.IDLE) // Human wanders about when idle.
             Idling();
+
+        if (currentState == HumanState.PRAYING)
+        {
+            Debug.Log("Praying");
+            MoveToDestination(2);
+
+            if (!desireStated && atShrine)
+                StateDesire();
+        }
 
         #region Neutral AI
         if (!hasFaith)
@@ -126,7 +137,6 @@ public class HumanAI : NetworkBehaviour
 
                     timesSwitched++;
                     shrineSwitched = true;
-
                 }
             }
 
@@ -137,7 +147,7 @@ public class HumanAI : NetworkBehaviour
                 shrineSwitched = false;
             }
         }
-        #endregion
+        #endregion  // Idling doesnt work?
 
         #region Human AI
         else
@@ -148,9 +158,6 @@ public class HumanAI : NetworkBehaviour
                 isDayTime = true;
                 if (!statsTweaked)
                     TweakStats();
-
-                if (humanAnimator.hasCollapsed)
-                    currentState = HumanState.RECOVER;
 
                 else if (!hasHome)
                     currentState = HumanState.BUILDING_HOUSE;
@@ -298,35 +305,23 @@ public class HumanAI : NetworkBehaviour
             }
             #endregion
 
-            #region State Machine Night
+            #region "State Machine" Night
             if (!isDayTime)
             {
-                switch (currentState)
+                if (currentState == HumanState.SLEEPING)
                 {
-                    case HumanState.PRAYING:
-                        Debug.Log("Praying");
-                        MoveToDestination(2);
+                    Debug.Log("Sleeping");
 
-                        if (!desireStated && atShrine)
-                            StateDesire();
+                    desireStated = false;
+                    statsTweaked = false;
 
-                        break;
+                    foreach (GameObject cloud in desireClouds)
+                        cloud.SetActive(false);  // Deactivate all the desire clouds.
 
-                    case HumanState.SLEEPING:
-                        Debug.Log("Sleeping");
-
-                        desireStated = false;
-                        statsTweaked = false;
-
-                        foreach (GameObject cloud in desireClouds)
-                            cloud.SetActive(false);  // Deactivate all the desire clouds.
-
-                        if (_house != null)
-                            MoveToDestination(3);
-                        else
-                            Idling();
-
-                        break;
+                    if (_house != null)
+                        MoveToDestination(3);
+                    else
+                        Idling();
                 }
             }
             #endregion
@@ -603,6 +598,7 @@ public class HumanAI : NetworkBehaviour
 
     public void IncreaseFear(float amount, float modifier) { fear += amount * modifier; }
 
+    #region uNet Commands & RPC calls
     [Command] // Spawn a house through the server
     void CmdSpawnHouse(Vector3 pos, bool isHost, NetworkInstanceId humanID)
     {
@@ -656,4 +652,5 @@ public class HumanAI : NetworkBehaviour
         var obj = ClientScene.FindLocalObject(ID);
         obj.GetComponent<Tree>().state = Tree.States.CHOPPED;
     }
+    #endregion
 }

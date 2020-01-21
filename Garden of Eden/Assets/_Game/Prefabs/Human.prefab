@@ -5864,6 +5864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4fbe2e96f5c09846b538af2d3607d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasFaith: 0
   currentState: 0
   currentDesire: 3
   desireClouds:
@@ -5876,6 +5877,8 @@ MonoBehaviour:
   switchShrine: 0
   atShrine: 0
   speed: 20
+  wanderDuration: 100
+  turnSpeed: 5
   enoughSpaceToBuild: 0
   fear: 0
   faith: 0
