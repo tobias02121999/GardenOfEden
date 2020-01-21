@@ -130,7 +130,10 @@ public class HumanAI : NetworkBehaviour
             // The neutral human prays at a different shrine every night. The first human to please it will convert it to their side.
             if ((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360))
             {
-                if (timesSwitched >= 4)
+                foreach (GameObject cloud in desireClouds)
+                    cloud.SetActive(false);
+
+                if (timesSwitched >= 5)
                     gameObject.SetActive(false);
 
                 // During the day the only thing it does is switch the shrine it will pray at during the upcoming night, and idle about.
@@ -138,7 +141,6 @@ public class HumanAI : NetworkBehaviour
 
                 if (!shrineSwitched)
                 {
-
                     if (switchShrine == false)
                     {
                         GameManager.Instance.TeamOneNeutralHumans.Remove(gameObject);

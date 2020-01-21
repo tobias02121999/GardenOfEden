@@ -30,9 +30,6 @@ public class Shrine : MonoBehaviour
             hasRun = true;
             foreach (GameObject human in GameManager.Instance.TeamOneHumans)
             {
-                foreach (GameObject cloud in human.GetComponentInParent<HumanAI>().desireClouds)
-                    cloud.SetActive(false);
-
                 human.gameObject.GetComponentInParent<HumanAI>().atShrine = false;
                 human.gameObject.GetComponentInParent<HumanAI>().speed = 15;
                 human.gameObject.GetComponentInParent<RagdollAnimator>().enabled = true;
@@ -40,9 +37,6 @@ public class Shrine : MonoBehaviour
 
             foreach (GameObject human in GameManager.Instance.TeamTwoHumans)
             {
-                foreach (GameObject cloud in human.GetComponentInParent<HumanAI>().desireClouds)
-                    cloud.SetActive(false);
-
                 human.gameObject.GetComponentInParent<HumanAI>().atShrine = false;
                 human.gameObject.GetComponentInParent<HumanAI>().speed = 15;
                 human.gameObject.GetComponentInParent<RagdollAnimator>().enabled = true;
