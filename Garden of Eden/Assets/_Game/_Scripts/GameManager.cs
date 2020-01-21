@@ -216,6 +216,21 @@ public class GameManager : NetworkBehaviour
 
             teamTwoStorks[i].GetComponent<Stork>().teamID = 1;
         }
+
+        // Monuments
+        var identity1 = monuments[0].GetComponent<NetworkIdentity>();
+        var _connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+        if (identity1.clientAuthorityOwner != null)
+            identity1.RemoveClientAuthority(_connection);
+
+        monuments[0].GetComponent<Monument>().teamID = 0;
+
+        // -----------------------
+        var identity2 = monuments[1].GetComponent<NetworkIdentity>();
+        identity2.AssignClientAuthority(_connection);
+
+        monuments[1].GetComponent<Monument>().teamID = 1;
     }
 
     [ClientRpc]

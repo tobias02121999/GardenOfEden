@@ -78,6 +78,6 @@ Material:
     - _UsageType: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.35873854, g: 0.81042117, b: 0.97881544, a: 1}
+    - _Color: {r: 0.33985844, g: 0.7565406, b: 0.91178983, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}

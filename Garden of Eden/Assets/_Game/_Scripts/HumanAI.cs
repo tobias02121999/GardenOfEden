@@ -45,6 +45,8 @@ public class HumanAI : NetworkBehaviour
     public GameObject hologram;
     public bool isDayTime = false;
     public bool isGrounded = false;
+    [SyncVar] public bool isStork = false;
+    [SyncVar] public NetworkInstanceId storkID;
 
     [Space]
 
@@ -71,6 +73,21 @@ public class HumanAI : NetworkBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
+        if (isStork)
+        {
+            var humanHips = transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
+            humanHips.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            GetComponent<RagdollAnimator>().impactRecovery = 0f;
+        }
+        else
+        {
+            var humanHips = transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
+            humanHips.constraints = RigidbodyConstraints.None;
+            GetComponent<RagdollAnimator>().impactRecovery = 1f;
+
+            transform.parent = null;
+        }
+        
         inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
         inFront.y = 33f;
 

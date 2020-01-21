@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sand
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-  m_LightmapFlags: 1
+  m_Name: Mask 1 Detail
+  m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
+  m_ShaderKeywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -67,37 +67,37 @@ Material:
     - _LightThreshold: 0.3
     - _MKEditorShowDetailBehavior: 0
     - _MKEditorShowDissolveBehavior: 0
-    - _MKEditorShowLightBehavior: 1
+    - _MKEditorShowLightBehavior: 0
     - _MKEditorShowMainBehavior: 1
     - _MKEditorShowOutlineBehavior: 0
     - _MKEditorShowReflectionBehavior: 0
     - _MKEditorShowRenderBehavior: 0
     - _MKEditorShowRimBehavior: 0
-    - _MKEditorShowShadowBehavior: 0
+    - _MKEditorShowShadowBehavior: 1
     - _MKEditorShowSketchBehavior: 0
     - _MKEditorShowSpecularBehavior: 0
     - _MKEditorShowTranslucentBehavior: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 0.02
+    - _OutlineSize: 0
     - _Parallax: 0.02
-    - _RimIntensity: 0.5
-    - _RimSize: 1.5
+    - _RimIntensity: 0.461
+    - _RimSize: 1.06
     - _RimSmoothness: 0.5
-    - _ShadowIntensity: 1
-    - _Shininess: 0.275
+    - _ShadowIntensity: 0.476
+    - _Shininess: 0.183
     - _SmoothnessTextureChannel: 1
     - _SpecularHighlights: 1
-    - _SpecularIntensity: 0.5
+    - _SpecularIntensity: 0.251
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.5849056, g: 0.575067, b: 0.51041293, a: 1}
-    - _EmissionColor: {r: 0.54915655, g: 0.54153174, b: 0.49437824, a: 1}
+    - _Color: {r: 0.43614274, g: 0.61165, b: 0.9339623, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.1568627, g: 0.38910788, b: 0.85882354, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}

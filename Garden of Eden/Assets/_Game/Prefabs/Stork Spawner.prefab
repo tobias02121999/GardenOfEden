@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944829025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -135.5, y: 55, z: 113.6}
+  m_LocalPosition: {x: -93.3, y: 55, z: 128.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5268663493386661567}
@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bird: {fileID: 3107386266670874818, guid: 261c70dec864f6c4ab642e6a81433513, type: 3}
+  human: {fileID: 6538513111818248708, guid: d7e0de83abd823543941735570e360b9, type: 3}
   spawnPoints:
   - {fileID: 5268663492154732755}
   - {fileID: 944829026}

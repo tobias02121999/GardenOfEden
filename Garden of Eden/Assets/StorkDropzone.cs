@@ -19,14 +19,10 @@ public class StorkDropzone : MonoBehaviour
     // Check for storks dropping humans
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Stork"))
+        if (other.CompareTag("HumanBodypart"))
         {
-            var stork = other.GetComponentInParent<Stork>();
-
-            stork.humanHips.constraints = RigidbodyConstraints.None;
-            stork.human.GetComponent<RagdollAnimator>().impactRecovery = 1f;
-
-            stork.human.transform.parent = null;
+            var human = other.GetComponentInParent<HumanAI>();
+            human.isStork = false;
         }
     }
 }
