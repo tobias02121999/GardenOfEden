@@ -8,7 +8,6 @@ using Node = UnityEngine.XR.XRNode;
 public class PlayerControls : NetworkBehaviour
 {
     // Initialize the public variables
-    public GameObject headModel;
     public Transform leftPivot;
     public Transform rightPivot;
     public Camera leftEye;
@@ -20,6 +19,7 @@ public class PlayerControls : NetworkBehaviour
 
     // Initialize the private variables
     PlayerSetup setup;
+    float handTimeL, handTimeR;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,18 @@ public class PlayerControls : NetworkBehaviour
     void Update()
     {
         if (!setup.isOther)
+        {
             HandTracking(); // Takes care of the local hand tracking
+
+            if (setup.teamID == 0)
+                RpcSyncToClient(handTimeL, handTimeR);
+
+            if (setup.teamID == 1)
+                CmdSyncToServer(handTimeL, handTimeR);
+        }
+
+        handAnimationL["Hand Close"].time = handTimeL;
+        handAnimationR["Hand Close"].time = handTimeR;
     }
 
     // Initialize the player object
@@ -67,10 +78,24 @@ public class PlayerControls : NetworkBehaviour
         rightPivot.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
 
         var duration = handAnimationL["Hand Close"].length;
-        handAnimationL["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
-        handAnimationR["Hand Close"].time = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
+        handTimeL = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
+        handTimeR = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger), 0f, duration - .1f);
 
         isFistL = (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) >= .75f);
         isFistR = (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) >= .75f);
+    }
+
+    [Command]
+    void CmdSyncToServer(float value1, float value2)
+    {
+        handTimeL = value1;
+        handTimeR = value2;
+    }
+
+    [ClientRpc]
+    void RpcSyncToClient(float value1, float value2)
+    {
+        handTimeL = value1;
+        handTimeR = value2;
     }
 }
