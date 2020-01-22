@@ -175,7 +175,7 @@ MonoBehaviour:
   - {fileID: 5884804077524965149}
   - {fileID: 5884804078914354995}
   - {fileID: 5884804077856778327}
-  spawnDuration: {x: 100, y: 1000}
+  spawnDuration: {x: 500, y: 5000}
   spawnHeight: {x: 0, y: 10}
   target: {fileID: 5884804079032163567}
   flightDeviation: 50

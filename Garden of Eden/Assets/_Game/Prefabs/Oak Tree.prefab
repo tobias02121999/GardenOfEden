@@ -916,11 +916,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3630650152067082564}
     m_Modifications:
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Name
-      value: Bird Waypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -976,6 +971,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Bird Waypoint
+      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_Radius
@@ -996,11 +996,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5294115782913679902}
     m_Modifications:
-    - target: {fileID: 8744629939337441619, guid: 2758de83f8fc7824c89431dcc8b7abfa,
-        type: 3}
-      propertyPath: m_Name
-      value: Buff Effect
-      objectReference: {fileID: 0}
     - target: {fileID: 4955639454360032380, guid: 2758de83f8fc7824c89431dcc8b7abfa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1075,6 +1070,11 @@ PrefabInstance:
         type: 3}
       propertyPath: scalingMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744629939337441619, guid: 2758de83f8fc7824c89431dcc8b7abfa,
+        type: 3}
+      propertyPath: m_Name
+      value: Buff Effect
       objectReference: {fileID: 0}
     - target: {fileID: 1535197283203465148, guid: 2758de83f8fc7824c89431dcc8b7abfa,
         type: 3}
