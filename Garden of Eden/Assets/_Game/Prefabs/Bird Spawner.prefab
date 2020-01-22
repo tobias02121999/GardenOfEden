@@ -169,17 +169,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bird: {fileID: 3652508346319371967, guid: 3fa21b1d78906824d860bd267e837401, type: 3}
+  human: {fileID: 0}
   spawnPoints:
   - {fileID: 5884804078614671928}
   - {fileID: 5884804077524965149}
   - {fileID: 5884804078914354995}
   - {fileID: 5884804077856778327}
-  spawnDuration: {x: 50, y: 500}
+  spawnDuration: {x: 100, y: 1000}
   spawnHeight: {x: 0, y: 10}
   target: {fileID: 5884804079032163567}
   flightDeviation: 50
   isStork: 0
-  gameManager: {fileID: 0}
 --- !u!114 &5884804079032163566
 MonoBehaviour:
   m_ObjectHideFlags: 0

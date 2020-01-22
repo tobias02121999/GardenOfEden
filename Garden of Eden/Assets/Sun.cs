@@ -17,9 +17,11 @@ public class Sun : Singleton<Sun>
     public Color sandColorDay, sandColorNight;
     public Material waterMaterial, skyMaterial, birchMaterial, oakMaterial, grassMaterial, plateauMaterial, rockMaterial, sandMaterial;
     public ParticleSystem mist;
-    //public AuraAPI.Aura aura;
     public Light directionalLight;
     public float lightIntensityDay, lightIntensityNight;
+
+    //[HideInInspector]
+    public AuraAPI.Aura aura;
 
     // Initialize the private variables
     public float rotation;
@@ -99,11 +101,9 @@ public class Sun : Singleton<Sun>
         birchMaterial.SetColor("_EmissionColor", birchColor);
         oakMaterial.SetColor("_EmissionColor", oakColor);
 
-        /*
         aura.frustum.settings.color = auraColor;
         aura.frustum.settings.density = density;
         aura.frustum.settings.colorStrength = ambient;
-        */
 
         directionalLight.intensity = lightIntensity;
 

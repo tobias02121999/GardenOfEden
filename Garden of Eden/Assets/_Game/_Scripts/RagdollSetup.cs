@@ -13,6 +13,9 @@ public class RagdollSetup : NetworkBehaviour
     public Material[] teamMaterials;
     public Renderer modelRenderer;
 
+    [SyncVar]
+    public bool isStork = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,21 @@ public class RagdollSetup : NetworkBehaviour
     {
         ToggleComponents(); // Disable the local components if this object is not controlled by the local player
         ApplyMaterial(); // Apply the correct team material to the unit based on its networked teamID
+
+        if (isStork)
+        {
+            var humanHips = transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
+            humanHips.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+            GetComponent<RagdollAnimator>().impactRecovery = 0f;
+        }
+        else
+        {
+            var humanHips = transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
+            humanHips.constraints = RigidbodyConstraints.None;
+            GetComponent<RagdollAnimator>().impactRecovery = 1f;
+
+            transform.parent = null;
+        }
     }
 
     // Disable the local components if this object is not controlled by the local player
@@ -67,5 +85,11 @@ public class RagdollSetup : NetworkBehaviour
     void ApplyMaterial()
     {
         modelRenderer.material = teamMaterials[teamID];
+    }
+
+    [Command] // Drop the human on the island
+    public void CmdDropHuman()
+    {
+        isStork = false;
     }
 }

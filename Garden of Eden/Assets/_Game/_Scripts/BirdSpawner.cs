@@ -49,7 +49,12 @@ public class BirdSpawner : NetworkBehaviour
                 var spawn = spawnPoints[index].position;
                 spawn.y += Random.Range(spawnHeight.x, spawnHeight.y);
 
-                CmdSpawnBird(spawn, 0, false); // Spawn a bird over the network
+                var obj = Instantiate(bird, spawn, Quaternion.identity);
+                var targetPos = target.position + new Vector3(Random.Range(-flightDeviation, flightDeviation), 0f, Random.Range(-flightDeviation, flightDeviation));
+                var lookPos = targetPos - obj.transform.position;
+                lookPos.y = 0f;
+                var rotation = Quaternion.LookRotation(lookPos);
+                obj.transform.rotation = rotation;
             }
 
             spawnAlarm = Mathf.RoundToInt(Random.Range(spawnDuration.x, spawnDuration.y));
@@ -76,8 +81,7 @@ public class BirdSpawner : NetworkBehaviour
             // Spawn a human
             var _parent = obj.GetComponent<Stork>().humanParent;
             var _obj = Instantiate(human, _parent.position, Quaternion.identity);
-            _obj.GetComponent<HumanAI>().storkID = GetComponent<NetworkIdentity>().netId;
-            _obj.GetComponent<HumanAI>().isStork = true;
+            _obj.GetComponent<RagdollSetup>().isStork = true;
 
             NetworkServer.Spawn(obj);
             NetworkServer.Spawn(_obj);
@@ -108,7 +112,5 @@ public class BirdSpawner : NetworkBehaviour
         var stork = ClientScene.FindLocalObject(storkID);
         var human = ClientScene.FindLocalObject(humanID);
         human.transform.parent = stork.GetComponent<Stork>().humanParent;
-
-        Debug.Log("Parent Human To Stork");
     }
 }
