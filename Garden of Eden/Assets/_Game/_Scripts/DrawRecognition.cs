@@ -176,6 +176,8 @@ public class DrawRecognition : MonoBehaviour
                                 paintRenderer.targetObject = obj;
                                 paintRenderer.isDrawing = false;
 
+                                Debug.Log("SPAWN ->" + symbolObjects[c].name);
+
                                 //playerInventory.returnTools();
                                 goto End;
                             }
