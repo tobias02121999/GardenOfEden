@@ -48,6 +48,12 @@ public class PlayerSetup : NetworkBehaviour
             NetworkPlayers.Instance.otherPlayer = gameObject;
 
             isOther = true;
+
+            length = playerMasks.Length;
+            for (var i = 0; i < length; i++)
+                playerMasks[i].layer = 0;
+
+            maskCloud.layer = 0;
         }
         else
         {
