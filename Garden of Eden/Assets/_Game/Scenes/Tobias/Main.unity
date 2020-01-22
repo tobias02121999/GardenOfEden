@@ -13094,6 +13094,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6784808512569705866, guid: 4cc1641e34a52d44087fd7de8f0179f0,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8693324816639214960, guid: 4cc1641e34a52d44087fd7de8f0179f0,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -13109,11 +13114,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 2f089f2204817c249a9692cb65a1a89e, type: 2}
-    - target: {fileID: 6784808512569705866, guid: 4cc1641e34a52d44087fd7de8f0179f0,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cc1641e34a52d44087fd7de8f0179f0, type: 3}
 --- !u!4 &1874519299 stripped
@@ -19748,11 +19748,6 @@ PrefabInstance:
     - target: {fileID: 215432620379188466, guid: e746679ac8af5bb4fa431511fee206bc,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5709343976702517855, guid: e746679ac8af5bb4fa431511fee206bc,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 215432620379188471, guid: e746679ac8af5bb4fa431511fee206bc,
@@ -19823,6 +19818,11 @@ PrefabInstance:
     - target: {fileID: 215432620379188469, guid: e746679ac8af5bb4fa431511fee206bc,
         type: 3}
       propertyPath: freeCamActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5709343976702517855, guid: e746679ac8af5bb4fa431511fee206bc,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2670678288109887084, guid: e746679ac8af5bb4fa431511fee206bc,
