@@ -10,6 +10,8 @@ public class PlayerControls : NetworkBehaviour
     // Initialize the public variables
     public Transform leftPivot;
     public Transform rightPivot;
+    public Transform headPivot;
+    public Transform centerPivot;
     public Camera leftEye;
     public Camera rightEye;
     public Animation handAnimationL, handAnimationR;
@@ -76,6 +78,9 @@ public class PlayerControls : NetworkBehaviour
 
         rightPivot.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
         rightPivot.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
+
+        headPivot.position = centerPivot.position;
+        headPivot.rotation = centerPivot.rotation;
 
         var duration = handAnimationL["Hand Close"].length;
         handTimeL = Mathf.Clamp(duration * OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger), 0f, duration - .1f);
