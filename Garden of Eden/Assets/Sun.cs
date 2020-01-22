@@ -101,9 +101,11 @@ public class Sun : Singleton<Sun>
         birchMaterial.SetColor("_EmissionColor", birchColor);
         oakMaterial.SetColor("_EmissionColor", oakColor);
 
+        /*
         aura.frustum.settings.color = auraColor;
         aura.frustum.settings.density = density;
         aura.frustum.settings.colorStrength = ambient;
+        */
 
         directionalLight.intensity = lightIntensity;
 

@@ -12,7 +12,6 @@ public class DrawRecognition : MonoBehaviour
     public TextMesh drawDataText;
     public GameObject[] symbolObjects;
     public PaintRenderer paintRenderer;
-    public PlayerInventory playerInventory;
 
     public static string returnShape;
 
