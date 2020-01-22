@@ -645,6 +645,7 @@ MonoBehaviour:
   masks: []
   buildState: 0
   buildTarget: 0
+  buildProgress: 0
 --- !u!1001 &70506758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2994,12 +2995,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.7885
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -3009,7 +3010,7 @@ PrefabInstance:
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -5707,6 +5708,7 @@ MonoBehaviour:
   masks: []
   buildState: 0
   buildTarget: 0
+  buildProgress: 0
 --- !u!4 &890148132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7153381597493673861, guid: 569a2176978a3104c85dac4b706dbd43,
@@ -7037,7 +7039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1118660130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7342,11 +7344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c5e1ad3e8dcc74c864703479f85471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  auraLights:
-  - {fileID: 494117853}
-  - {fileID: 0}
+  sceneLights: []
   sun: {fileID: 1386516386}
-  networkPlayers: {fileID: 459819290}
 --- !u!4 &1201948365
 Transform:
   m_ObjectHideFlags: 0
@@ -7877,12 +7876,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.7885
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -7892,7 +7891,7 @@ PrefabInstance:
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -8176,7 +8175,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1342033462
 GameObject:
@@ -8462,12 +8461,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386516384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e1499e0096e37489e91cc65b7905ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  daySpeed: 0.01
+  daySpeed: 1
   nightSpeed: 0.05
   densityDay: 0.02
   densityNight: 0.2
@@ -8503,6 +8502,7 @@ MonoBehaviour:
   directionalLight: {fileID: 494117851}
   lightIntensityDay: 1.75
   lightIntensityNight: 0
+  aura: {fileID: 0}
   rotation: 0
 --- !u!4 &1397618911 stripped
 Transform:
@@ -11602,7 +11602,7 @@ GameObject:
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1775430024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18699,7 +18699,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &2131297441
 GameObject:
@@ -18880,7 +18880,7 @@ PrefabInstance:
     - target: {fileID: 215432620379188466, guid: e746679ac8af5bb4fa431511fee206bc,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 215432620379188471, guid: e746679ac8af5bb4fa431511fee206bc,
         type: 3}

@@ -19756,6 +19756,11 @@ PrefabInstance:
       propertyPath: freeCamActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5709343976702517855, guid: e746679ac8af5bb4fa431511fee206bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2670678288109887084, guid: e746679ac8af5bb4fa431511fee206bc,
         type: 3}
       propertyPath: m_IsActive
