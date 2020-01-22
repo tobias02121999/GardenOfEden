@@ -55,7 +55,7 @@ TagManager:
   - Building In Progress
   - Checkspace
   - ConstructionSite
-  - Head1
+  - LocalMask
   m_SortingLayers:
   - name: Default
     uniqueID: 0

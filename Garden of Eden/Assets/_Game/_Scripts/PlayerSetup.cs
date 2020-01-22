@@ -9,6 +9,10 @@ public class PlayerSetup : NetworkBehaviour
     public bool isOther;
     public Behaviour[] nonLocalComponents;
     public GameObject[] nonLocalObjects;
+    public GameObject[] playerMasks;
+    public Material[] teamMaterials;
+    public Renderer[] handRenderers;
+    public GameObject maskCloud;
 
     //[HideInInspector]
     public int teamID;
@@ -18,6 +22,14 @@ public class PlayerSetup : NetworkBehaviour
     {
         DisableComponents(); // Disable the local components if this object is not controlled by the local player
         AssignTeamID(); // Assign the correct team ID to each player
+
+        var length = playerMasks.Length;
+        for (var i = 0; i < length; i++)
+            playerMasks[i].SetActive(i == teamID);
+
+        length = handRenderers.Length;
+        for (var i = 0; i < length; i++)
+            handRenderers[i].material = teamMaterials[teamID];
     }
 
     // Disable the local components if this object is not controlled by the local player
@@ -38,7 +50,15 @@ public class PlayerSetup : NetworkBehaviour
             isOther = true;
         }
         else
+        {
             NetworkPlayers.Instance.localPlayer = gameObject;
+
+            var length = playerMasks.Length;
+            for (var i = 0; i < length; i++)
+                playerMasks[i].layer = 31;
+
+            maskCloud.layer = 31;
+        }
     }
 
     // Assign the correct team ID to each player

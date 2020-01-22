@@ -2217,8 +2217,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e2ea66692cc0e6428eb775dc648c484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   paintChunks:
   - {fileID: 8753391414413237190}
   - {fileID: 7261519837245125413}
@@ -7815,8 +7815,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7916be7daacf42c4ea934fd055eafc73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   toolMesh:
   - {fileID: 7576597147636407700}
   - {fileID: 4200125250327911113}
@@ -7825,7 +7825,7 @@ MonoBehaviour:
   - {fileID: 4257016973373205505}
   toolID: 1
   handType: 0
-  handTag: 
+  handTag:
 --- !u!82 &480411304585900308
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8081,8 +8081,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c10bed7dd08cc74a8ee0960e9b5e5a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   cameraTransform: {fileID: 6532427273485342750}
   flexibility: 2.5
   turnability: 65
@@ -8183,7 +8183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2530787504429124629
 Transform:
   m_ObjectHideFlags: 0
@@ -8475,8 +8475,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7916be7daacf42c4ea934fd055eafc73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   toolMesh:
   - {fileID: 3043839176631767668}
   - {fileID: 1970448287905789624}
@@ -8485,7 +8485,7 @@ MonoBehaviour:
   - {fileID: 7454665726793578083}
   toolID: 2
   handType: 0
-  handTag: 
+  handTag:
 --- !u!82 &5826159434025582275
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9020,8 +9020,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e2ea66692cc0e6428eb775dc648c484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   paintChunks:
   - {fileID: 8158129695091954767}
   - {fileID: 5248540551090296695}
@@ -9158,8 +9158,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e2ea66692cc0e6428eb775dc648c484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   paintChunks:
   - {fileID: 8556268156362209714}
   - {fileID: 5771702139033950568}
@@ -14463,6 +14463,84 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0003025429, y: 0.0006772569, z: 0.00045071583}
   m_Center: {x: -0.0000009888537, y: 0.00037487847, z: 0.000010085531}
+--- !u!1 &3595909620134482803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3595909620134121299}
+  - component: {fileID: 3595909620137545587}
+  - component: {fileID: 3595909620136414643}
+  m_Layer: 0
+  m_Name: PlayerMask1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3595909620134121299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3595909620134482803}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0, y: -0.069, z: 0.478}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1534203353149140290}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!33 &3595909620137545587
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3595909620134482803}
+  m_Mesh: {fileID: 4300000, guid: 04c478bedb23023408e8722d646fec24, type: 3}
+--- !u!23 &3595909620136414643
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3595909620134482803}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 8c089f45c82e6b3468ec2d7db396c6c2, type: 2}
+  - {fileID: 2100000, guid: 27635c23e0141f5409a36ffe45640f79, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &3608158705054192474
 GameObject:
   m_ObjectHideFlags: 0
@@ -14571,8 +14649,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19e700ed421a28249b4e3ed7c85076ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   target: {fileID: 290011361242660828}
   reference: {fileID: 6537387249471951215}
   speed: 1000
@@ -20739,8 +20817,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7916be7daacf42c4ea934fd055eafc73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   toolMesh:
   - {fileID: 7208572640686413057}
   - {fileID: 190357451547073247}
@@ -20749,7 +20827,7 @@ MonoBehaviour:
   - {fileID: 93202625338597011}
   toolID: 3
   handType: 0
-  handTag: 
+  handTag:
 --- !u!82 &4178137463508369355
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21250,8 +21328,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08668557e3ad8394eb37c1997fb37315, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   targetPoint: {fileID: 4874351410201081361}
   lineDensity: 2
   particlePrefab: {fileID: 3493377890850991581, guid: b49040d2183008743a48cab050236d42,
@@ -21343,8 +21421,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08668557e3ad8394eb37c1997fb37315, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   targetPoint: {fileID: 1250555734614253368}
   lineDensity: 2
   particlePrefab: {fileID: 3493377890850991581, guid: b49040d2183008743a48cab050236d42,
@@ -31039,7 +31117,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
-  - {fileID: 3866543915353886012}
+  - {fileID: 3595909620134121299}
   - {fileID: 2530787504429124629}
   - {fileID: 6409384969428536893}
   - {fileID: 7520158808146061391}
@@ -31118,8 +31196,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19e700ed421a28249b4e3ed7c85076ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   target: {fileID: 6532427273485342750}
   reference: {fileID: 2509998283890415868}
   speed: 1000
@@ -32903,8 +32981,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19e700ed421a28249b4e3ed7c85076ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   target: {fileID: 1259975458233020016}
   reference: {fileID: 5288353378312925303}
   speed: 1000
@@ -33936,8 +34014,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4046e4f6e4ec2e546881523970ab3a22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   sensitivity: 0
   lineOffset: 1
   recognitionScale: 1
@@ -39197,8 +39275,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4046e4f6e4ec2e546881523970ab3a22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   sensitivity: 0
   lineOffset: 1
   recognitionScale: 1
@@ -39586,8 +39664,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e2ea66692cc0e6428eb775dc648c484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   paintChunks:
   - {fileID: 2002942703189190909}
   - {fileID: 3752849605034958475}
@@ -39703,8 +39781,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df9f338034892c44ebb62d97894772f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   usePerEyeCameras: 0
   useFixedUpdateForTracking: 0
   disableEyeAnchorCameras: 0
@@ -39836,8 +39914,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_SceneId:
     m_Value: 0
   m_AssetId:
@@ -39869,8 +39947,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
@@ -39891,8 +39969,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Target: {fileID: 290011361242660828}
   m_ChildIndex: 0
   m_SendInterval: 0.1
@@ -39911,8 +39989,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Target: {fileID: 1259975458233020016}
   m_ChildIndex: 1
   m_SendInterval: 0.1
@@ -39931,8 +40009,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Target: {fileID: 1534203353149140290}
   m_ChildIndex: 2
   m_SendInterval: 0.1
@@ -39951,8 +40029,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebc8d12f3d8141640875e03af94eeb4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   isOther: 0
   nonLocalComponents:
   - {fileID: 6034395769693479386}
@@ -39962,6 +40040,16 @@ MonoBehaviour:
   - {fileID: 6532427273485501502}
   - {fileID: 6532427273485501500}
   - {fileID: 196038620371248950}
+  playerMasks:
+  - {fileID: 3595909620134482803}
+  - {fileID: 2530787504428765237}
+  teamMaterials:
+  - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
+  - {fileID: 2100000, guid: 2f089f2204817c249a9692cb65a1a89e, type: 2}
+  handRenderers:
+  - {fileID: 4874351410204026639}
+  - {fileID: 3976558818921671189}
+  maskCloud: {fileID: 7520158808146060847}
   teamID: 0
 --- !u!114 &986074901754382071
 MonoBehaviour:
@@ -39973,9 +40061,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40d1e168d61d2554ca5fc321c733e607, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headModel: {fileID: 3866543915353657628}
+  m_Name:
+  m_EditorClassIdentifier:
   leftPivot: {fileID: 290011361242660828}
   rightPivot: {fileID: 1259975458233020016}
   leftEye: {fileID: 6548324590111892844}
@@ -39994,8 +40081,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ff62fe65bcc6d24fbf4b617f7be9093, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   hands:
   - {fileID: 4874351410200849009}
   - {fileID: 8551684752067512426}
@@ -40181,8 +40268,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df8e1d778abf442e4bec449c360e9e1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   fadeTime: 2
   fadeColor: {r: 0.01, g: 0.01, b: 0.01, a: 1}
   fadeOnStart: 1
@@ -40197,8 +40284,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   profile: {fileID: 11400000, guid: 98106900b3bf4494fb4a31611fdbb0b3, type: 2}
 --- !u!114 &349088731272535573
 MonoBehaviour:
@@ -40210,8 +40297,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdcd06815c47d30489f70df42db56a48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   frustum:
     settings:
       enableVolumes: 1
@@ -65004,8 +65091,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e2ea66692cc0e6428eb775dc648c484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   paintChunks:
   - {fileID: 1868471495418569952}
   - {fileID: 99166238934799517}
@@ -65128,8 +65215,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7916be7daacf42c4ea934fd055eafc73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   toolMesh:
   - {fileID: 6413252602744627889}
   - {fileID: 5594790016646785039}
@@ -65138,7 +65225,7 @@ MonoBehaviour:
   - {fileID: 2535744191159396045}
   toolID: 4
   handType: 0
-  handTag: 
+  handTag:
 --- !u!82 &8131617787426857153
 AudioSource:
   m_ObjectHideFlags: 0
@@ -71216,8 +71303,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e2ea66692cc0e6428eb775dc648c484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   paintChunks:
   - {fileID: 8657094478338550747}
   - {fileID: 8657094478338550745}
@@ -77824,15 +77911,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6, type: 3}
---- !u!1 &2535744191159396045 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 426221984651519212, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2799826418673730081}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2535744191159827181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 426221984651294924, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2799826418673730081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2535744191159396045 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 426221984651519212, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
     type: 3}
   m_PrefabInstance: {fileID: 2799826418673730081}
   m_PrefabAsset: {fileID: 0}
@@ -78156,15 +78243,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6, type: 3}
---- !u!1 &7454665726793578083 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 426221984651519212, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
-    type: 3}
-  m_PrefabInstance: {fileID: 7106245184992760463}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7454665726793148995 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 426221984651294924, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7106245184992760463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7454665726793578083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 426221984651519212, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
     type: 3}
   m_PrefabInstance: {fileID: 7106245184992760463}
   m_PrefabAsset: {fileID: 0}
