@@ -181,7 +181,7 @@ public class HumanAI : NetworkBehaviour
                 else if (!hasHome)
                     currentState = HumanState.BUILDING_HOUSE;
 
-                else if (!isDepressed && hasHome)
+                else if (!isDepressed && hasHome && currentDesire != HumanDesire.FOOD)
                     currentState = HumanState.BUILDING_MONUMENT;
 
                 else
