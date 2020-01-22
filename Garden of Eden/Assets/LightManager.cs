@@ -5,48 +5,38 @@ using UnityEngine;
 public class LightManager : MonoBehaviour
 {
     // Initialize the public variables
-    public AuraAPI.AuraLight[] auraLights;
+    public AuraAPI.AuraLight[] sceneLights;
     public Sun sun;
-    public NetworkPlayers networkPlayers;
 
     // Initialize the private variables
-    GameObject localPlayer;
-
-    // Initialize the private variables
-    bool auraIsLit;
+    bool lightsAreAwake;
 
     // Start is called before the first frame update
     void Start()
     {
-        localPlayer = networkPlayers.localPlayer;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        AuraLightsInit(); // Initialize the aura lights
+        WakeLights(); // Wake the scene lights as soon as the local player has spawned in
     }
 
-    // Initialize the aura lights
-    void AuraLightsInit()
+    // Wake the scene lights as soon as the local player has spawned in
+    void WakeLights()
     {
-        if (localPlayer != null)
+        var playerExists = (NetworkPlayers.Instance.localPlayer != null);
+
+        if (playerExists && !lightsAreAwake)
         {
-            var cam = localPlayer.transform.Find("CenterEyeAnchor").gameObject;
-            cam.AddComponent<AuraAPI.Aura>();
-            Debug.Log("Component Added");
-
-            //sun.aura = localPlayer.GetComponentInChildren<AuraAPI.Aura>();
-
-            var length = auraLights.Length;
-
+            var length = sceneLights.Length;
             for (var i = 0; i < length; i++)
-            {
-                auraLights[i].enabled = true;
+                sceneLights[i].enabled = true;
 
-                if (i == length - 1)
-                    auraIsLit = true;
-            }
+            sun.aura = NetworkPlayers.Instance.localPlayer.GetComponent<PlayerInventory>().headTransform.GetComponent<AuraAPI.Aura>();
+
+            lightsAreAwake = true;
         }
     }
 }

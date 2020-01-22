@@ -21,8 +21,8 @@ public class StorkDropzone : MonoBehaviour
     {
         if (other.CompareTag("HumanBodypart"))
         {
-            var human = other.GetComponentInParent<HumanAI>();
-            human.isStork = false;
+            var human = other.GetComponentInParent<RagdollSetup>();
+            human.CmdDropHuman();
         }
     }
 }

@@ -20,7 +20,7 @@ public class HumanAI : NetworkBehaviour
 
     [Space]
 
-    public Transform humanMesh;
+    public Transform humanHips;
     public Transform movementParent, rotationReference;
 
     public RagdollAnimator humanAnimator;
@@ -45,8 +45,7 @@ public class HumanAI : NetworkBehaviour
     public GameObject hologram;
     public bool isDayTime = false;
     public bool isGrounded = false;
-    [SyncVar] public bool isStork = false;
-    [SyncVar] public NetworkInstanceId storkID;
+    public float monumentBuildDistance;
 
     [Space]
 
@@ -73,22 +72,7 @@ public class HumanAI : NetworkBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if (isStork)
-        {
-            var humanHips = transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
-            humanHips.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-            GetComponent<RagdollAnimator>().impactRecovery = 0f;
-        }
-        else
-        {
-            var humanHips = transform.Find("mixamorig:Hips").GetComponent<Rigidbody>();
-            humanHips.constraints = RigidbodyConstraints.None;
-            GetComponent<RagdollAnimator>().impactRecovery = 1f;
-
-            transform.parent = null;
-        }
-        
-        inFront = humanMesh.position + (humanMesh.transform.forward * 6f);
+        inFront = humanHips.position + (humanHips.transform.forward * 6f);
         inFront.y = 33f;
 
         if (isAscended)
@@ -225,11 +209,11 @@ public class HumanAI : NetworkBehaviour
                         int layer = 17;
                         int mask = 1 << layer;
 
-                        Collider[] trees = Physics.OverlapSphere(humanMesh.position, 1.5f, mask);
+                        Collider[] trees = Physics.OverlapSphere(humanHips.position, 1.5f, mask);
 
                         if (!buildingHouse && isGrounded)
                         {
-                            var newPos = humanMesh.position + (humanMesh.transform.forward * 6f);  // Instantiate the collision checker before checking if there is enough space.
+                            var newPos = humanHips.position + (humanHips.transform.forward * 6f);  // Instantiate the collision checker before checking if there is enough space.
                             newPos.y = 36.5f;
                             checkHouse.transform.position = newPos;
                             checkHouse.SetActive(true);
@@ -278,7 +262,7 @@ public class HumanAI : NetworkBehaviour
 
                                 movementParent.rotation = _houseRot;  // Then, if the player has chopped a tree, move (look at) to the house that he's building
 
-                                if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
+                                if (Vector3.Distance(humanHips.position, _house.transform.position) <= 2f)
                                 {
                                     hasWood = false;
                                     // Advance the building to the next stage
@@ -289,13 +273,13 @@ public class HumanAI : NetworkBehaviour
                         {
                             MoveToDestination(4);
 
-                            if (Vector3.Distance(humanMesh.position, _house.transform.position) <= 2f)
+                            if (Vector3.Distance(humanHips.position, _house.transform.position) <= 2f)
                             {
                                 var obj = _house.GetComponentInParent<House>();
                                 var id = obj.GetComponent<NetworkIdentity>().netId;
                                 obj.CmdSendVarServer(id, true);
 
-                                humanMesh.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position
+                                humanHips.position = _house.GetComponentInParent<House>().doorPosition.position;  // Set human to entrance position
 
                                 // Reset the human's speed
                                 for (int i = 0; i < humanAnimator.bones.Length; i++)
@@ -317,6 +301,8 @@ public class HumanAI : NetworkBehaviour
                     case HumanState.BUILDING_MONUMENT:
                         if (!isDepressed)
                             MoveToDestination(5);
+
+                        BuildMonument();
                         break;
                 }
             }
@@ -354,7 +340,7 @@ public class HumanAI : NetworkBehaviour
                 int foodLayer = 23;
                 int foodMask = 1 << foodLayer;
 
-                Collider[] berries = Physics.OverlapSphere(humanMesh.position, 50f, foodMask);
+                Collider[] berries = Physics.OverlapSphere(humanHips.position, 50f, foodMask);
                 List<Transform> berryTransforms = new List<Transform>();
                 foreach (Collider col in berries)
                 {
@@ -373,7 +359,7 @@ public class HumanAI : NetworkBehaviour
                 int layer = 17;
                 int mask = 1 << layer;
 
-                Collider[] trees = Physics.OverlapSphere(humanMesh.position, 50f, mask);
+                Collider[] trees = Physics.OverlapSphere(humanHips.position, 50f, mask);
                 List<Transform> colTransforms = new List<Transform>();
                 foreach (Collider col in trees)
                 {
@@ -392,29 +378,17 @@ public class HumanAI : NetworkBehaviour
             case 2: // ... the Shrine
                 if (hasFaith)
                 {
-                    if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                    {
-                        rotationReference.LookAt(GameManager.Instance.shrines[0].transform.position);
+                    var _setup = GetComponent<RagdollSetup>();
+                    var _target = GameManager.Instance.shrines[_setup.teamID].transform.position;
 
-                        var shrineRot = rotationReference.rotation;
-                        shrineRot.x = 0f;
-                        shrineRot.z = 0f;
+                    rotationReference.LookAt(_target);
 
-                        movementParent.rotation = shrineRot;
-                    }
+                    var shrineRot = rotationReference.rotation;
+                    shrineRot.x = 0f;
+                    shrineRot.z = 0f;
 
-                    if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                    {
-                        rotationReference.LookAt(GameManager.Instance.shrines[1].transform.position);
-
-                        var shrineRot = rotationReference.rotation;
-                        shrineRot.x = 0f;
-                        shrineRot.z = 0f;
-
-                        movementParent.rotation = shrineRot;
-                    }
+                    movementParent.rotation = shrineRot;
                 }
-
                 else
                 {
                     if (switchShrine == false)
@@ -463,27 +437,16 @@ public class HumanAI : NetworkBehaviour
                 break;
 
             case 5:
-                if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
-                {
-                    rotationReference.LookAt(GameManager.Instance.monuments[0].transform.position);
+                var setup = GetComponent<RagdollSetup>();
+                var target = GameManager.Instance.monuments[setup.teamID].transform.position;
 
-                    var monumentRot = rotationReference.rotation;
-                    monumentRot.x = 0f;
-                    monumentRot.z = 0f;
+                rotationReference.LookAt(target);
 
-                    movementParent.rotation = monumentRot;
-                }
+                var monumentRot = rotationReference.rotation;
+                monumentRot.x = 0f;
+                monumentRot.z = 0f;
 
-                if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
-                {
-                    rotationReference.LookAt(GameManager.Instance.monuments[1].transform.position);
-
-                    var monumentRot = rotationReference.rotation;
-                    monumentRot.x = 0f;
-                    monumentRot.z = 0f;
-
-                    movementParent.rotation = monumentRot;
-                }
+                movementParent.rotation = monumentRot;
                 break;
         }
     }
@@ -614,6 +577,17 @@ public class HumanAI : NetworkBehaviour
     }
 
     public void IncreaseFear(float amount, float modifier) { fear += amount * modifier; }
+
+    // Build up the monument
+    void BuildMonument()
+    {
+        var setup = GetComponent<RagdollSetup>();
+        var target = GameManager.Instance.monuments[setup.teamID];
+        var dist = Vector3.Distance(humanHips.position, target.transform.position);
+
+        if (dist <= monumentBuildDistance)
+            target.GetComponent<Monument>().buildProgress++;
+    }
 
     #region uNet Commands & RPC calls
     [Command] // Spawn a house through the server

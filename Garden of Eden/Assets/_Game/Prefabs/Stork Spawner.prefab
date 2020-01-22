@@ -69,8 +69,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5268663493386661567}
-  - component: {fileID: 5268663493386661560}
   - component: {fileID: 5268663493386661561}
+  - component: {fileID: 5268663493386661560}
   m_Layer: 0
   m_Name: Stork Spawner
   m_TagString: Untagged
@@ -94,28 +94,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5268663493386661560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5268663493386661562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fcaa0b7471dbf84584b2d2c5473b1d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bird: {fileID: 3107386266670874818, guid: 261c70dec864f6c4ab642e6a81433513, type: 3}
-  human: {fileID: 6538513111818248708, guid: d7e0de83abd823543941735570e360b9, type: 3}
-  spawnPoints:
-  - {fileID: 5268663492154732755}
-  - {fileID: 944829026}
-  spawnDuration: {x: 5000, y: 5000}
-  spawnHeight: {x: 0, y: 0}
-  target: {fileID: 5268663493386661567}
-  flightDeviation: 5
-  isStork: 1
 --- !u!114 &5268663493386661561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +127,25 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &5268663493386661560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268663493386661562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcaa0b7471dbf84584b2d2c5473b1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bird: {fileID: 3107386266670874818, guid: 261c70dec864f6c4ab642e6a81433513, type: 3}
+  human: {fileID: 6538513111818248708, guid: d7e0de83abd823543941735570e360b9, type: 3}
+  spawnPoints:
+  - {fileID: 5268663492154732755}
+  - {fileID: 944829026}
+  spawnDuration: {x: 5000, y: 5000}
+  spawnHeight: {x: 0, y: 0}
+  target: {fileID: 5268663493386661567}
+  flightDeviation: 5
+  isStork: 1

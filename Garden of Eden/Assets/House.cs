@@ -40,43 +40,64 @@ public class House : NetworkBehaviour
         var localPlayerID = NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID;
 
         // Check if the house is under construction
-        if (humanBuilt && !constructionFinished)
+        if (humanBuilt)
         {
-            state = States.CONSTRUCTION;
+            if (!constructionFinished)
+            {
+                state = States.CONSTRUCTION;
 
-            modelStates[0].SetActive(true);
-            modelStates[1].SetActive(false);
+                modelStates[0].SetActive(true);
+                modelStates[1].SetActive(false);
 
-            var length = finishedScripts.Length;
-            for (var i = 0; i < length; i++)
-                finishedScripts[i].enabled = false;
+                var length = finishedScripts.Length;
+                for (var i = 0; i < length; i++)
+                    finishedScripts[i].enabled = false;
 
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                GetComponent<Rigidbody>().isKinematic = true;
+            }
         }
         else
         {
-            var length = GameManager.Instance.TeamOneHumans.Count;
-            for (var i = 0; i < length; i++)
+            if (setup.teamID == 0)
             {
-                var human = GameManager.Instance.TeamOneHumans[i].GetComponent<HumanAI>();
-                if (!human.hasHome && !human.buildingHouse)
+                var length = GameManager.Instance.TeamOneHumans.Count;
+                for (var i = 0; i < length; i++)
                 {
-                    human._house = this.gameObject;
-                    human.hasHome = true;
-                    break;
+                    var human = GameManager.Instance.TeamOneHumans[i].GetComponent<HumanAI>();
+                    if (!human.hasHome && !human.buildingHouse)
+                    {
+                        human._house = this.gameObject;
+                        human.hasHome = true;
+                        break;
+                    }
                 }
             }
-        }
 
-        if (((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360)) && !hasRun)
-        {
-            if (human != null)
+            if (setup.teamID == 1)
             {
-                human.GetComponent<HumanAI>().humanMesh.position = doorPosition.position;
-                human.gameObject.SetActive(true);
+                var length = GameManager.Instance.TeamTwoHumans.Count;
+                for (var i = 0; i < length; i++)
+                {
+                    var human = GameManager.Instance.TeamTwoHumans[i].GetComponent<HumanAI>();
+                    if (!human.hasHome && !human.buildingHouse)
+                    {
+                        human._house = this.gameObject;
+                        human.hasHome = true;
+                        break;
+                    }
+                }
+            }
 
-                hasRun = true;
+            if (((Sun.Instance.rotation < 90 && Sun.Instance.rotation >= 0) || (Sun.Instance.rotation > 270 && Sun.Instance.rotation <= 360)) && !hasRun)
+            {
+                if (human != null)
+                {
+                    human.GetComponent<HumanAI>().humanHips.position = doorPosition.position;
+                    human.gameObject.SetActive(true);
+
+                    hasRun = true;
+                }
             }
         }
 

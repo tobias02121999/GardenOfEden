@@ -122,7 +122,8 @@ MonoBehaviour:
   - {fileID: 6608705937310759444}
   - {fileID: 4906940349283597613}
   buildState: 0
-  buildTarget: 30
+  buildTarget: 5000
+  buildProgress: 0
 --- !u!1 &559985710483440930
 GameObject:
   m_ObjectHideFlags: 0
