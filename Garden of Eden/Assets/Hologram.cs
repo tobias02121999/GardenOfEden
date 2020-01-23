@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class Hologram : NetworkBehaviour
+public class Hologram : MonoBehaviour
 {
     // Initialize the public variables
     public GameObject spawnPrefab;
@@ -31,7 +30,7 @@ public class Hologram : NetworkBehaviour
 
         if (hasCollided && inventory.paint >= paintCost && spawnPrefab != null)
         {
-            CmdSpawnObject(isHome, isFarm, NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID);
+            Instantiate(spawnPrefab, transform.position, transform.rotation); Instantiate(spawnPrefab);
 
             paintRenderer.lineRenderer.positionCount = 0;
             inventory.paint -= paintCost;
@@ -52,6 +51,7 @@ public class Hologram : NetworkBehaviour
             hasCollided = true;
     }
 
+    /*
     [Command]
     void CmdSpawnObject(bool _isHome, bool _isFarm, int teamID)
     {
@@ -77,4 +77,5 @@ public class Hologram : NetworkBehaviour
 
         NetworkServer.Spawn(obj);
     }
+    */
 }
