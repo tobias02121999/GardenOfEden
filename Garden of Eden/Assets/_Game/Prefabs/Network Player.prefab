@@ -370,7 +370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5079684726702033552
 Transform:
   m_ObjectHideFlags: 0
@@ -2628,7 +2628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5432396016319543693
 Transform:
   m_ObjectHideFlags: 0
@@ -7967,7 +7967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7629993955114191557
 Transform:
   m_ObjectHideFlags: 0
@@ -8075,7 +8075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2440722582411509177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2662207408906618176}
@@ -8990,7 +8990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2591310523140923166
 Transform:
   m_ObjectHideFlags: 0
@@ -9021,7 +9021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8460411688560487407
 Transform:
   m_ObjectHideFlags: 0
@@ -33413,7 +33413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1238161790557109995
 Transform:
   m_ObjectHideFlags: 0
@@ -39481,7 +39481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &83284325409512484
 Transform:
   m_ObjectHideFlags: 0
@@ -39666,7 +39666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4921964521707218339
 Transform:
   m_ObjectHideFlags: 0
@@ -40675,7 +40675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6955086806675517616
 Transform:
   m_ObjectHideFlags: 0
@@ -60075,7 +60075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3922897030769452960
 Transform:
   m_ObjectHideFlags: 0
@@ -60290,7 +60290,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3328746865110145635
 Transform:
   m_ObjectHideFlags: 0
@@ -65096,7 +65096,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3943189676228741519
 Transform:
   m_ObjectHideFlags: 0
@@ -77487,6 +77487,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 426221984651519212, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 426221984651294924, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -77974,6 +77979,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 426221984651519212, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 426221984651294924, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -78139,6 +78149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 426221984651519212, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 426221984651294924, guid: c3ab0d2dfb0b7ab4fbe6e66e02ab18b6,
         type: 3}
