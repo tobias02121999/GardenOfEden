@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class DrawRecognition : MonoBehaviour
+public class DrawRecognition : NetworkBehaviour
 {
     // Initialize the private variables
     public GameObject drawPointCollider;
@@ -171,14 +172,10 @@ public class DrawRecognition : MonoBehaviour
                         {
                             if (xx == gridWidth - 1 && yy == gridHeight - 1)
                             {
-                                var obj = ObjectPooler.Instance.SpawnFromPool(symbolObjects[c].name, transform.position, Quaternion.identity);
-                                obj.GetComponentInChildren<Hologram>().paintRenderer = paintRenderer;
-                                paintRenderer.targetObject = obj;
+                                var isClient = (NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID == 1);
+                                CmdSpawnObject(symbolObjects[c].name, isClient);
+
                                 paintRenderer.isDrawing = false;
-
-                                Debug.Log("SPAWN ->" + symbolObjects[c].name);
-
-                                //playerInventory.returnTools();
                                 goto End;
                             }
                         }
@@ -224,5 +221,38 @@ public class DrawRecognition : MonoBehaviour
                 returnShape = "None";
                 return "None";
         }
+    }
+
+    [Server]
+    void CmdSpawnObject(string name, bool isClient)
+    {
+        var obj = ObjectPooler.Instance.SpawnFromPool(name, transform.position, Quaternion.identity);
+        obj.GetComponent<Hologram>().paintRenderer = paintRenderer;
+
+        var id = NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID;
+        obj.GetComponent<HologramSetup>().teamID = id;
+
+        if (id == 0)
+            GameManager.Instance.teamOneHolograms.Add(obj);
+
+        if (id == 1)
+            GameManager.Instance.teamTwoHolograms.Add(obj);
+
+        NetworkServer.Spawn(obj);
+
+        if (isClient)
+        {
+            var ID = obj.GetComponent<NetworkIdentity>().netId;
+            RpcBounceClient(ID);
+        }
+        else
+            paintRenderer.targetObject = obj;
+    }
+
+    [ClientRpc]
+    void RpcBounceClient(NetworkInstanceId ID)
+    {
+        var obj = ClientScene.FindLocalObject(ID);
+        paintRenderer.targetObject = obj;
     }
 }

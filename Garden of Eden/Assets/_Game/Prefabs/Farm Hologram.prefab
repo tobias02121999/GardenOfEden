@@ -11783,9 +11783,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6780479405059434315}
-  - component: {fileID: 7348656497264110616}
-  - component: {fileID: 8982990538263970937}
-  - component: {fileID: 7534014084835276700}
   - component: {fileID: 2866794844857960684}
   m_Layer: 24
   m_Name: Animation
@@ -11809,53 +11806,6 @@ Transform:
   m_Father: {fileID: 3180025520642176050}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &7348656497264110616
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780479405059537771}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!65 &8982990538263970937
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780479405059537771}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 8.660767, y: 7.915185, z: 8.660767}
-  m_Center: {x: 0.00000071525574, y: 3.975718, z: -0.08785534}
---- !u!114 &7534014084835276700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780479405059537771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2668b0ad5e05ecc408049d4825b5df2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPrefab: {fileID: 4603397830561035397, guid: 74861a2bad924bd43b87d6232f19344b,
-    type: 3}
-  paintRenderer: {fileID: 0}
-  paintCost: 33
-  isHome: 0
-  isFarm: 1
 --- !u!95 &2866794844857960684
 Animator:
   serializedVersion: 3
@@ -11884,6 +11834,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3180025520642176050}
+  - component: {fileID: 3849017649416208093}
+  - component: {fileID: 538759694234519350}
+  - component: {fileID: 8676675760931562196}
+  - component: {fileID: 4161103853764920387}
+  - component: {fileID: 7235985892216990018}
+  - component: {fileID: 6996817785869600169}
   m_Layer: 0
   m_Name: Farm Hologram
   m_TagString: Untagged
@@ -11907,6 +11863,122 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &3849017649416208093
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619618193510316101}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &538759694234519350
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619618193510316101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.660767, y: 7.915185, z: 8.660767}
+  m_Center: {x: 0.00000071525574, y: 3.975718, z: -0.08785534}
+--- !u!114 &8676675760931562196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619618193510316101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &4161103853764920387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619618193510316101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &7235985892216990018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619618193510316101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71c0c173deb33046896016ed7a00fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamID: 0
+--- !u!114 &6996817785869600169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619618193510316101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2668b0ad5e05ecc408049d4825b5df2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPrefab: {fileID: 4603397830561035397, guid: 74861a2bad924bd43b87d6232f19344b,
+    type: 3}
+  paintRenderer: {fileID: 0}
+  paintCost: 33
+  isHome: 0
+  isFarm: 1
+  animationTransform: {fileID: 0}
 --- !u!1001 &4602781737147643656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11914,6 +11986,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3180025520642176050}
     m_Modifications:
+    - target: {fileID: 9171000669206935496, guid: 11747bfd54c295847a2da59af4f6f8c3,
+        type: 3}
+      propertyPath: m_Name
+      value: PaintJar
+      objectReference: {fileID: 0}
     - target: {fileID: 9171000669207096296, guid: 11747bfd54c295847a2da59af4f6f8c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11983,11 +12060,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9171000669206935496, guid: 11747bfd54c295847a2da59af4f6f8c3,
-        type: 3}
-      propertyPath: m_Name
-      value: PaintJar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11747bfd54c295847a2da59af4f6f8c3, type: 3}

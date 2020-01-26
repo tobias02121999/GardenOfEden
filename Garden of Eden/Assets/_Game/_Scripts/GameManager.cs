@@ -36,6 +36,9 @@ public class GameManager : NetworkBehaviour
     [SyncVar] public float teamOneFoodScore;
     [SyncVar] public float teamTwoFoodScore;
 
+    public List<GameObject> teamOneHolograms = new List<GameObject>();
+    public List<GameObject> teamTwoHolograms = new List<GameObject>();
+
     bool hungerDistributed = false;
 
     // Manage the singleton instance
@@ -215,6 +218,29 @@ public class GameManager : NetworkBehaviour
             identity.AssignClientAuthority(connection);
 
             teamTwoStorks[i].GetComponent<Stork>().teamID = 1;
+        }
+
+        // Holograms
+        length = teamOneHolograms.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamOneHolograms[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
+
+            teamOneHolograms[i].GetComponent<HologramSetup>().teamID = 0;
+        }
+
+        length = teamTwoHolograms.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamTwoHolograms[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            identity.AssignClientAuthority(connection);
+
+            teamTwoHolograms[i].GetComponent<HologramSetup>().teamID = 1;
         }
 
         // Monuments
