@@ -14,6 +14,7 @@ public class Monument : NetworkBehaviour
     public int buildTarget;
 
     //[HideInInspector]
+    [SyncVar]
     public int buildProgress;
 
     // Initialize the private variables
@@ -44,21 +45,12 @@ public class Monument : NetworkBehaviour
 
         animator.SetInteger("buildState", buildState);
 
-        if (teamID == 0 && isServer)
-            RpcSyncToClient(buildProgress);
-
-        if (teamID == 1 && !isServer)
+        if (teamID == 1 && NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID == 1)
             CmdSyncToServer(buildProgress);
     }
 
     [Command]
     void CmdSyncToServer(int value)
-    {
-        buildProgress = value;
-    }
-
-    [ClientRpc]
-    void RpcSyncToClient(int value)
     {
         buildProgress = value;
     }

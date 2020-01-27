@@ -8,6 +8,8 @@ public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
 public class HumanAI : NetworkBehaviour
 {
+    public Monument targetMonument;
+
     [SerializeField]
     bool hasFaith;
 
@@ -607,12 +609,11 @@ public class HumanAI : NetworkBehaviour
     // Build up the monument
     void BuildMonument()
     {
-        var setup = GetComponent<RagdollSetup>();
-        var target = GameManager.Instance.monuments[setup.teamID];
+        var target = GameManager.Instance.monuments[NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID];
         var dist = Vector3.Distance(humanHips.position, target.transform.position);
 
         if (dist <= monumentBuildDistance)
-            target.GetComponent<Monument>().buildProgress++; Debug.Log("Building . . .");
+            target.GetComponent<Monument>().buildProgress++;
 
         Debug.Log("Going to build monument");
     }

@@ -220,23 +220,29 @@ public class GameManager : NetworkBehaviour
         length = teamOneStorks.Count;
         for (var i = 0; i < length; i++)
         {
-            var identity = teamOneStorks[i].GetComponent<NetworkIdentity>();
-            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            if (teamOneStorks[i] != null)
+            {
+                var identity = teamOneStorks[i].GetComponent<NetworkIdentity>();
+                var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
 
-            if (identity.clientAuthorityOwner != null)
-                identity.RemoveClientAuthority(connection);
+                if (identity.clientAuthorityOwner != null)
+                    identity.RemoveClientAuthority(connection);
 
-            teamOneStorks[i].GetComponent<Stork>().teamID = 0;
+                teamOneStorks[i].GetComponent<Stork>().teamID = 0;
+            }
         }
 
         length = teamTwoStorks.Count;
         for (var i = 0; i < length; i++)
         {
-            var identity = teamTwoStorks[i].GetComponent<NetworkIdentity>();
-            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
-            identity.AssignClientAuthority(connection);
+            if (teamTwoStorks[i] != null)
+            {
+                var identity = teamTwoStorks[i].GetComponent<NetworkIdentity>();
+                var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+                identity.AssignClientAuthority(connection);
 
-            teamTwoStorks[i].GetComponent<Stork>().teamID = 1;
+                teamTwoStorks[i].GetComponent<Stork>().teamID = 1;
+            }
         }
 
         // Holograms
