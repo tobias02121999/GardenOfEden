@@ -612,7 +612,9 @@ public class HumanAI : NetworkBehaviour
         var dist = Vector3.Distance(humanHips.position, target.transform.position);
 
         if (dist <= monumentBuildDistance)
-            target.GetComponent<Monument>().buildProgress++;
+            target.GetComponent<Monument>().buildProgress++; Debug.Log("Building . . .");
+
+        Debug.Log("Going to build monument");
     }
 
     #region uNet Commands & RPC calls

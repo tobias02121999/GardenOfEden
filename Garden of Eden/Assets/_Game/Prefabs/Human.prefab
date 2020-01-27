@@ -5900,7 +5900,7 @@ MonoBehaviour:
     type: 3}
   isDayTime: 0
   isGrounded: 0
-  monumentBuildDistance: 5
+  monumentBuildDistance: 7.5
   buildingHouse: 0
   desireStated: 0
   hasHome: 0

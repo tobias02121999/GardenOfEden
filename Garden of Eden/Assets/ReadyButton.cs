@@ -16,7 +16,8 @@ public class ReadyButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameManager.Instance.playersReady)
+            Destroy(this.gameObject);
     }
 
     // Check for hand

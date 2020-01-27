@@ -1661,8 +1661,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plateau: {fileID: 357763709}
-  playerOneReady: 0
-  playerTwoReady: 0
+  playerOneReady: 1
+  playerTwoReady: 1
   playersReady: 0
   shrines:
   - {fileID: 837838799}
@@ -2088,13 +2088,14 @@ GameObject:
   m_Component:
   - component: {fileID: 357763710}
   - component: {fileID: 357763711}
+  - component: {fileID: 357763712}
   m_Layer: 0
   m_Name: Playspace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &357763710
 Transform:
   m_ObjectHideFlags: 0
@@ -2124,7 +2125,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357763709}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: fdf3cbabb76d2d64f8d02d5760996299, type: 2}
   m_CullingMode: 0
@@ -2135,6 +2136,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &357763712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357763709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb21d3468d634d749be57c9963bbbc12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 357763711}
 --- !u!4 &361428706 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0778e3519fae26248a796e5187d77002,
@@ -20337,7 +20351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6195598785284129787}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6.69, z: 0}
+  m_LocalPosition: {x: 0, y: -49, z: 0}
   m_LocalScale: {x: 1.7769847, y: 1.776981, z: 1.7769847}
   m_Children:
   - {fileID: 49633137}
