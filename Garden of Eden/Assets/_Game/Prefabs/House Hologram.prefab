@@ -1168,9 +1168,9 @@ MonoBehaviour:
   spawnPrefab: {fileID: 8778074915786923238, guid: 9bb295d988821ce4997bd060c8f1c1b1,
     type: 3}
   paintRenderer: {fileID: 0}
-  paintCost: 10
-  isHome: 0
-  isFarm: 1
+  paintCost: 20
+  isHome: 1
+  isFarm: 0
   animationTransform: {fileID: 6780479405059434315}
 --- !u!1001 &6764503880223685083
 PrefabInstance:

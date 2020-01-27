@@ -11978,7 +11978,7 @@ MonoBehaviour:
   paintCost: 33
   isHome: 0
   isFarm: 1
-  animationTransform: {fileID: 0}
+  animationTransform: {fileID: 6780479405059434315}
 --- !u!1001 &4602781737147643656
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class Hologram : NetworkBehaviour
     public float paintCost;
     public bool isHome;
     public bool isFarm;
+    public bool isCloud;
     public Transform animationTransform;
 
     // Initialize the private variables
@@ -32,7 +33,7 @@ public class Hologram : NetworkBehaviour
         {
             //Instantiate(spawnPrefab, transform.position, transform.rotation); Instantiate(spawnPrefab);
             var setup = GetComponent<HologramSetup>();
-            CmdSpawnObject(isHome, isFarm, setup.teamID);
+            CmdSpawnObject(isHome, isFarm, isCloud, setup.teamID);
 
             paintRenderer.lineRenderer.positionCount = 0;
             inventory.paint -= paintCost;
@@ -54,7 +55,7 @@ public class Hologram : NetworkBehaviour
     }
 
     [Command]
-    void CmdSpawnObject(bool _isHome, bool _isFarm, int teamID)
+    void CmdSpawnObject(bool _isHome, bool _isFarm, bool _isCloud, int teamID)
     {
         var obj = Instantiate(spawnPrefab, animationTransform.position, animationTransform.rotation); Instantiate(spawnPrefab);
 
@@ -74,6 +75,15 @@ public class Hologram : NetworkBehaviour
 
             if (teamID == 1)
                 GameManager.Instance.teamTwoFarms.Add(obj);
+        }
+
+        if (_isCloud)
+        {
+            if (teamID == 0)
+                GameManager.Instance.teamOneClouds.Add(obj);
+
+            if (teamID == 1)
+                GameManager.Instance.teamTwoClouds.Add(obj);
         }
 
         NetworkServer.Spawn(obj);

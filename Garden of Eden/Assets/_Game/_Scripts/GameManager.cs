@@ -6,6 +6,14 @@ public class GameManager : NetworkBehaviour
 {
     // Initialize the singleton
     public static GameManager Instance { get; private set; }
+    public GameObject plateau;
+
+    [SyncVar]
+    public bool playerOneReady;
+    public bool playerTwoReady;
+
+    [SyncVar]
+    public bool playersReady;
 
     public GameObject[] shrines;
     public GameObject[] monuments;
@@ -13,6 +21,9 @@ public class GameManager : NetworkBehaviour
     //public Transform[] homes;
     public List<GameObject> teamOneHomes = new List<GameObject>();
     public List<GameObject> teamTwoHomes = new List<GameObject>();
+
+    public List<GameObject> teamOneClouds = new List<GameObject>();
+    public List<GameObject> teamTwoClouds = new List<GameObject>();
 
     public List<GameObject> teamOneStorks = new List<GameObject>();
     public List<GameObject> teamTwoStorks = new List<GameObject>();
@@ -62,6 +73,9 @@ public class GameManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playersReady)
+            plateau.SetActive(true);
+
         if (isServer)
         {
             // Calculate food score team one
@@ -96,7 +110,12 @@ public class GameManager : NetworkBehaviour
                 score = 1;
 
             teamTwoFoodScore = score;
+
+            if (playerOneReady && playerTwoReady)
+                playersReady = true;
         }
+        else
+            CmdSyncClientReady(playerTwoReady);
 
         // Control the object authorities
         if (isServer)
@@ -243,6 +262,29 @@ public class GameManager : NetworkBehaviour
             teamTwoHolograms[i].GetComponent<HologramSetup>().teamID = 1;
         }
 
+        // Clouds
+        length = teamOneClouds.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamOneClouds[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
+
+            teamOneClouds[i].GetComponent<CloudSetup>().teamID = 0;
+        }
+
+        length = teamTwoClouds.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamTwoClouds[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            identity.AssignClientAuthority(connection);
+
+            teamTwoClouds[i].GetComponent<CloudSetup>().teamID = 1;
+        }
+
         // Monuments
         var identity1 = monuments[0].GetComponent<NetworkIdentity>();
         var _connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
@@ -269,5 +311,11 @@ public class GameManager : NetworkBehaviour
 
         if (ClientScene.FindLocalObject(humanID) == null)
             Debug.Log("Couldnt find bounced human");
+    }
+
+    [Command]
+    void CmdSyncClientReady(bool ready)
+    {
+        playerTwoReady = ready;
     }
 }

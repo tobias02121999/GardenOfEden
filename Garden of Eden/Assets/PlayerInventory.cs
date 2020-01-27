@@ -11,7 +11,7 @@ public class PlayerInventory : MonoBehaviour
     public GameObject deskPrefab;
     public Transform headTransform;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float paint, paintToSpend;
 
     /* >> OLD INVENTORY SYSTEM PUBLIC VARIABLES <<
@@ -41,9 +41,12 @@ public class PlayerInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput(); // Get the touch controller input
-        Switch(); // Switch between hands and paintbrushes
-        SummonDesk(); // Summon the god desk
+        if (GameManager.Instance.playersReady)
+        {
+            GetInput(); // Get the touch controller input
+            Switch(); // Switch between hands and paintbrushes
+            SummonDesk(); // Summon the god desk
+        }
     }
 
     // Get the touch controller input

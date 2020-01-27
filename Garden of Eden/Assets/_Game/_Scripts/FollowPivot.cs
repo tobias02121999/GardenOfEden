@@ -76,7 +76,7 @@ public class FollowPivot : MonoBehaviour
         var dist = Vector3.Distance(transform.position, target.position);
         var step = dist * speed;
 
-        if (dist <= distanceThreshold)
+        if (dist <= distanceThreshold || !GameManager.Instance.playersReady)
         {
             rb.constraints = RigidbodyConstraints.None;
             rb.velocity = reference.forward * step * Time.deltaTime;
