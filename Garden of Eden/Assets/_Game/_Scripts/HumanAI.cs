@@ -84,7 +84,7 @@ public class HumanAI : NetworkBehaviour
             halo.SetActive(false);
 
         if (!_wasInvoked)
-            StartCoroutine("IncreaseFaithOverTime");    // Continually gain levels of faith.
+            StartCoroutine(IncreaseFaithOverTime(false));    // Continually gain levels of faith.
 
         if (!humanAnimator.hasCollapsed && isGrounded)
             AddForce();
