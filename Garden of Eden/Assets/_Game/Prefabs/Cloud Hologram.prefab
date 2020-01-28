@@ -4907,6 +4907,7 @@ MonoBehaviour:
   paintCost: 15
   isHome: 0
   isFarm: 0
+  isCloud: 1
   animationTransform: {fileID: 6780479405059434315}
 --- !u!1001 &6764503880223685083
 PrefabInstance:
