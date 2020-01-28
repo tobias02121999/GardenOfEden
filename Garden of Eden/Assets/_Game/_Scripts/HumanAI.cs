@@ -546,7 +546,7 @@ public class HumanAI : NetworkBehaviour
         statsTweaked = true;
     }
 
-    IEnumerator IncreaseFaithOverTime()
+    public IEnumerator IncreaseFaithOverTime(bool isUnfaithful)
     {
         _wasInvoked = true;
 
@@ -556,7 +556,11 @@ public class HumanAI : NetworkBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(5f);
+            if (isUnfaithful)
+                yield return new WaitForSeconds(8f);
+            else
+                yield return new WaitForSeconds(5f);
+
             faith++;
             faith = Mathf.Clamp(faith, 0, 100);
         }
