@@ -25,7 +25,8 @@ public class BirdSpawner : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpawnBird(); // Spawn a bird
+        if (GameManager.Instance.playersReady)
+            SpawnBird(); // Spawn a bird
     }
 
     // Spawn a bird

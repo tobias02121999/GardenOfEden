@@ -651,7 +651,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8778074915786490054}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3888775228042913329
 GameObject:
@@ -870,6 +870,9 @@ Transform:
   - {fileID: 4823008020749571595}
   - {fileID: 8476721202914709372}
   - {fileID: 3831582202726177479}
+  - {fileID: 5201941951876320891}
+  - {fileID: 6496431653402465927}
+  - {fileID: 3597739499256667255}
   m_Father: {fileID: 8778074915786490054}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1306,7 +1309,7 @@ Transform:
   m_LocalScale: {x: 2.5125, y: 0.34558707, z: 4.648125}
   m_Children: []
   m_Father: {fileID: 8778074915786490054}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1763919391306800450
 MeshFilter:
@@ -1753,9 +1756,6 @@ Transform:
   - {fileID: 8720136058200155837}
   - {fileID: 5902405467261337108}
   - {fileID: 8224827650965107298}
-  - {fileID: 5201941951876320891}
-  - {fileID: 6496431653402465927}
-  - {fileID: 3597739499256667255}
   - {fileID: 1790420340422854386}
   - {fileID: 4856757130618415917}
   m_Father: {fileID: 0}
@@ -2894,13 +2894,8 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8778074915786490054}
+    m_TransformParent: {fileID: 8720136058200155837}
     m_Modifications:
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Name
-      value: Bird Waypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2939,7 +2934,7 @@ PrefabInstance:
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
@@ -2955,6 +2950,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Bird Waypoint
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
@@ -3045,13 +3045,8 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8778074915786490054}
+    m_TransformParent: {fileID: 8720136058200155837}
     m_Modifications:
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Name
-      value: Bird Waypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3090,7 +3085,7 @@ PrefabInstance:
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
@@ -3106,6 +3101,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Bird Waypoint
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
@@ -3225,13 +3225,8 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8778074915786490054}
+    m_TransformParent: {fileID: 8720136058200155837}
     m_Modifications:
-    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
-        type: 3}
-      propertyPath: m_Name
-      value: Bird Waypoint
-      objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3270,7 +3265,7 @@ PrefabInstance:
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381712, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}
@@ -3286,6 +3281,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266374724764381714, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Bird Waypoint
       objectReference: {fileID: 0}
     - target: {fileID: 3266374724764381715, guid: 82b5bddcd97a8a242b8cd4fd23c7aeb9,
         type: 3}

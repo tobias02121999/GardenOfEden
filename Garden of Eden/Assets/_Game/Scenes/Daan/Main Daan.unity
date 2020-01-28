@@ -2995,12 +2995,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.7885
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -3010,7 +3010,7 @@ PrefabInstance:
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -7108,7 +7108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1118660130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7945,12 +7945,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.7885
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363201341283, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -7960,7 +7960,7 @@ PrefabInstance:
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2572620364221593472, guid: db46638d23a201342ae57b133df7636d,
+    - target: {fileID: 2572620363781091107, guid: db46638d23a201342ae57b133df7636d,
         type: 3}
       propertyPath: scalingMode
       value: 0
@@ -8530,12 +8530,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386516384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4e1499e0096e37489e91cc65b7905ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  daySpeed: 0.01
+  daySpeed: 1
   nightSpeed: 0.05
   densityDay: 0.02
   densityNight: 0.2
@@ -11671,7 +11671,7 @@ GameObject:
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1775430024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18949,7 +18949,7 @@ PrefabInstance:
     - target: {fileID: 215432620379188466, guid: e746679ac8af5bb4fa431511fee206bc,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 215432620379188471, guid: e746679ac8af5bb4fa431511fee206bc,
         type: 3}

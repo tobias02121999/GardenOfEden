@@ -17,10 +17,7 @@ public class PaintJar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var inventory = GetComponentInParent<PlayerInventory>();
-        
-        if (inventory == null)
-            inventory = (PlayerInventory)FindObjectOfType(typeof(PlayerInventory));
+        var inventory = NetworkPlayers.Instance.localPlayer.GetComponent<PlayerInventory>();
 
         var maxChunkAmount = paintChunks.Length;
 

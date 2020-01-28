@@ -8,6 +8,8 @@ public enum HumanDesire {HOUSING, FOOD, TO_ASCEND, NOTHING}
 
 public class HumanAI : NetworkBehaviour
 {
+    public Monument targetMonument;
+
     [SerializeField]
     bool hasFaith;
 
@@ -20,6 +22,7 @@ public class HumanAI : NetworkBehaviour
 
     [Space]
 
+    public ParticleSystem[] particles;  // 1 == Level up, 2 == Converted to neutral, 3 == death
     public Transform humanHips;
     public Transform movementParent, rotationReference;
 
@@ -49,7 +52,7 @@ public class HumanAI : NetworkBehaviour
 
     [Space]
 
-    int fearReductionSpeed, timesSwitched;
+    int fearReductionSpeed, timesSwitched = 4;
     float wanderAlarm, gatheredWood;
     bool statsTweaked, convertedToNeutral;
 
@@ -118,7 +121,12 @@ public class HumanAI : NetworkBehaviour
                     cloud.SetActive(false);
 
                 if (timesSwitched >= 5)
-                    gameObject.SetActive(false);
+                {
+                    var deathParticles = particles[2];
+                    deathParticles.Play();    // Play the death particle.
+                    if (deathParticles.IsAlive())   // Wait for the particle system to finish playing;
+                        gameObject.SetActive(false);
+                }
 
                 // During the day the only thing it does is switch the shrine it will pray at during the upcoming night, and idle about.
                 currentState = HumanState.IDLE;
@@ -582,17 +590,36 @@ public class HumanAI : NetworkBehaviour
         convertedToNeutral = true;
     }
 
-    public void IncreaseFear(float amount, float modifier) { fear += amount * modifier; }
+    public void IncreaseFear(float amount)
+    {
+        fear += amount;
+
+        if (fear >= 100)
+        {
+            hasFaith = false;
+            if (GameManager.Instance.TeamOneHumans.Contains(gameObject))
+            {
+                GameManager.Instance.TeamOneHumans.Remove(gameObject);
+                GameManager.Instance.TeamOneNeutralHumans.Add(gameObject);
+            }
+            if (GameManager.Instance.TeamTwoHumans.Contains(gameObject))
+            {
+                GameManager.Instance.TeamTwoHumans.Remove(gameObject);
+                GameManager.Instance.TeamTwoNeutralHumans.Add(gameObject);
+            }
+        }
+    }
 
     // Build up the monument
     void BuildMonument()
     {
-        var setup = GetComponent<RagdollSetup>();
-        var target = GameManager.Instance.monuments[setup.teamID];
+        var target = GameManager.Instance.monuments[NetworkPlayers.Instance.localPlayer.GetComponent<PlayerSetup>().teamID];
         var dist = Vector3.Distance(humanHips.position, target.transform.position);
 
         if (dist <= monumentBuildDistance)
             target.GetComponent<Monument>().buildProgress++;
+
+        Debug.Log("Going to build monument");
     }
 
     #region uNet Commands & RPC calls

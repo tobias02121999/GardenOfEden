@@ -5796,6 +5796,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 56cc9ed645196014ead5fd8b4cd7d064, type: 2}
   - {fileID: 2100000, guid: 2f089f2204817c249a9692cb65a1a89e, type: 2}
   modelRenderer: {fileID: 5981691095965400831}
+  isStork: 0
 --- !u!114 &1438448271049857592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5870,6 +5871,10 @@ MonoBehaviour:
   desireClouds:
   - {fileID: 8529602799225207130}
   - {fileID: 621227681162568359}
+  particles:
+  - {fileID: 8655379496418060396, guid: 5b3fd25e5f067ea4f9041ac21cabef56, type: 3}
+  - {fileID: 8655379496418060396, guid: 5b3fd25e5f067ea4f9041ac21cabef56, type: 3}
+  - {fileID: 5415645377353285573, guid: 749eb4f430b5af9418bf5fa003d0b271, type: 3}
   humanHips: {fileID: 5981691095979225045}
   movementParent: {fileID: 4982348979533985199}
   rotationReference: {fileID: 5539984398783368406}
@@ -5895,8 +5900,7 @@ MonoBehaviour:
     type: 3}
   isDayTime: 0
   isGrounded: 0
-  isStork: 0
-  monumentBuildDistance: 5
+  monumentBuildDistance: 7.5
   buildingHouse: 0
   desireStated: 0
   hasHome: 0

@@ -6,6 +6,14 @@ public class GameManager : NetworkBehaviour
 {
     // Initialize the singleton
     public static GameManager Instance { get; private set; }
+    public GameObject plateau;
+
+    [SyncVar]
+    public bool playerOneReady;
+    public bool playerTwoReady;
+
+    [SyncVar]
+    public bool playersReady;
 
     public GameObject[] shrines;
     public GameObject[] monuments;
@@ -13,6 +21,9 @@ public class GameManager : NetworkBehaviour
     //public Transform[] homes;
     public List<GameObject> teamOneHomes = new List<GameObject>();
     public List<GameObject> teamTwoHomes = new List<GameObject>();
+
+    public List<GameObject> teamOneClouds = new List<GameObject>();
+    public List<GameObject> teamTwoClouds = new List<GameObject>();
 
     public List<GameObject> teamOneStorks = new List<GameObject>();
     public List<GameObject> teamTwoStorks = new List<GameObject>();
@@ -35,6 +46,9 @@ public class GameManager : NetworkBehaviour
     [Header("Globals")]
     [SyncVar] public float teamOneFoodScore;
     [SyncVar] public float teamTwoFoodScore;
+
+    public List<GameObject> teamOneHolograms = new List<GameObject>();
+    public List<GameObject> teamTwoHolograms = new List<GameObject>();
 
     bool hungerDistributed = false;
 
@@ -59,7 +73,19 @@ public class GameManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isServer)
+        if (playerOneReady && playerTwoReady)
+            playersReady = true;
+
+        if (playersReady)
+            plateau.SetActive(true);
+
+        if (!isServer)
+            NetworkPlayers.Instance.localPlayer.GetComponent<PlayerControls>().CmdSyncManagerToServer(playerTwoReady);
+
+        if (Input.GetButtonDown("Submit"))
+            playerTwoReady = true;
+
+        if (isServer && playersReady)
         {
             // Calculate food score team one
             var humanCount = TeamOneHumans.Count;
@@ -93,11 +119,9 @@ public class GameManager : NetworkBehaviour
                 score = 1;
 
             teamTwoFoodScore = score;
-        }
 
-        // Control the object authorities
-        if (isServer)
             SetAuthority(); // Set the authorities of the balls
+        }
     }
 
     // Check if food is sufficient
@@ -198,23 +222,75 @@ public class GameManager : NetworkBehaviour
         length = teamOneStorks.Count;
         for (var i = 0; i < length; i++)
         {
-            var identity = teamOneStorks[i].GetComponent<NetworkIdentity>();
-            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            if (teamOneStorks[i] != null)
+            {
+                var identity = teamOneStorks[i].GetComponent<NetworkIdentity>();
+                var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
 
-            if (identity.clientAuthorityOwner != null)
-                identity.RemoveClientAuthority(connection);
+                if (identity.clientAuthorityOwner != null)
+                    identity.RemoveClientAuthority(connection);
 
-            teamOneStorks[i].GetComponent<Stork>().teamID = 0;
+                teamOneStorks[i].GetComponent<Stork>().teamID = 0;
+            }
         }
 
         length = teamTwoStorks.Count;
         for (var i = 0; i < length; i++)
         {
-            var identity = teamTwoStorks[i].GetComponent<NetworkIdentity>();
+            if (teamTwoStorks[i] != null)
+            {
+                var identity = teamTwoStorks[i].GetComponent<NetworkIdentity>();
+                var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+                identity.AssignClientAuthority(connection);
+
+                teamTwoStorks[i].GetComponent<Stork>().teamID = 1;
+            }
+        }
+
+        // Holograms
+        length = teamOneHolograms.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamOneHolograms[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
+
+            teamOneHolograms[i].GetComponent<HologramSetup>().teamID = 0;
+        }
+
+        length = teamTwoHolograms.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamTwoHolograms[i].GetComponent<NetworkIdentity>();
             var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
             identity.AssignClientAuthority(connection);
 
-            teamTwoStorks[i].GetComponent<Stork>().teamID = 1;
+            teamTwoHolograms[i].GetComponent<HologramSetup>().teamID = 1;
+        }
+
+        // Clouds
+        length = teamOneClouds.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamOneClouds[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+
+            if (identity.clientAuthorityOwner != null)
+                identity.RemoveClientAuthority(connection);
+
+            teamOneClouds[i].GetComponent<CloudSetup>().teamID = 0;
+        }
+
+        length = teamTwoClouds.Count;
+        for (var i = 0; i < length; i++)
+        {
+            var identity = teamTwoClouds[i].GetComponent<NetworkIdentity>();
+            var connection = NetworkPlayers.Instance.otherPlayer.GetComponent<NetworkIdentity>().connectionToClient;
+            identity.AssignClientAuthority(connection);
+
+            teamTwoClouds[i].GetComponent<CloudSetup>().teamID = 1;
         }
 
         // Monuments
@@ -243,5 +319,12 @@ public class GameManager : NetworkBehaviour
 
         if (ClientScene.FindLocalObject(humanID) == null)
             Debug.Log("Couldnt find bounced human");
+    }
+
+    [Command]
+    void CmdSyncClientReady(bool ready)
+    {
+        playerTwoReady = ready;
+        Debug.Log("Client manager ready");
     }
 }

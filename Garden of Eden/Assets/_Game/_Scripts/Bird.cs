@@ -113,14 +113,19 @@ public class Bird : MonoBehaviour
     // Check if the bird has landed at the waypoint
     void CheckIfLanded()
     {
-        var dist = Vector3.Distance(transform.position, waypoint.position);
-        if (dist <= restDistance)
+        if (waypoint != null)
         {
-            rb.velocity = new Vector3(0f, 0f, 0f);
-            restAlarm = Mathf.RoundToInt(Random.Range(restDuration.x - .45f, restDuration.y + .45f));
-            modelAnimation.Play("Bird Resting");
-            state = States.RESTING;
-        } 
+            var dist = Vector3.Distance(transform.position, waypoint.position);
+            if (dist <= restDistance)
+            {
+                rb.velocity = new Vector3(0f, 0f, 0f);
+                restAlarm = Mathf.RoundToInt(Random.Range(restDuration.x - .45f, restDuration.y + .45f));
+                modelAnimation.Play("Bird Resting");
+                state = States.RESTING;
+            }
+        }
+        else
+            state = States.TAKEOFF;
     }
 
     // Check if the bird is airborne
@@ -140,7 +145,7 @@ public class Bird : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, transform.eulerAngles.z);
 
-        if (restAlarm <= 0)
+        if (restAlarm <= 0 || waypoint == null)
         {
             energy = Mathf.RoundToInt(Random.Range(-.49f, maxEnergy + .49f));
             modelAnimation.Play("Bird Flying");

@@ -124,7 +124,6 @@ public class Brush : MonoBehaviour
             var obj = Instantiate(drawRecognition, transform.position, Quaternion.identity);
             obj.transform.parent = drawPointParent;
             obj.transform.localPosition = new Vector3(drawPivot.x, drawPivot.y, 0f);
-            obj.GetComponent<DrawRecognition>().playerInventory = GetComponentInParent<PlayerInventory>();
 
             var drawRecog = obj.GetComponent<DrawRecognition>();
             drawRecog.scale = scale * recognitionScale;

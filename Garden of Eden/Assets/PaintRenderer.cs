@@ -38,7 +38,10 @@ public class PaintRenderer : MonoBehaviour
             lineRenderer.positionCount = amount;
 
             for (var i = 0; i < amount; i++)
-                lineRenderer.SetPosition(i, drawPoints[i].position);
+            {
+                if (drawPoints[i] != null)
+                    lineRenderer.SetPosition(i, drawPoints[i].position);
+            }
         }
         else
         {
