@@ -1661,8 +1661,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plateau: {fileID: 357763709}
-  playerOneReady: 1
-  playerTwoReady: 1
+  playerOneReady: 0
+  playerTwoReady: 0
   playersReady: 0
   shrines:
   - {fileID: 837838799}
@@ -19585,6 +19585,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 6924097934f826a4ea7490d31c69e2ab, type: 2}
+    - target: {fileID: 8564809534845372035, guid: b6c03f616429e874f8df22d5d4f42495,
+        type: 3}
+      propertyPath: buildTarget
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 3931246301747020302, guid: b6c03f616429e874f8df22d5d4f42495,
         type: 3}
       propertyPath: m_AssetId.i0
@@ -19664,11 +19669,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AssetId.i15
       value: 149
-      objectReference: {fileID: 0}
-    - target: {fileID: 8564809534845372035, guid: b6c03f616429e874f8df22d5d4f42495,
-        type: 3}
-      propertyPath: buildTarget
-      value: 5000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6c03f616429e874f8df22d5d4f42495, type: 3}

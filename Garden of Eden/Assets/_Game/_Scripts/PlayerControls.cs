@@ -103,4 +103,10 @@ public class PlayerControls : NetworkBehaviour
         handTimeL = value1;
         handTimeR = value2;
     }
+
+    [Command]
+    public void CmdSyncManagerToServer(bool value)
+    {
+        GameManager.Instance.playerTwoReady = value;
+    }
 }

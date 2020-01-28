@@ -73,10 +73,19 @@ public class GameManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerOneReady && playerTwoReady)
+            playersReady = true;
+
         if (playersReady)
             plateau.SetActive(true);
 
-        if (isServer)
+        if (!isServer)
+            NetworkPlayers.Instance.localPlayer.GetComponent<PlayerControls>().CmdSyncManagerToServer(playerTwoReady);
+
+        if (Input.GetButtonDown("Submit"))
+            playerTwoReady = true;
+
+        if (isServer && playersReady)
         {
             // Calculate food score team one
             var humanCount = TeamOneHumans.Count;
@@ -111,15 +120,8 @@ public class GameManager : NetworkBehaviour
 
             teamTwoFoodScore = score;
 
-            if (playerOneReady && playerTwoReady)
-                playersReady = true;
-        }
-        else
-            CmdSyncClientReady(playerTwoReady);
-
-        // Control the object authorities
-        if (isServer)
             SetAuthority(); // Set the authorities of the balls
+        }
     }
 
     // Check if food is sufficient
@@ -323,5 +325,6 @@ public class GameManager : NetworkBehaviour
     void CmdSyncClientReady(bool ready)
     {
         playerTwoReady = ready;
+        Debug.Log("Client manager ready");
     }
 }
